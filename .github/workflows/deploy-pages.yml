@@ -67,7 +67,6 @@ jobs:
 
   deploy-cn-server:
     needs: build
-    if: ${{ secrets.CN_DEPLOY_HOST != '' && secrets.CN_DEPLOY_USER != '' && secrets.CN_DEPLOY_SSH_KEY != '' }}
     runs-on: ubuntu-latest
     env:
       DEPLOY_HOST: ${{ secrets.CN_DEPLOY_HOST }}
@@ -75,14 +74,28 @@ jobs:
       DEPLOY_PORT: ${{ secrets.CN_DEPLOY_PORT }}
       DEPLOY_KNOWN_HOSTS: ${{ secrets.CN_DEPLOY_KNOWN_HOSTS }}
       DEPLOY_PATH: ${{ vars.CN_DEPLOY_PATH }}
+      CN_DEPLOY_SSH_KEY: ${{ secrets.CN_DEPLOY_SSH_KEY }}
     steps:
+      - name: Check CN deploy config
+        id: check-cn-deploy
+        run: |
+          set -euo pipefail
+          if [ -z "${DEPLOY_HOST:-}" ] || [ -z "${DEPLOY_USER:-}" ] || [ -z "${CN_DEPLOY_SSH_KEY:-}" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "CN deploy skipped: missing CN_DEPLOY_HOST/CN_DEPLOY_USER/CN_DEPLOY_SSH_KEY."
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Download site artifact
+        if: ${{ steps.check-cn-deploy.outputs.enabled == 'true' }}
         uses: actions/download-artifact@v4
         with:
           name: static-site
           path: dist
 
       - name: Prepare SSH
+        if: ${{ steps.check-cn-deploy.outputs.enabled == 'true' }}
         run: |
           set -euo pipefail
           mkdir -p ~/.ssh
@@ -97,10 +110,8 @@ jobs:
             ssh-keyscan -p "$PORT" "$DEPLOY_HOST" >> ~/.ssh/known_hosts
           fi
           chmod 644 ~/.ssh/known_hosts
-        env:
-          CN_DEPLOY_SSH_KEY: ${{ secrets.CN_DEPLOY_SSH_KEY }}
-
       - name: Sync files to CN server
+        if: ${{ steps.check-cn-deploy.outputs.enabled == 'true' }}
         run: |
           set -euo pipefail
           PORT="${DEPLOY_PORT:-22}"
