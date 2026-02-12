@@ -56,6 +56,9 @@ const appBaseUrl = normalizeBaseUrl(process.env.NUXT_APP_BASE_URL || '/')
 export default defineNuxtConfig({
   extends: ['docus'],
   ssr: true,
+  image: {
+    provider: "none",
+  },
   app: {
     baseURL: appBaseUrl,
   },
