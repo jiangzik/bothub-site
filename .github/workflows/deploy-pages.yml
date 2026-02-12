@@ -47,6 +47,13 @@ jobs:
         with:
           path: .output/public
 
+      - name: Upload site artifact for server deploy
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-site
+          path: .output/public
+          if-no-files-found: error
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -57,3 +64,49 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  deploy-cn-server:
+    needs: build
+    if: ${{ secrets.CN_DEPLOY_HOST != '' && secrets.CN_DEPLOY_USER != '' && secrets.CN_DEPLOY_SSH_KEY != '' }}
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_HOST: ${{ secrets.CN_DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.CN_DEPLOY_USER }}
+      DEPLOY_PORT: ${{ secrets.CN_DEPLOY_PORT }}
+      DEPLOY_KNOWN_HOSTS: ${{ secrets.CN_DEPLOY_KNOWN_HOSTS }}
+      DEPLOY_PATH: ${{ vars.CN_DEPLOY_PATH }}
+    steps:
+      - name: Download site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: static-site
+          path: dist
+
+      - name: Prepare SSH
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$CN_DEPLOY_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+          PORT="${DEPLOY_PORT:-22}"
+          if [ -n "${DEPLOY_KNOWN_HOSTS:-}" ]; then
+            printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          else
+            ssh-keyscan -p "$PORT" "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+          fi
+          chmod 644 ~/.ssh/known_hosts
+        env:
+          CN_DEPLOY_SSH_KEY: ${{ secrets.CN_DEPLOY_SSH_KEY }}
+
+      - name: Sync files to CN server
+        run: |
+          set -euo pipefail
+          PORT="${DEPLOY_PORT:-22}"
+          TARGET_PATH="${DEPLOY_PATH:-/data/bothub/website}"
+          TARGET="$DEPLOY_USER@$DEPLOY_HOST"
+          SSH_ARGS="-i ~/.ssh/id_ed25519 -p $PORT -o StrictHostKeyChecking=yes"
+
+          ssh $SSH_ARGS "$TARGET" "mkdir -p '$TARGET_PATH'"
+          rsync -az --delete -e "ssh $SSH_ARGS" dist/ "$TARGET:$TARGET_PATH/"
