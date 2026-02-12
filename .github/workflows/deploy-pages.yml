@@ -32,12 +32,7 @@ jobs:
         run: npm ci
 
       - name: Resolve base URL
-        run: |
-          if [ -f CNAME ]; then
-            echo "NUXT_APP_BASE_URL=/" >> "$GITHUB_ENV"
-          else
-            echo "NUXT_APP_BASE_URL=/${{ github.event.repository.name }}/" >> "$GITHUB_ENV"
-          fi
+        run: echo "NUXT_APP_BASE_URL=/" >> "$GITHUB_ENV"
 
       - name: Build static site
         run: npx nuxi generate
