@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{ label?: string }>(), {
-  label: 'Android',
+  label: 'Linux',
 })
 
 interface VersionEntry {
@@ -9,7 +9,7 @@ interface VersionEntry {
 }
 
 interface VersionManifest {
-  android?: VersionEntry | string
+  linux?: VersionEntry | string
 }
 
 const runtimeConfig = useRuntimeConfig()
@@ -31,28 +31,29 @@ const { data } = await useFetch<VersionManifest>('version.json', {
 })
 
 const downloadHref = computed(() => {
-  const value = data.value?.android
+  const value = data.value?.linux
   const url = typeof value === 'string' ? value : value?.url
-  return resolveSiteUrl(url || runtimeConfig.public?.downloads?.apk || '/downloads/app-release.apk')
+  return resolveSiteUrl(url || runtimeConfig.public?.downloads?.linux || '')
 })
 
 const versionText = computed(() => {
-  const value = data.value?.android
+  const value = data.value?.linux
   if (value && typeof value === 'object' && value.version) {
     return value.version
   }
-  return runtimeConfig.public?.versions?.android || ''
+  return runtimeConfig.public?.versions?.linux || ''
 })
 </script>
 
 <template>
   <UButton
+    v-if="downloadHref"
     color="neutral"
     variant="outline"
     size="xl"
     :to="downloadHref"
     external
-    icon="i-lucide-smartphone"
+    icon="i-lucide-box"
   >
     <slot>{{ props.label }}</slot>
     <template v-if="versionText"> v{{ versionText }}</template>

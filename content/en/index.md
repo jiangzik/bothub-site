@@ -26,6 +26,9 @@ BotHub
   :::download-windows-button
   Windows
   :::
+  :::download-linux-button
+  Linux
+  :::
   :::download-apk-button
   Android
   :::
@@ -46,7 +49,7 @@ Designed around a shared interaction model for Desktop, Android, and iOS (in pro
   <article class="platform-card platform-card--desktop">
     <p class="platform-tag">Desktop</p>
     <h3>Primary productivity workspace</h3>
-    <p>macOS and Windows are live for long sessions, deep context, and multi-task workflows.</p>
+    <p>macOS, Windows, and Linux are live for long sessions, deep context, and multi-task workflows.</p>
     <ul>
       <li>Multi-model switching with parameter control</li>
       <li>Local storage with privacy-first design</li>

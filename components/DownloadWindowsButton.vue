@@ -5,6 +5,7 @@ const props = withDefaults(defineProps<{ label?: string }>(), {
 
 interface VersionEntry {
   url?: string
+  version?: string
 }
 
 interface VersionManifest {
@@ -34,6 +35,14 @@ const downloadHref = computed(() => {
   const url = typeof value === 'string' ? value : value?.url
   return resolveSiteUrl(url || runtimeConfig.public?.downloads?.windows || '')
 })
+
+const versionText = computed(() => {
+  const value = data.value?.windows
+  if (value && typeof value === 'object' && value.version) {
+    return value.version
+  }
+  return runtimeConfig.public?.versions?.windows || ''
+})
 </script>
 
 <template>
@@ -47,5 +56,6 @@ const downloadHref = computed(() => {
     icon="i-lucide-monitor"
   >
     <slot>{{ props.label }}</slot>
+    <template v-if="versionText"> v{{ versionText }}</template>
   </UButton>
 </template>

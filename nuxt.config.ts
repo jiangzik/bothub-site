@@ -11,6 +11,7 @@ interface VersionJson {
   android?: VersionEntry
   mac?: VersionEntry
   windows?: VersionEntry
+  linux?: VersionEntry
 }
 
 const readVersionJson = (relativePath: string): VersionJson => {
@@ -75,11 +76,13 @@ export default defineNuxtConfig({
         apk: withAppBaseUrl(appBaseUrl, versionJson.android?.url || 'downloads/app-release.apk'),
         mac: withAppBaseUrl(appBaseUrl, versionJson.mac?.url),
         windows: withAppBaseUrl(appBaseUrl, versionJson.windows?.url),
+        linux: withAppBaseUrl(appBaseUrl, versionJson.linux?.url),
       },
       versions: {
         android: versionJson.android?.version || '',
         mac: versionJson.mac?.version || '',
         windows: versionJson.windows?.version || '',
+        linux: versionJson.linux?.version || '',
       },
     },
   },

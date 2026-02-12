@@ -26,6 +26,9 @@ BotHub
   :::download-windows-button
   Windows
   :::
+  :::download-linux-button
+  Linux
+  :::
   :::download-apk-button
   Android
   :::
@@ -46,7 +49,7 @@ BotHub
   <article class="platform-card platform-card--desktop">
     <p class="platform-tag">Desktop</p>
     <h3>主力生产力场景</h3>
-    <p>macOS 与 Windows 已上线，适合长会话、资料整理与并行多任务。</p>
+    <p>macOS、Windows 与 Linux 已上线，适合长会话、资料整理与并行多任务。</p>
     <ul>
       <li>多模型切换与参数控制</li>
       <li>本地存储，隐私优先</li>

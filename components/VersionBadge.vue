@@ -12,6 +12,7 @@ interface VersionManifest {
   android?: VersionEntry | string
   mac?: VersionEntry | string
   windows?: VersionEntry | string
+  linux?: VersionEntry | string
 }
 
 const label = computed(() => props.label ?? 'Version')
@@ -35,8 +36,9 @@ const versionText = computed(() => {
   const androidVersion = pickVersion(data.value?.android, fallback?.android)
   const macVersion = pickVersion(data.value?.mac, fallback?.mac)
   const windowsVersion = pickVersion(data.value?.windows, fallback?.windows)
+  const linuxVersion = pickVersion(data.value?.linux, fallback?.linux)
 
-  const value = `Android v${androidVersion} · macOS v${macVersion} · Windows v${windowsVersion}`
+  const value = `Android v${androidVersion} · macOS v${macVersion} · Windows v${windowsVersion} · Linux v${linuxVersion}`
   return label.value ? `${label.value}: ${value}` : value
 })
 </script>
