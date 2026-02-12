@@ -1,0 +1,17 @@
+{
+  "android": {
+    "version": "4.3.25",
+    "url": "/downloads/app-release.apk",
+    "notes": "1.新对话建议，请求日志\n2.修复bug，优化用户体验"
+  },
+  "mac": {
+    "url": "/downloads/BotHub-1.0.5-arm64.dmg",
+    "version": "1.0.5",
+    "notes": "1.代码执行、请求日志、新对话建议\n2.修复bug，优化用户体验"
+  },
+  "windows": {
+    "url": "/downloads/BotHub Setup 1.0.5.exe",
+    "version": "1.0.5",
+    "notes": "1.代码执行、请求日志、新对话建议\n2修复bug，优化用户体验"
+  }
+}
