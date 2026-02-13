@@ -136,5 +136,9 @@ Start with the quick start guide, then use the FAQ for common issues.
     <h3>Frequently Asked Questions</h3>
     <p>Troubleshooting for downloads, network errors, and model calls.</p>
   </a>
+  <a class="docs-entry-card" href="/en/faq/privacy-policy">
+    <h3>Privacy Policy</h3>
+    <p>Read how BotHub handles data and privacy across Android, iOS, and desktop.</p>
+  </a>
 </div>
 ::

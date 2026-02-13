@@ -136,5 +136,9 @@ Android 可下载，iOS 正在开发中，移动端体验持续完善。
     <h3>常见问题（FAQ）</h3>
     <p>下载失败、网络异常、模型调用失败等排查。</p>
   </a>
+  <a class="docs-entry-card" href="/zh/faq/privacy-policy">
+    <h3>隐私政策</h3>
+    <p>查看 BotHub 在 Android、iOS 与桌面端的数据与隐私说明。</p>
+  </a>
 </div>
 ::
