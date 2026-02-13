@@ -53,37 +53,7 @@ header[data-slot='root'] {
 }
 
 nav[data-slot='root'][data-state] {
-  top: calc(var(--ui-header-height) + var(--floating-header-top-offset) + 0.2rem);
-  max-height: calc(100vh - var(--ui-header-height) - var(--floating-header-top-offset) - 0.2rem);
-}
-
-@media (max-width: 1023px) {
-  nav[data-slot='root'][data-state] {
-    position: relative !important;
-    top: auto !important;
-    max-height: none !important;
-    margin-top: 0.7rem !important;
-    margin-inline: 0.45rem !important;
-    padding-inline: 0.7rem !important;
-    border: 1px solid var(--landing-border) !important;
-    border-radius: 18px !important;
-    overflow: hidden !important;
-    background: linear-gradient(145deg, var(--landing-surface-strong), var(--landing-surface)) !important;
-    box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12) !important;
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-  }
-
-  nav[data-slot='root'][data-state] [data-slot='container'] {
-    border-bottom: 0 !important;
-    border-radius: inherit;
-    padding-top: 0.72rem !important;
-    padding-bottom: 0.72rem !important;
-  }
-
-  .dark nav[data-slot='root'][data-state] {
-    box-shadow: 0 12px 26px rgba(1, 6, 16, 0.44);
-  }
+  display: none !important;
 }
 
 .dark header[data-slot='root'] {
