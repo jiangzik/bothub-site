@@ -118,3 +118,23 @@ Android 可下载，iOS 正在开发中，移动端体验持续完善。
   <figure class="phone-frame"><img src="/6.png" alt="BotHub 移动端界面截图" /></figure>
 </div>
 ::
+
+::u-page-section{class="docs-entry-section"}
+#title
+开始使用与问题排查
+
+#description
+第一次使用建议先走一遍快速开始，再根据 FAQ 处理常见问题。
+
+#default
+<div class="docs-entry-grid">
+  <a class="docs-entry-card" href="/zh/quick-start/overview">
+    <h3>3 分钟快速开始</h3>
+    <p>安装、配置、发出第一条消息。</p>
+  </a>
+  <a class="docs-entry-card" href="/zh/faq/overview">
+    <h3>常见问题（FAQ）</h3>
+    <p>下载失败、网络异常、模型调用失败等排查。</p>
+  </a>
+</div>
+::

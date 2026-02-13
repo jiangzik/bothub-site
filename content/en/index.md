@@ -118,3 +118,23 @@ Android is available now, and iOS is in progress with continuous improvements to
   <figure class="phone-frame"><img src="/6.png" alt="BotHub mobile screenshot" /></figure>
 </div>
 ::
+
+::u-page-section{class="docs-entry-section"}
+#title
+Get Started and Troubleshoot
+
+#description
+Start with the quick start guide, then use the FAQ for common issues.
+
+#default
+<div class="docs-entry-grid">
+  <a class="docs-entry-card" href="/en/quick-start/overview">
+    <h3>3-minute Quick Start</h3>
+    <p>Install, configure, and send your first message.</p>
+  </a>
+  <a class="docs-entry-card" href="/en/faq/overview">
+    <h3>Frequently Asked Questions</h3>
+    <p>Troubleshooting for downloads, network errors, and model calls.</p>
+  </a>
+</div>
+::
