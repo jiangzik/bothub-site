@@ -1,22 +1,22 @@
 {
   "android": {
-    "version": "4.3.26",
+    "version": "4.3.27",
     "url": "https://bothub.bookab.info/downloads/app-release.apk",
     "notes": "1.修复bug，优化用户体验"
   },
   "mac": {
-    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.6-arm64.dmg",
-    "version": "1.0.6",
+    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.7-arm64.dmg",
+    "version": "1.0.7",
     "notes": "1.电报机器人\n2.修复bug，优化用户体验"
   },
   "windows": {
-    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.6.exe",
-    "version": "1.0.6",
+    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.7.exe",
+    "version": "1.0.7",
     "notes": "1.电报机器人\n2修复bug，优化用户体验"
   },
   "linux": {
-    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.6.AppImage",
-    "version": "1.0.6",
+    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.7.AppImage",
+    "version": "1.0.7",
     "notes": "1.电报机器人\n2.修复bug，优化用户体验"
   }
 }
