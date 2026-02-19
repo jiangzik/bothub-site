@@ -5,10 +5,10 @@ const props = withDefaults(defineProps<{ label?: string }>(), {
 
 interface VersionEntry {
   url?: string
-  version?: string
 }
 
 interface VersionManifest {
+  version?: string
   android?: VersionEntry | string
 }
 
@@ -37,11 +37,7 @@ const downloadHref = computed(() => {
 })
 
 const versionText = computed(() => {
-  const value = data.value?.android
-  if (value && typeof value === 'object' && value.version) {
-    return value.version
-  }
-  return runtimeConfig.public?.versions?.android || ''
+  return data.value?.version || runtimeConfig.public?.versions?.android || ''
 })
 </script>
 

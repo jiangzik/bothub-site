@@ -2,12 +2,12 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 interface VersionEntry {
-  version?: string
   url?: string
   notes?: string
 }
 
 interface VersionJson {
+  version?: string
   android?: VersionEntry
   mac?: VersionEntry
   windows?: VersionEntry
@@ -189,7 +189,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      appVersion: versionJson.android?.version || '',
+      appVersion: versionJson.version || '',
       downloads: {
         apk: withAppBaseUrl(appBaseUrl, versionJson.android?.url || 'downloads/app-release.apk'),
         mac: withAppBaseUrl(appBaseUrl, versionJson.mac?.url),
@@ -197,10 +197,10 @@ export default defineNuxtConfig({
         linux: withAppBaseUrl(appBaseUrl, versionJson.linux?.url),
       },
       versions: {
-        android: versionJson.android?.version || '',
-        mac: versionJson.mac?.version || '',
-        windows: versionJson.windows?.version || '',
-        linux: versionJson.linux?.version || '',
+        android: versionJson.version || '',
+        mac: versionJson.version || '',
+        windows: versionJson.version || '',
+        linux: versionJson.version || '',
       },
     },
   },

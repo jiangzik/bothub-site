@@ -4,15 +4,8 @@ const props = defineProps<{
   loading?: string
 }>()
 
-interface VersionEntry {
-  version?: string
-}
-
 interface VersionManifest {
-  android?: VersionEntry | string
-  mac?: VersionEntry | string
-  windows?: VersionEntry | string
-  linux?: VersionEntry | string
+  version?: string
 }
 
 const label = computed(() => props.label ?? 'Version')
@@ -26,19 +19,9 @@ const { data } = await useFetch<VersionManifest>('version.json', {
   server: false,
 })
 
-const pickVersion = (entry: VersionEntry | string | undefined, fallback?: string) => {
-  if (entry && typeof entry === 'object' && entry.version) return entry.version
-  return fallback || loading.value
-}
-
 const versionText = computed(() => {
-  const fallback = runtimeConfig.public?.versions
-  const androidVersion = pickVersion(data.value?.android, fallback?.android)
-  const macVersion = pickVersion(data.value?.mac, fallback?.mac)
-  const windowsVersion = pickVersion(data.value?.windows, fallback?.windows)
-  const linuxVersion = pickVersion(data.value?.linux, fallback?.linux)
-
-  const value = `Android v${androidVersion} · macOS v${macVersion} · Windows v${windowsVersion} · Linux v${linuxVersion}`
+  const v = data.value?.version || runtimeConfig.public?.appVersion || loading.value
+  const value = `v${v}`
   return label.value ? `${label.value}: ${value}` : value
 })
 </script>
