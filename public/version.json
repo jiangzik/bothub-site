@@ -1,7 +1,7 @@
 {
   "version": "1.0.8",
   "android": {
-    "url": "https://bothub.bookab.info/downloads/app-release.apk",
+    "url": "https://bothub.bookab.info/downloads/app-web-release.apk",
     "notes": "1.选择文字"
   },
   "mac": {
