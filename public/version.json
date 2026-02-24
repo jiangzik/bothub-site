@@ -1,19 +1,19 @@
 {
-  "version": "1.0.9",
+  "version": "1.0.10",
   "android": {
     "url": "https://bothub.bookab.info/downloads/app-web-release.apk",
     "notes": "1.默认模型优化"
   },
   "mac": {
-    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.9-arm64.dmg",
+    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.10-arm64.dmg",
     "notes": "1.默认模型优化\n2.修复bug，优化用户体验"
   },
   "windows": {
-    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.9.exe",
+    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.10.exe",
     "notes": "1.默认模型优化\n2修复bug，优化用户体验"
   },
   "linux": {
-    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.9.AppImage",
+    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.10.AppImage",
     "notes": "1.默认模型优化\n2.修复bug，优化用户体验"
   }
 }
