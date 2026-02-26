@@ -1,19 +1,19 @@
 {
-  "version": "1.0.11",
+  "version": "1.0.12",
   "android": {
     "url": "https://bothub.bookab.info/downloads/app-web-release.apk",
     "notes": "1.skills"
   },
   "mac": {
-    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.11-arm64.dmg",
+    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.12-arm64.dmg",
     "notes": "1.skills\n2.修复bug，优化用户体验"
   },
   "windows": {
-    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.11.exe",
+    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.12.exe",
     "notes": "1.skills\n2修复bug，优化用户体验"
   },
   "linux": {
-    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.11.AppImage",
+    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.12.AppImage",
     "notes": "1.skills\n2.修复bug，优化用户体验"
   }
 }
