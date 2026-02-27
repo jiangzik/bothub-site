@@ -4,19 +4,36 @@ seo:
   description: BotHub 官网，支持多厂商兼容与本地隐私保护。
 ---
 
-::u-page-hero{class="landing-hero"}
+::u-page-hero{class="landing-hero kinetic-landing-hero"}
 #headline
-跨平台 AI 客户端
+BOTHUB KINETIC
 
 #title
-BotHub
+<div class="kinetic-hero-title">
+  <span class="line"><span class="line-inner"><span class="accent-word">AI</span>驱动</span></span>
+  <span class="line"><span class="line-inner">跨平台客户端</span></span>
+</div>
 
 #description
-<div class="landing-intro">
-  <p class="landing-lead">桌面端优先打造效率体验，Android 持续更新，iOS 正在开发中。</p>
+<div class="kinetic-hero-meta">
+  <p class="hero-subtitle">桌面端作为主力生产力工作台，Android 已可使用，iOS 正在持续开发中。</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="label">平台</span>
+      <strong>Desktop / Android / iOS</strong>
+    </div>
+    <div class="hero-stat">
+      <span class="label">隐私</span>
+      <strong>本地优先存储</strong>
+    </div>
+    <div class="hero-stat">
+      <span class="label">模型</span>
+      <strong>多厂商兼容</strong>
+    </div>
+  </div>
 </div>
 <div class="landing-version">
-  <VersionBadge label="版本" />
+  <version-badge label="版本"></version-badge>
 </div>
 
 #links
@@ -37,108 +54,220 @@ BotHub
   :::
 ::
 
-::u-page-section{class="platform-section"}
-#title
-一套产品，三端协同
+<div class="landing-kinetic-strip" aria-hidden="true">
+  <div class="landing-kinetic-track">
+    <span class="landing-kinetic-text">DESKTOP <span class="dot">/</span> ANDROID <span class="dot">/</span> iOS <span class="dot">/</span> 长上下文 <span class="dot">/</span> 多模型路由 <span class="dot">/</span> 本地隐私</span>
+    <span class="landing-kinetic-text">DESKTOP <span class="dot">/</span> ANDROID <span class="dot">/</span> iOS <span class="dot">/</span> 长上下文 <span class="dot">/</span> 多模型路由 <span class="dot">/</span> 本地隐私</span>
+  </div>
+</div>
 
-#description
-围绕同一套交互理念构建，确保 Desktop、Android、iOS（进行中）体验一致。
-
+::u-page-section{class="kinetic-section section-platform"}
 #default
-<div class="platform-grid">
-  <article class="platform-card platform-card--desktop">
-    <p class="platform-tag">Desktop</p>
-    <h3>主力生产力场景</h3>
-    <p>macOS、Windows 与 Linux 已上线，适合长会话、资料整理与并行多任务。</p>
-    <ul>
-      <li>多模型切换与参数控制</li>
-      <li>本地存储，隐私优先</li>
-      <li>面向高频使用优化桌面体验</li>
+<div class="section-header">
+  <div class="section-title-group">
+    <span class="section-number">01</span>
+    <h2 class="section-title">平台矩阵</h2>
+  </div>
+  <div class="section-nav" aria-hidden="true">
+    <span class="nav-btn">&larr;</span>
+    <span class="nav-btn">&rarr;</span>
+  </div>
+</div>
+<div class="report-grid">
+  <article class="report-card report-card-featured">
+    <div class="report-card-visual report-visual-orbit" aria-hidden="true"></div>
+    <div class="report-card-info">
+      <h3 class="report-card-name">Desktop 主工作台</h3>
+      <p class="report-card-desc">覆盖 macOS、Windows、Linux，针对长会话、深上下文和高频使用进行了完整优化。</p>
+    </div>
+    <span class="report-card-score">A+</span>
+  </article>
+  <article class="report-card">
+    <div class="report-card-visual report-visual-console" aria-hidden="true"></div>
+    <div class="report-card-info">
+      <h3 class="report-card-name">参数控制台</h3>
+      <p class="report-card-desc">模型、提供商与参数设置集中管理，切换更快。</p>
+    </div>
+    <span class="report-card-score">91</span>
+  </article>
+  <article class="report-card">
+    <div class="report-card-visual report-visual-pulse" aria-hidden="true"></div>
+    <div class="report-card-info">
+      <h3 class="report-card-name">Android 流程</h3>
+      <p class="report-card-desc">移动端延续桌面核心体验，外出场景可直接接续任务。</p>
+    </div>
+    <span class="report-card-score">89</span>
+  </article>
+  <article class="report-card">
+    <div class="report-card-visual report-visual-flow" aria-hidden="true"></div>
+    <div class="report-card-info">
+      <h3 class="report-card-name">Android 快捷操作</h3>
+      <p class="report-card-desc">常用操作与模型交接针对移动端场景做了快速入口优化。</p>
+    </div>
+    <span class="report-card-score">93</span>
+  </article>
+</div>
+::
+
+::u-page-section{class="kinetic-section section-desktop"}
+#default
+<div class="section-header">
+  <div class="section-title-group">
+    <span class="section-number">02</span>
+    <h2 class="section-title">Desktop 展示</h2>
+  </div>
+</div>
+<desktop-story-carousel locale="zh"></desktop-story-carousel>
+::
+
+::u-page-section{class="kinetic-section section-mobile"}
+#default
+<div class="section-header">
+  <div class="section-title-group">
+    <span class="section-number">03</span>
+    <h2 class="section-title">移动端界面</h2>
+  </div>
+</div>
+<mobile-story-carousel locale="zh"></mobile-story-carousel>
+::
+
+::u-page-section{class="kinetic-section section-docs"}
+#default
+<div class="section-header">
+  <div class="section-title-group">
+    <span class="section-number">04</span>
+    <h2 class="section-title">快速上手</h2>
+  </div>
+</div>
+<div class="tools-grid">
+  <a class="tool-card" href="/zh/quick-start/overview">
+    <div class="tool-card-icon">01</div>
+    <div class="tool-card-info">
+      <h3 class="tool-card-name">快速开始</h3>
+      <p class="tool-card-desc">完成安装、配置并发出第一条消息。</p>
+    </div>
+  </a>
+  <a class="tool-card" href="/zh/manual/overview">
+    <div class="tool-card-icon">02</div>
+    <div class="tool-card-info">
+      <h3 class="tool-card-name">使用手册</h3>
+      <p class="tool-card-desc">查看提供商配置、对话流程和上下文机制。</p>
+    </div>
+  </a>
+  <a class="tool-card" href="/zh/faq/overview">
+    <div class="tool-card-icon">03</div>
+    <div class="tool-card-info">
+      <h3 class="tool-card-name">常见问题</h3>
+      <p class="tool-card-desc">排查下载、网络和模型调用常见故障。</p>
+    </div>
+  </a>
+</div>
+<div class="compare-grid">
+  <div class="compare-box">
+    <p class="compare-box-title">新用户</p>
+    <div class="compare-section">
+      <p class="compare-desc">从安装到完成一次完整工作流，按步骤快速走通。</p>
+      <a class="compare-btn" href="/zh/quick-start/overview">打开快速开始</a>
+    </div>
+  </div>
+  <div class="compare-box">
+    <p class="compare-box-title">进阶用户</p>
+    <div class="compare-section">
+      <p class="compare-desc">进一步优化提供商策略、参数配置与提示词控制。</p>
+      <a class="compare-btn" href="/zh/manual/providers">打开提供商指南</a>
+    </div>
+  </div>
+</div>
+::
+
+::u-page-section{class="kinetic-section section-capabilities"}
+#default
+<div class="section-header">
+  <div class="section-title-group">
+    <span class="section-number">05</span>
+    <h2 class="section-title">核心能力</h2>
+  </div>
+</div>
+<div class="capability-grid">
+  <article class="capability-card">
+    <p class="capability-kicker">Context Engine</p>
+    <h3 class="capability-title">长上下文任务不中断</h3>
+    <p class="capability-desc">在多轮对话和复杂任务中，持续保留关键信息与阶段状态，减少反复补充背景的成本。</p>
+    <ul class="capability-list">
+      <li>长会话上下文延续</li>
+      <li>阶段状态可追踪</li>
+      <li>跨任务记忆更稳定</li>
     </ul>
   </article>
-
-  <article class="platform-card platform-card--android">
-    <p class="platform-tag">Android</p>
-    <h3>移动场景可直接使用</h3>
-    <p>随时同步你的使用习惯，外出时也能保持完整工作流。</p>
-    <ul>
-      <li>现已支持安装与更新</li>
-      <li>与桌面端一致的核心能力</li>
-      <li>适合快速追问与碎片化处理</li>
+  <article class="capability-card">
+    <p class="capability-kicker">Provider Routing</p>
+    <h3 class="capability-title">多模型与多提供商协同</h3>
+    <p class="capability-desc">同一工作流中按任务目标切换模型能力，覆盖创作、分析、代码、检索等不同负载。</p>
+    <ul class="capability-list">
+      <li>多提供商统一管理</li>
+      <li>模型能力按需调度</li>
+      <li>参数策略集中控制</li>
     </ul>
   </article>
-
-  <article class="platform-card platform-card--ios">
-    <p class="platform-tag">iOS</p>
-    <h3>正在开发中</h3>
-    <p>iOS 版本目前进行中，目标是保持与 Desktop / Android 同样顺滑的体验。</p>
-    <ul>
-      <li>统一交互与功能优先级</li>
-      <li>持续推进适配与体验打磨</li>
-      <li>后续会第一时间对外同步进展</li>
+  <article class="capability-card">
+    <p class="capability-kicker">Prompt Control</p>
+    <h3 class="capability-title">可复用的提示词体系</h3>
+    <p class="capability-desc">将临时提问升级为结构化提示词模板，降低团队协作中的输出波动与沟通成本。</p>
+    <ul class="capability-list">
+      <li>模板化提示词沉淀</li>
+      <li>场景化参数组合</li>
+      <li>团队复用效率提升</li>
+    </ul>
+  </article>
+  <article class="capability-card">
+    <p class="capability-kicker">Local Privacy</p>
+    <h3 class="capability-title">本地优先的数据策略</h3>
+    <p class="capability-desc">核心数据本地优先，降低敏感信息外泄风险，在效率与合规之间做稳定平衡。</p>
+    <ul class="capability-list">
+      <li>本地优先存储</li>
+      <li>关键配置可控</li>
+      <li>隐私策略可审计</li>
     </ul>
   </article>
 </div>
 ::
 
-::u-page-section{class="desktop-section"}
-#title
-Desktop 界面预览
-
-#description
-更适合深度对话与长时间使用的主工作台。
-
+::u-page-section{class="kinetic-section section-workflow"}
 #default
-<div class="desktop-shot-grid">
-  <figure class="shot-frame">
-    <img src="/7.png" alt="BotHub 桌面端对话界面" />
-    <figcaption>对话与上下文管理</figcaption>
-  </figure>
-  <figure class="shot-frame">
-    <img src="/8.png" alt="BotHub 桌面端设置界面" />
-    <figcaption>多模型配置与参数控制</figcaption>
-  </figure>
+<div class="section-header">
+  <div class="section-title-group">
+    <span class="section-number">06</span>
+    <h2 class="section-title">典型工作流</h2>
+  </div>
 </div>
-::
-
-::u-page-section{class="mobile-section"}
-#title
-移动端界面预览
-
-#description
-Android 可下载，iOS 正在开发中，移动端体验持续完善。
-
-#default
-<div class="mobile-shot-grid">
-  <figure class="phone-frame"><img src="/1.png" alt="BotHub 移动端聊天界面" /></figure>
-  <figure class="phone-frame"><img src="/2.png" alt="BotHub 移动端模型设置" /></figure>
-  <figure class="phone-frame"><img src="/3.png" alt="BotHub 移动端功能页面" /></figure>
-  <figure class="phone-frame"><img src="/4.png" alt="BotHub 移动端界面截图" /></figure>
-  <figure class="phone-frame"><img src="/5.png" alt="BotHub 移动端界面截图" /></figure>
-  <figure class="phone-frame"><img src="/6.png" alt="BotHub 移动端界面截图" /></figure>
+<div class="workflow-grid">
+  <article class="workflow-card">
+    <p class="workflow-label">个人研究者</p>
+    <h3 class="workflow-title">从问题拆解到结论交付</h3>
+    <div class="workflow-steps">
+      <div class="workflow-step"><span class="step-index">01</span><p>建立任务上下文与目标约束</p></div>
+      <div class="workflow-step"><span class="step-index">02</span><p>多模型交叉验证关键观点</p></div>
+      <div class="workflow-step"><span class="step-index">03</span><p>沉淀可复用的结论模板</p></div>
+    </div>
+  </article>
+  <article class="workflow-card">
+    <p class="workflow-label">产品团队</p>
+    <h3 class="workflow-title">从需求到评审闭环</h3>
+    <div class="workflow-steps">
+      <div class="workflow-step"><span class="step-index">01</span><p>整理需求背景与约束条件</p></div>
+      <div class="workflow-step"><span class="step-index">02</span><p>生成方案对比与风险清单</p></div>
+      <div class="workflow-step"><span class="step-index">03</span><p>输出评审稿并持续迭代</p></div>
+    </div>
+  </article>
+  <article class="workflow-card">
+    <p class="workflow-label">运营支持</p>
+    <h3 class="workflow-title">高频问答与流程标准化</h3>
+    <div class="workflow-steps">
+      <div class="workflow-step"><span class="step-index">01</span><p>归档常见问题与处理路径</p></div>
+      <div class="workflow-step"><span class="step-index">02</span><p>按场景匹配提示词模板</p></div>
+      <div class="workflow-step"><span class="step-index">03</span><p>形成可复用的响应手册</p></div>
+    </div>
+  </article>
 </div>
-::
-
-::u-page-section{class="docs-entry-section"}
-#title
-开始使用与问题排查
-
-#description
-第一次使用建议先走一遍快速开始，再根据 FAQ 处理常见问题。
-
-#default
-<div class="docs-entry-grid">
-  <a class="docs-entry-card" href="/zh/quick-start/overview">
-    <h3>3 分钟快速开始</h3>
-    <p>安装、配置、发出第一条消息。</p>
-  </a>
-  <a class="docs-entry-card" href="/zh/faq/overview">
-    <h3>常见问题（FAQ）</h3>
-    <p>下载失败、网络异常、模型调用失败等排查。</p>
-  </a>
-  <a class="docs-entry-card" href="/zh/faq/privacy-policy">
-    <h3>隐私政策</h3>
-    <p>查看 BotHub 在 Android、iOS 与桌面端的数据与隐私说明。</p>
-  </a>
-</div>
+<p class="workflow-footnote">你可以从快速开始入门，再逐步把提示词、模型路由和工作流模板沉淀为长期资产。</p>
 ::

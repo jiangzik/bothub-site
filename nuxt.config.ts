@@ -152,6 +152,8 @@ export default defineNuxtConfig({
   routeRules: {
     '/privacy-policy': { redirect: '/zh/faq/privacy-policy' },
     '/privacy-policy/': { redirect: '/zh/faq/privacy-policy' },
+    '/faq/privacy-policy': { redirect: '/zh/faq/privacy-policy' },
+    '/faq/privacy-policy/': { redirect: '/zh/faq/privacy-policy' },
     '/quick-start': { redirect: '/zh/quick-start/overview' },
     '/quick-start/': { redirect: '/zh/quick-start/overview' },
     '/manual': { redirect: '/zh/manual/overview' },
