@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Redirecting...</title>
+    <script>
+      (function () {
+        var fromPath = '/faq/privacy-policy';
+        var toPath = '/zh/faq/privacy-policy';
+        var pathname = window.location.pathname || '';
+        var normalized = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+        var prefix = normalized.endsWith(fromPath) ? normalized.slice(0, -fromPath.length) : '';
+        var target = prefix + toPath + window.location.search + window.location.hash;
+        window.location.replace(target);
+      })();
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0; url=/zh/faq/privacy-policy">
+    </noscript>
+  </head>
+  <body></body>
+</html>

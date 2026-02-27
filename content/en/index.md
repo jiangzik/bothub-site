@@ -161,6 +161,13 @@ BOTHUB KINETIC
       <p class="tool-card-desc">Troubleshooting for download, network, and calls.</p>
     </div>
   </a>
+  <a class="tool-card" href="/en/faq/privacy-policy">
+    <div class="tool-card-icon">04</div>
+    <div class="tool-card-info">
+      <h3 class="tool-card-name">Privacy Policy</h3>
+      <p class="tool-card-desc">Review data collection scope, storage, and privacy commitments.</p>
+    </div>
+  </a>
 </div>
 <div class="compare-grid">
   <div class="compare-box">

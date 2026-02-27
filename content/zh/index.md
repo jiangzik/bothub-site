@@ -161,6 +161,13 @@ BOTHUB KINETIC
       <p class="tool-card-desc">排查下载、网络和模型调用常见故障。</p>
     </div>
   </a>
+  <a class="tool-card" href="/zh/faq/privacy-policy">
+    <div class="tool-card-icon">04</div>
+    <div class="tool-card-info">
+      <h3 class="tool-card-name">隐私政策</h3>
+      <p class="tool-card-desc">查看数据收集范围、存储方式与隐私承诺。</p>
+    </div>
+  </a>
 </div>
 <div class="compare-grid">
   <div class="compare-box">
