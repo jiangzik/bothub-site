@@ -1,18 +1,6 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
-
-interface VersionEntry {
-  url?: string
-  notes?: string
-}
-
-interface VersionJson {
-  version?: string
-  android?: VersionEntry
-  mac?: VersionEntry
-  windows?: VersionEntry
-  linux?: VersionEntry
-}
+import type { VersionEntry, VersionJson } from './types/version'
 
 const readVersionJson = (relativePath: string): VersionJson => {
   const fullPath = resolve(process.cwd(), relativePath)
@@ -163,12 +151,14 @@ export default defineNuxtConfig({
         mac: withAppBaseUrl(appBaseUrl, versionJson.mac?.url),
         windows: withAppBaseUrl(appBaseUrl, versionJson.windows?.url),
         linux: withAppBaseUrl(appBaseUrl, versionJson.linux?.url),
+        server: withAppBaseUrl(appBaseUrl, versionJson.server?.url),
       },
       versions: {
         android: versionJson.version || '',
         mac: versionJson.version || '',
         windows: versionJson.version || '',
         linux: versionJson.version || '',
+        server: versionJson.version || '',
       },
     },
   },
@@ -211,6 +201,7 @@ export default defineNuxtConfig({
   },
   devServer: {
     host: '0.0.0.0',
+    port: 8090,
   },
   appConfig: {
     header: {

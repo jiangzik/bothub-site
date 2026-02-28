@@ -1,12 +1,10 @@
 <script setup lang="ts">
+import type { VersionManifest } from '~/types/version'
+
 const props = defineProps<{
   label?: string
   loading?: string
 }>()
-
-interface VersionManifest {
-  version?: string
-}
 
 const label = computed(() => props.label ?? 'Version')
 const loading = computed(() => props.loading ?? '--')

@@ -6,7 +6,7 @@
     "generate": "nuxi generate"
   },
   "dependencies": {
-    "docus": "latest",
+    "docus": "5.4.2",
     "better-sqlite3": "^12.5.0",
     "nuxt": "^4.2.2"
   }

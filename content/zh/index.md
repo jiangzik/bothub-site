@@ -49,6 +49,9 @@ BOTHUB KINETIC
   :::download-apk-button
   Android
   :::
+  :::download-server-button
+  Server
+  :::
   :::join-qq-group-button{id-label="QQ群"}
   加入QQ群
   :::
