@@ -1539,6 +1539,134 @@ body:not(:has(.kinetic-landing-hero)) .mt-8.pb-24.space-y-12 a {
   color: var(--accent);
 }
 
+/* Unified modal language for landing page surfaces (search + server install). */
+[data-slot='overlay']:has(+ .bothub-modal-surface) {
+  background: rgba(10, 14, 23, 0.42);
+  backdrop-filter: blur(2px);
+}
+
+.bothub-modal-surface {
+  border: 2px solid var(--black) !important;
+  border-radius: 0 !important;
+  background: var(--white) !important;
+  box-shadow: none !important;
+  outline: none !important;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+  overflow: hidden !important;
+}
+
+.bothub-modal-surface,
+.bothub-modal-surface::before,
+.bothub-modal-surface::after {
+  border-radius: 0 !important;
+}
+
+.bothub-modal-surface *::before,
+.bothub-modal-surface *::after {
+  border-radius: 0 !important;
+}
+
+.bothub-modal-surface [data-slot='header'],
+.bothub-modal-surface .bothub-modal__header {
+  border-bottom: 2px solid var(--black);
+  padding: 0.9rem 1rem 0.78rem;
+}
+
+.bothub-modal-surface [data-slot='title'],
+.bothub-modal-surface .bothub-modal__title {
+  font-family: var(--font);
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.bothub-modal-surface [data-slot='description'],
+.bothub-modal-surface .bothub-modal__description {
+  margin-top: 0.34rem;
+  color: var(--gray-500);
+  font-size: 0.86rem;
+}
+
+.bothub-modal-surface [data-slot='close'],
+.bothub-modal-surface .bothub-modal__close {
+  border: 1px solid var(--black);
+  border-radius: 0;
+  background: var(--white);
+}
+
+.bothub-modal-surface [data-slot='body'],
+.bothub-modal-surface .bothub-modal__body {
+  background: var(--white);
+}
+
+.bothub-modal-surface [data-slot='footer'],
+.bothub-modal-surface .bothub-modal__footer {
+  border-top: 2px solid var(--black);
+}
+
+.bothub-modal-surface [data-slot='footer'] [data-slot='base'],
+.bothub-modal-surface .bothub-modal__footer [data-slot='base'] {
+  border-radius: 0;
+}
+
+.bothub-modal--search [data-slot='input'] {
+  border-bottom: 2px solid var(--black);
+  border-radius: 0 !important;
+  overflow: hidden;
+}
+
+.bothub-modal--search [data-slot='root'],
+.bothub-modal--search [data-slot='content'],
+.bothub-modal--search [data-slot='viewport'] {
+  border-radius: 0 !important;
+  background: var(--white);
+}
+
+.bothub-modal--search [data-slot='input'] [data-slot='base'],
+.bothub-modal--search [data-slot='input'] input {
+  min-height: 3rem;
+  font-family: var(--font);
+  font-size: 0.98rem;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+}
+
+.bothub-modal--search [data-slot='viewport'] {
+  padding: 0.28rem;
+}
+
+.bothub-modal--search [data-slot='label'] {
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+}
+
+.bothub-modal--search [data-slot='item'] {
+  border: 1px solid transparent;
+  border-radius: 0 !important;
+}
+
+.bothub-modal--search [data-slot='item']::before {
+  border-radius: 0 !important;
+}
+
+.bothub-modal--search [data-slot='item'][data-highlighted] {
+  border-color: var(--black);
+  background: var(--off-white);
+}
+
+.bothub-modal--search [data-slot='itemLabelBase'] mark,
+.bothub-modal--search [data-slot='itemLabelSuffix'] mark {
+  background: var(--black);
+  color: var(--white);
+}
+
 .landing-hero [data-slot='wrapper'],
 .landing-kinetic-strip,
 .report-card,
@@ -1744,6 +1872,21 @@ body:not(:has(.kinetic-landing-hero)) .mt-8.pb-24.space-y-12 a {
   .landing-hero [data-slot='links'] [data-slot='base'] {
     width: 100%;
     justify-content: center;
+  }
+
+  .bothub-modal-surface {
+    width: calc(100vw - 0.7rem);
+    box-shadow: none;
+  }
+
+  .bothub-modal-surface [data-slot='header'],
+  .bothub-modal-surface .bothub-modal__header {
+    padding: 0.78rem 0.82rem 0.65rem;
+  }
+
+  .bothub-modal-surface [data-slot='description'],
+  .bothub-modal-surface .bothub-modal__description {
+    font-size: 0.8rem;
   }
 
   .landing-kinetic-strip {

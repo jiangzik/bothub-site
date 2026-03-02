@@ -213,6 +213,14 @@ export default defineNuxtConfig({
         height: '40px',
       },
     },
+    ui: {
+      contentSearch: {
+        slots: {
+          modal: 'bothub-modal-surface bothub-modal--search w-[calc(100vw-1rem)] sm:w-[min(1180px,calc(100vw-2rem))] sm:max-w-none h-[min(84vh,820px)]',
+          input: '[&>input]:text-base/5',
+        },
+      },
+    },
     github: null,
   },
 })
