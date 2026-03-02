@@ -299,6 +299,37 @@ h3,
   color: #ffffff;
 }
 
+.bothub-search-trigger[data-slot='base'] {
+  min-height: 2.62rem;
+  border-radius: 0;
+  border: 2px solid var(--black) !important;
+  background: var(--white) !important;
+  color: var(--black) !important;
+  box-shadow: none !important;
+  padding-inline: 0.95rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.bothub-search-trigger[data-slot='base']:hover {
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  transform: translateY(-2px);
+}
+
+.bothub-search-trigger [data-slot='trailing'] kbd {
+  border: 1px solid var(--black);
+  border-radius: 0;
+  background: var(--white);
+  color: var(--black);
+  box-shadow: none;
+}
+
+.bothub-search-trigger [data-slot='trailing'] kbd:last-child {
+  min-width: 1.35rem;
+}
+
 .landing-kinetic-strip {
   width: min(1400px, calc(100% - 1rem));
   margin: 0 auto 0.9rem;
@@ -1610,6 +1641,37 @@ body:not(:has(.kinetic-landing-hero)) .mt-8.pb-24.space-y-12 a {
 .bothub-modal-surface [data-slot='footer'] [data-slot='base'],
 .bothub-modal-surface .bothub-modal__footer [data-slot='base'] {
   border-radius: 0;
+}
+
+.bothub-modal--server [data-slot='footer'] [data-slot='base'] {
+  min-height: 2.62rem;
+  border-radius: 0;
+  border: 2px solid var(--black);
+  background: var(--white);
+  color: var(--black);
+  padding-inline: 0.95rem;
+  font-size: 0.71rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.bothub-modal--server [data-slot='footer'] [data-slot='base']:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.bothub-modal--server [data-slot='footer'] [data-slot='base'][data-color='primary'] {
+  background: var(--black);
+  color: var(--white);
+}
+
+.bothub-modal--server [data-slot='footer'] [data-slot='base'][data-color='primary']:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
 }
 
 .bothub-modal--search [data-slot='input'] {

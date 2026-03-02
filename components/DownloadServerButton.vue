@@ -132,7 +132,7 @@ async function copyCommand() {
       <UButton color="neutral" variant="outline" @click="copyCommand">
         {{ copyLabel }}
       </UButton>
-      <UButton color="primary" variant="soft" :to="serverUrl" external>
+      <UButton color="primary" :to="serverUrl" external>
         {{ downloadLabel }}
       </UButton>
     </template>
