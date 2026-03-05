@@ -1,23 +1,23 @@
 {
-  "version": "1.0.15",
+  "version": "1.0.16",
   "android": {
     "url": "https://bothub.bookab.info/downloads/app-web-release.apk",
-    "notes": "1.群聊\n2.数据管理\n3.修复bug，优化用户体验"
+    "notes": "1.登录\n2.数据管理\n3.修复bug，优化用户体验"
   },
   "mac": {
-    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.15-arm64.dmg",
-    "notes": "1.群聊\n2.数据管理\n3.修复bug，优化用户体验"
+    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.16-arm64.dmg",
+    "notes": "1.登录\n2.数据管理\n3.修复bug，优化用户体验"
   },
   "windows": {
-    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.15.exe",
-    "notes": "1.群聊\n2.数据管理\n3.修复bug，优化用户体验"
+    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.16.exe",
+    "notes": "1.登录\n2.数据管理\n3.修复bug，优化用户体验"
   },
   "linux": {
-    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.15.AppImage",
-    "notes": "1.群聊\n2.数据管理\n3.修复bug，优化用户体验"
+    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.16.AppImage",
+    "notes": "1.登录\n2.数据管理\n3.修复bug，优化用户体验"
   },
   "server": {
-    "url": "https://bothub.bookab.info/downloads/bothub-server-1.0.15.tar.gz",
+    "url": "https://bothub.bookab.info/downloads/bothub-server-1.0.16.tar.gz",
     "notes": "Server Edition - 部署到任意服务器，通过浏览器访问"
   }
 }
