@@ -7,7 +7,6 @@ const { open } = useContentSearch()
     color="neutral"
     variant="outline"
     class="w-full bothub-search-trigger"
-    style="border:2px solid var(--black); border-radius:0; background:var(--white); color:var(--black); box-shadow:none;"
     icon="i-lucide-search"
     label="Search..."
     aria-label="Search..."

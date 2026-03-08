@@ -106,6 +106,10 @@ export default defineNuxtConfig({
     },
   },
   ssr: true,
+  colorMode: {
+    preference: 'system',
+    fallback: 'light',
+  },
   image: {
     provider: "none",
   },
@@ -133,6 +137,10 @@ export default defineNuxtConfig({
         {
           rel: 'shortcut icon',
           href: withAppBaseUrl(appBaseUrl, 'favicon.ico'),
+        },
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap',
         },
       ],
     },
@@ -214,6 +222,10 @@ export default defineNuxtConfig({
       },
     },
     ui: {
+      colors: {
+        primary: 'orange',
+        neutral: 'stone',
+      },
       contentSearch: {
         slots: {
           modal: 'bothub-modal-surface bothub-modal--search w-[calc(100vw-1rem)] sm:w-[min(1180px,calc(100vw-2rem))] sm:max-w-none h-[min(84vh,820px)]',

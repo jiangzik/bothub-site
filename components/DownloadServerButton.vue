@@ -97,17 +97,16 @@ async function copyCommand() {
 </script>
 
 <template>
-  <UButton
+  <a
     v-if="shouldRender"
-    color="neutral"
-    variant="outline"
-    size="xl"
-    icon="i-lucide-server"
-    @click="open = true"
+    href="#"
+    class="term-download-link"
+    @click.prevent="open = true"
   >
-    <slot>{{ props.label }}</slot>
-    <template v-if="versionText"> v{{ versionText }}</template>
-  </UButton>
+    <span class="term-prompt">&gt;</span>
+    <span class="term-cmd-text">./install --platform=server</span>
+    <span v-if="versionText" class="term-version">v{{ versionText }}</span>
+  </a>
 
   <UModal
     v-model:open="open"
@@ -143,18 +142,19 @@ async function copyCommand() {
 .server-command {
   margin: 0;
   padding: 0.9rem;
-  border: 2px solid var(--black);
-  border-radius: 0;
-  background: var(--off-white);
+  border: 1px solid var(--border, #e0d5c5);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--sand, #e8dcc8) 20%, transparent);
   box-shadow: none;
   overflow-x: auto;
 }
 
 .server-command code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  line-height: 1.8;
   white-space: pre-wrap;
   word-break: break-word;
+  color: var(--text-primary, #3d2b1f);
 }
 </style>

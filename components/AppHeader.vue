@@ -18,7 +18,7 @@ const links = computed(() => appConfig.github && appConfig.github.url
 
 <template>
   <UHeader
-    :ui="{ center: 'flex-1' }"
+    :ui="{ center: 'hidden lg:flex flex-1' }"
     :to="localePath('/')"
     :title="appConfig.header?.title || site.name"
   >
@@ -46,14 +46,12 @@ const links = computed(() => appConfig.github && appConfig.github.url
         />
       </template>
 
-      <UContentSearchButton class="lg:hidden" />
-
       <ClientOnly>
         <UColorModeButton />
+      </ClientOnly>
 
-        <template #fallback>
-          <div class="h-8 w-8 animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-md" />
-        </template>
+      <ClientOnly>
+        <UContentSearchButton class="lg:hidden" />
       </ClientOnly>
 
       <template v-if="links?.length">
@@ -65,16 +63,32 @@ const links = computed(() => appConfig.github && appConfig.github.url
       </template>
     </template>
 
-    <template #toggle="{ open, toggle }">
-      <IconMenuToggle
-        :open="open"
-        class="lg:hidden"
-        @click="toggle"
-      />
-    </template>
-
     <template #body>
-      <AppHeaderBody />
+      <div class="mobile-menu-body">
+        <div class="mobile-menu-cmd">$ bothub --navigate</div>
+        <UContentSearchButton class="w-full mobile-menu-btn" />
+        <NuxtLink
+          :to="localePath('/quick-start/overview')"
+          class="mobile-menu-link"
+        >
+          <span class="mobile-menu-prompt">&gt;</span>
+          {{ $t('docs.links') === 'Community' ? 'quick-start' : 'quick-start' }}
+        </NuxtLink>
+        <NuxtLink
+          :to="localePath('/manual/overview')"
+          class="mobile-menu-link"
+        >
+          <span class="mobile-menu-prompt">&gt;</span>
+          {{ $t('docs.links') === 'Community' ? 'manual' : 'manual' }}
+        </NuxtLink>
+        <NuxtLink
+          :to="localePath('/faq/overview')"
+          class="mobile-menu-link"
+        >
+          <span class="mobile-menu-prompt">&gt;</span>
+          {{ $t('docs.links') === 'Community' ? 'faq' : 'faq' }}
+        </NuxtLink>
+      </div>
     </template>
   </UHeader>
 </template>

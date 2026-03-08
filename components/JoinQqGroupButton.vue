@@ -9,14 +9,15 @@ const QQ_GROUP_ID = '292036480'
 </script>
 
 <template>
-  <UButton
-    color="primary"
-    size="xl"
-    :to="QQ_GROUP_URL"
-    external
+  <a
+    :href="QQ_GROUP_URL"
+    class="term-download-link"
+    target="_blank"
+    rel="noopener"
     :title="`${props.idLabel}: ${QQ_GROUP_ID}`"
   >
-    <slot>{{ props.label }}</slot>
-    <span class="ms-1">({{ QQ_GROUP_ID }})</span>
-  </UButton>
+    <span class="term-prompt">&gt;</span>
+    <span class="term-cmd-text">connect --group={{ QQ_GROUP_ID }}</span>
+    <span class="term-label"><slot>{{ props.label }}</slot></span>
+  </a>
 </template>

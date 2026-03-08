@@ -57,16 +57,15 @@ const shouldRender = computed(() => config.alwaysRender || !!downloadHref.value)
 </script>
 
 <template>
-  <UButton
+  <a
     v-if="shouldRender"
-    color="neutral"
-    variant="outline"
-    size="xl"
-    :to="downloadHref"
-    external
-    :icon="config.icon"
+    :href="downloadHref"
+    class="term-download-link"
+    target="_blank"
+    rel="noopener"
   >
-    <slot>{{ props.label }}</slot>
-    <template v-if="versionText"> v{{ versionText }}</template>
-  </UButton>
+    <span class="term-prompt">&gt;</span>
+    <span class="term-cmd-text">./install --platform={{ props.platform }}</span>
+    <span v-if="versionText" class="term-version">v{{ versionText }}</span>
+  </a>
 </template>

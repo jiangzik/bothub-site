@@ -25,7 +25,7 @@ const versionText = computed(() => {
 </script>
 
 <template>
-  <p class="text-sm text-muted">
-    {{ versionText }}
+  <p class="term-version-badge">
+    <span class="term-sys">[sys]</span> {{ versionText }}
   </p>
 </template>

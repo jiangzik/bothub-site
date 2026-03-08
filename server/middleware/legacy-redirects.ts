@@ -6,17 +6,14 @@ const LEGACY_REDIRECTS: Record<string, string> = {
   '/quick-start': '/zh/quick-start/overview',
   '/manual': '/zh/manual/overview',
   '/faq': '/zh/faq/overview',
-  '/changelog': '/zh/changelog/overview',
   '/zh/quick-start': '/zh/quick-start/overview',
   '/zh/manual': '/zh/manual/overview',
   '/zh/faq': '/zh/faq/overview',
   '/zh/privacy-policy': '/zh/faq/privacy-policy',
-  '/zh/changelog': '/zh/changelog/overview',
   '/en/quick-start': '/en/quick-start/overview',
   '/en/manual': '/en/manual/overview',
   '/en/faq': '/en/faq/overview',
   '/en/privacy-policy': '/en/faq/privacy-policy',
-  '/en/changelog': '/en/changelog/overview',
 }
 
 const normalizePath = (pathname: string): string => {

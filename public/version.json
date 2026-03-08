@@ -1,23 +1,23 @@
 {
-  "version": "1.0.18",
+  "version": "1.0.19",
   "android": {
     "url": "https://bothub.bookab.info/downloads/app-web-release.apk",
-    "notes": "1.分支功能"
+    "notes": "1.电脑控制"
   },
   "mac": {
-    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.18-arm64.dmg",
-    "notes": "1.分支功能"
+    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.19-arm64.dmg",
+    "notes": "1.电脑控制"
   },
   "windows": {
-    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.18.exe",
-    "notes": "1.分支功能"
+    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.19.exe",
+    "notes": "1.电脑控制"
   },
   "linux": {
-    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.18.AppImage",
-    "notes": "1.分支功能"
+    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.19.AppImage",
+    "notes": "1.电脑控制"
   },
   "server": {
-    "url": "https://bothub.bookab.info/downloads/bothub-server-1.0.18.tar.gz",
-    "notes": "1.分支功能"
+    "url": "https://bothub.bookab.info/downloads/bothub-server-1.0.19.tar.gz",
+    "notes": "1.电脑控制"
   }
 }
