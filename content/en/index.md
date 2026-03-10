@@ -66,10 +66,6 @@ Linux
 Android
 :::
 
-:::download-server-button
-Server
-:::
-
 </div>
 </div>
 

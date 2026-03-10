@@ -2145,7 +2145,7 @@ body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 a {
 }
 
 /* ============================================================
-   27. Modal Surfaces (Search + Server Install)
+   27. Modal Surfaces (Search)
    ============================================================ */
 [data-slot="overlay"]:has(+ .bothub-modal-surface) {
   background: rgba(61, 43, 31, 0.3);
@@ -2227,38 +2227,6 @@ body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 a {
 .bothub-modal-surface [data-slot="footer"] [data-slot="base"],
 .bothub-modal-surface .bothub-modal__footer [data-slot="base"] {
   border-radius: 2px;
-}
-
-.bothub-modal--server [data-slot="footer"] [data-slot="base"] {
-  min-height: 2.62rem;
-  border-radius: 2px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-primary);
-  padding-inline: 0.95rem;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  transition: all 0.2s;
-}
-
-.bothub-modal--server [data-slot="footer"] [data-slot="base"]:hover {
-  color: var(--terra);
-  border-color: var(--terra);
-  transform: translateY(-1px);
-}
-
-.bothub-modal--server [data-slot="footer"] [data-slot="base"][data-color="primary"] {
-  background: var(--terra);
-  color: #fff;
-  border-color: var(--terra);
-}
-
-.bothub-modal--server [data-slot="footer"] [data-slot="base"][data-color="primary"]:hover {
-  background: var(--terra-dark);
-  border-color: var(--terra-dark);
-  color: #fff;
 }
 
 /* Search modal */

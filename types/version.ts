@@ -9,7 +9,6 @@ export interface VersionManifest {
   mac?: VersionEntry | string
   windows?: VersionEntry | string
   linux?: VersionEntry | string
-  server?: VersionEntry | string
 }
 
 export interface VersionJson {
@@ -18,5 +17,4 @@ export interface VersionJson {
   mac?: VersionEntry
   windows?: VersionEntry
   linux?: VersionEntry
-  server?: VersionEntry
 }
