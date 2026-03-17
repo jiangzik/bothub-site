@@ -119,10 +119,10 @@ Cloud link module loaded ... done
 <pre>
 Loading doc index ... done
 
-  <a href="/en/quick-start/overview">[01] Quick Start .......... Install, configure, send your first message</a>
-  <a href="/en/manual/overview">[02] Manual ............... Provider setup, chat flow, and context behavior</a>
-  <a href="/en/faq/overview">[03] FAQ .................. Troubleshooting for download, network, and calls</a>
-  <a href="/en/faq/privacy-policy">[04] Privacy Policy ....... Review data collection scope and commitments</a>
+  <a href="en/quick-start/overview">[01] Quick Start .......... Install, configure, send your first message</a>
+  <a href="en/manual/overview">[02] Manual ............... Provider setup, chat flow, and context behavior</a>
+  <a href="en/faq/overview">[03] FAQ .................. Troubleshooting for download, network, and calls</a>
+  <a href="en/faq/privacy-policy">[04] Privacy Policy ....... Review data collection scope and commitments</a>
 </pre>
 </div>
 

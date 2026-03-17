@@ -93,6 +93,7 @@ const withAppBaseUrl = (baseUrl: string, value?: string): string => {
 }
 
 const appBaseUrl = normalizeBaseUrl(process.env.NUXT_APP_BASE_URL || '/')
+const enableRobotsTxt = appBaseUrl === '/'
 
 export default defineNuxtConfig({
   extends: ['docus'],
@@ -204,6 +205,9 @@ export default defineNuxtConfig({
   },
   site: {
     name: 'BotHub',
+  },
+  robots: {
+    robotsTxt: enableRobotsTxt,
   },
   devServer: {
     host: '0.0.0.0',

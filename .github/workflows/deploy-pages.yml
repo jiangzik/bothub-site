@@ -32,7 +32,32 @@ jobs:
         run: npm ci
 
       - name: Resolve base URL
-        run: echo "NUXT_APP_BASE_URL=/" >> "$GITHUB_ENV"
+        run: |
+          set -euo pipefail
+
+          BASE_URL_INPUT="${{ vars.NUXT_APP_BASE_URL }}"
+          if [ -n "$BASE_URL_INPUT" ]; then
+            BASE_URL="$BASE_URL_INPUT"
+          else
+            REPO_NAME="${GITHUB_REPOSITORY#*/}"
+            OWNER_LOWER="$(printf '%s' "$GITHUB_REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')"
+            REPO_LOWER="$(printf '%s' "$REPO_NAME" | tr '[:upper:]' '[:lower:]')"
+
+            if [ "$REPO_LOWER" = "${OWNER_LOWER}.github.io" ]; then
+              BASE_URL="/"
+            else
+              BASE_URL="/${REPO_NAME}/"
+            fi
+          fi
+
+          if [ "$BASE_URL" = "/" ]; then
+            NORMALIZED_BASE_URL="/"
+          else
+            NORMALIZED_BASE_URL="/$(printf '%s' "$BASE_URL" | sed -E 's#^/+##; s#/+$##')/"
+          fi
+
+          echo "NUXT_APP_BASE_URL=$NORMALIZED_BASE_URL" >> "$GITHUB_ENV"
+          echo "Resolved NUXT_APP_BASE_URL=$NORMALIZED_BASE_URL"
 
       - name: Build static site
         run: npx nuxi generate

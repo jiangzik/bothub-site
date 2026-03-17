@@ -119,10 +119,10 @@ Android
 <pre>
 读取文档索引 ... 完成
 
-  <a href="/zh/quick-start/overview">[01] 快速开始 ............. 完成安装配置并发出第一条消息</a>
-  <a href="/zh/manual/overview">[02] 使用手册 ............. 查看提供商配置、对话流程和上下文机制</a>
-  <a href="/zh/faq/overview">[03] 常见问题 ............. 排查下载、网络和模型调用常见故障</a>
-  <a href="/zh/faq/privacy-policy">[04] 隐私政策 ............. 查看数据收集范围、存储方式与隐私承诺</a>
+  <a href="zh/quick-start/overview">[01] 快速开始 ............. 完成安装配置并发出第一条消息</a>
+  <a href="zh/manual/overview">[02] 使用手册 ............. 查看提供商配置、对话流程和上下文机制</a>
+  <a href="zh/faq/overview">[03] 常见问题 ............. 排查下载、网络和模型调用常见故障</a>
+  <a href="zh/faq/privacy-policy">[04] 隐私政策 ............. 查看数据收集范围、存储方式与隐私承诺</a>
 </pre>
 </div>
 
