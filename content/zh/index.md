@@ -1,7 +1,7 @@
 ---
 seo:
   title: BotHub
-  description: BotHub 官网，支持多厂商兼容与本地隐私保护。
+  description: BotHub 官网 — 一个聊天客户端，接你自己的 API Key，支持桌面和 Android。
 ---
 
 ::u-page-hero{class="terminal-landing-hero"}
@@ -25,24 +25,9 @@ seo:
  ██████╔╝╚██████╔╝   ██║   ██║  ██║╚██████╔╝██████╔╝
  ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝
 </pre>
-<p style="margin:8px 0 4px;color:var(--ink);font-size:14px;font-weight:700;">AI 驱动跨平台客户端</p>
-<p style="color:var(--text-muted);font-size:12px;">平台: Desktop / Android / iOS &nbsp;|&nbsp; 隐私: 本地优先存储 &nbsp;|&nbsp; 模型: 多厂商兼容</p>
+<p style="margin:8px 0 4px;color:var(--ink);font-size:14px;font-weight:700;">用自己的 Key，和各家模型聊天</p>
+<p style="color:var(--text-muted);font-size:12px;">Desktop / Android / iOS &nbsp;|&nbsp; 数据存本地 &nbsp;|&nbsp; 接多家 API</p>
 <version-badge label="版本"></version-badge>
-</div>
-
-<div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --platforms</span></div>
-<div class="term-output">
-<pre>
-+------------+----------------------------+-------+
-| 模块       | 描述                       | 评分  |
-+------------+----------------------------+-------+
-| DESKTOP    | macOS / Windows / Linux    |  A+   |
-| CONSOLE    | 参数控制台                 |  91   |
-| ANDROID    | 移动端流程                 |  89   |
-| QUICK      | Android 快捷操作           |  93   |
-+------------+----------------------------+-------+
-</pre>
-<p style="color:var(--text-muted);font-size:12px;">桌面端作为主力生产力工作台，Android 已可使用，iOS 正在持续开发中。</p>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --download</span></div>
@@ -67,32 +52,43 @@ Android
 :::
 
 </div>
+<p style="color:var(--text-muted);font-size:12px;margin-top:8px;">桌面端功能最全，Android 已上线，iOS 还在做。</p>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --capabilities</span></div>
 <div class="term-output">
 <pre>
-已加载 4 个核心模块:
+已加载 6 个模块:
 
--- CONTEXT ENGINE -----------------------------------------------
-  长上下文任务不中断
-  在多轮对话和复杂任务中，持续保留关键信息与阶段状态。
-  · 长会话上下文延续  · 阶段状态可追踪  · 跨任务记忆更稳定
+-- 多模型切换 ------------------------------------------------------
+  一个界面里用多家的模型
+  填好 API Key 就能用 OpenAI、Claude、Gemini 等，对话中间随时切。
+  · 支持几十家服务商  · 对话中途换模型  · 每个 Bot 可以绑不同模型
 
--- PROVIDER ROUTING ---------------------------------------------
-  多模型与多提供商协同
-  同一工作流中按任务目标切换模型能力，覆盖创作、分析、代码、检索。
-  · 多提供商统一管理  · 模型能力按需调度  · 参数策略集中控制
+-- MCP 工具 --------------------------------------------------------
+  让模型能操作文件、浏览器、搜索
+  接入 MCP Server 后，模型可以读写文件、控浏览器、查网页，不只是聊天。
+  · 接文件系统  · 接浏览器 (Playwright)  · 接搜索引擎
 
--- PROMPT CONTROL -----------------------------------------------
-  可复用的提示词体系
-  将临时提问升级为结构化提示词模板，降低输出波动与沟通成本。
-  · 模板化提示词沉淀  · 场景化参数组合  · 团队复用效率提升
+-- 提示词和技能 ----------------------------------------------------
+  把常用的提问方式存下来
+  写好的提示词存成模板，下次直接用；技能系统可以组合多步操作。
+  · 提示词模板库  · 可复用技能  · 按场景配参数
 
--- LOCAL PRIVACY ------------------------------------------------
-  本地优先的数据策略
-  核心数据本地优先，降低敏感信息外泄风险，平衡效率与合规。
-  · 本地优先存储  · 关键配置可控  · 隐私策略可审计
+-- 定时任务 --------------------------------------------------------
+  让 Bot 自己定时跑
+  设好时间，Bot 会按计划自动执行对话或任务，不用盯着。
+  · 定时触发  · 自动执行  · 查看运行记录
+
+-- 群组对话 --------------------------------------------------------
+  多个 Bot 在同一个对话里协作
+  建一个群聊，拉几个不同模型的 Bot 进来，各自回答，互相补充。
+  · 多 Bot 同场  · 不同模型各答各的  · 适合对比和讨论
+
+-- 数据本地存 ------------------------------------------------------
+  聊天记录默认不上传
+  所有对话、配置、附件都存在你自己的设备上，不登录也能用全部功能。
+  · 本地 SQLite 存储  · API Key 不经过我们的服务器  · 可选云同步
 </pre>
 </div>
 
@@ -101,17 +97,30 @@ Android
 <pre>
 已加载云连接模块 ... 完成
 
--- PHONE → PC ---------------------------------------------------
-  手机扫码，即刻连接电脑
-  登录后在 Android 端扫一扫，即可与桌面端配对，随时随地操控你的电脑。
-  · 扫码一键配对  · 不在同一网络也能连  · 连接状态实时可见
+-- 手机连电脑 ------------------------------------------------------
+  扫个码就能配对
+  在 Android 上登录账号，扫桌面端的二维码，手机就能连上电脑。
+  · 扫码配对  · 跨网络可用  · 连接状态实时显示
 
--- REMOTE CONTROL -----------------------------------------------
-  口袋里的远程桌面
-  出门在外也能用手机查看电脑运行状态、执行命令、管理 Agent 任务。
-  · 远程终端访问  · 多台电脑统一管理  · 随时查看连接状况
+-- 远程控制 --------------------------------------------------------
+  在手机上操作电脑
+  出门也能用手机打开终端、执行命令、看屏幕、管理 Agent 任务。
+  · 远程终端  · 远程看屏幕  · 同时管多台电脑
 </pre>
-<p style="color:var(--text-muted);font-size:12px;">登录账号后即可使用云连接功能；不登录时所有功能仍可正常使用，数据完全保留在本地。</p>
+<p style="color:var(--text-muted);font-size:12px;">登录后可用云连接；不登录一样用，数据留在本地。</p>
+</div>
+
+<div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --integrations</span></div>
+<div class="term-output">
+<pre>
+桌面端支持接入聊天平台机器人:
+
+  · 飞书 Bot — 在飞书群里用，支持审批流程
+  · Telegram Bot — 接 Telegram
+  · QQ Bot — 接 QQ
+
+配置好之后，群里发消息就能触发 Bot 回复和任务执行。
+</pre>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --docs</span></div>
@@ -119,23 +128,11 @@ Android
 <pre>
 读取文档索引 ... 完成
 
-  <a href="zh/quick-start/overview">[01] 快速开始 ............. 完成安装配置并发出第一条消息</a>
-  <a href="zh/manual/overview">[02] 使用手册 ............. 查看提供商配置、对话流程和上下文机制</a>
-  <a href="zh/faq/overview">[03] 常见问题 ............. 排查下载、网络和模型调用常见故障</a>
-  <a href="zh/faq/privacy-policy">[04] 隐私政策 ............. 查看数据收集范围、存储方式与隐私承诺</a>
+  <a href="zh/quick-start/overview">[01] 快速开始 ............. 装好、配好、发出第一条消息</a>
+  <a href="zh/manual/overview">[02] 使用手册 ............. 配置服务商、对话流程、上下文机制</a>
+  <a href="zh/faq/overview">[03] 常见问题 ............. 下载、网络、调用的常见问题</a>
+  <a href="zh/faq/privacy-policy">[04] 隐私政策 ............. 我们收集什么数据、怎么存的</a>
 </pre>
-</div>
-
-<div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --workflows</span></div>
-<div class="term-output">
-<pre>
-已加载 3 条典型工作流:
-
-  > 个人研究者:  问题拆解 → 交叉验证 → 结论沉淀
-  > 产品团队:    需求整理 → 方案对比 → 评审迭代
-  > 运营支持:    问题归档 → 模板匹配 → 响应手册
-</pre>
-<p style="color:var(--text-muted);font-size:12px;">从快速开始入门，再逐步把提示词、模型路由和工作流模板沉淀为长期资产。</p>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --community</span></div>

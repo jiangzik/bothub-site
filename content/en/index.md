@@ -1,7 +1,7 @@
 ---
 seo:
   title: BotHub
-  description: Official site for BotHub with multi-provider compatibility and local privacy protection.
+  description: BotHub — a chat client that uses your own API keys. Desktop and Android.
 ---
 
 ::u-page-hero{class="terminal-landing-hero"}
@@ -25,24 +25,9 @@ seo:
  ██████╔╝╚██████╔╝   ██║   ██║  ██║╚██████╔╝██████╔╝
  ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝
 </pre>
-<p style="margin:8px 0 4px;color:var(--ink);font-size:14px;font-weight:700;">AI-Powered Cross-Platform Client</p>
-<p style="color:var(--text-muted);font-size:12px;">Platforms: Desktop / Android / iOS &nbsp;|&nbsp; Privacy: Local-first storage &nbsp;|&nbsp; Providers: Multi-model ready</p>
+<p style="margin:8px 0 4px;color:var(--ink);font-size:14px;font-weight:700;">Chat with any model, using your own keys</p>
+<p style="color:var(--text-muted);font-size:12px;">Desktop / Android / iOS &nbsp;|&nbsp; Data stays on your device &nbsp;|&nbsp; Bring your own API keys</p>
 <version-badge label="Version"></version-badge>
-</div>
-
-<div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --platforms</span></div>
-<div class="term-output">
-<pre>
-+------------+------------------------+-------+
-| MODULE     | DESCRIPTION            | SCORE |
-+------------+------------------------+-------+
-| DESKTOP    | macOS / Windows / Linux|  A+   |
-| CONSOLE    | Parameter Control      |  91   |
-| ANDROID    | Mobile Flow            |  89   |
-| QUICK      | Android Quick Actions  |  93   |
-+------------+------------------------+-------+
-</pre>
-<p style="color:var(--text-muted);font-size:12px;">Desktop is the productivity core. Android is live. iOS is incoming.</p>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --download</span></div>
@@ -67,32 +52,43 @@ Android
 :::
 
 </div>
+<p style="color:var(--text-muted);font-size:12px;margin-top:8px;">Desktop has the most features. Android is live. iOS is in progress.</p>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --capabilities</span></div>
 <div class="term-output">
 <pre>
-Loaded 4 core modules:
+Loaded 6 modules:
 
--- CONTEXT ENGINE -----------------------------------------------
-  Long-context tasks without interruption
-  Keep critical information and stage state across deep multi-turn sessions.
-  · Long-session continuity  · Trackable task stages  · Stable memory across tasks
+-- Multi-model switching -------------------------------------------
+  Use models from different providers in one place
+  Add your API keys for OpenAI, Claude, Gemini, etc. Switch models mid-conversation.
+  · Dozens of providers  · Switch models anytime  · Each bot can use a different model
 
--- PROVIDER ROUTING ---------------------------------------------
-  Multi-model and multi-provider orchestration
-  Switch model capability by task type in one workflow.
-  · Unified provider management  · Task-aware model routing  · Centralized parameter strategy
+-- MCP tools -------------------------------------------------------
+  Let models use files, browsers, and search
+  Connect MCP servers so models can read/write files, control a browser, or search the web.
+  · Filesystem access  · Browser automation (Playwright)  · Web search
 
--- PROMPT CONTROL -----------------------------------------------
-  Reusable prompt systems for teams
-  Turn ad-hoc prompts into structured templates for higher efficiency.
-  · Template prompt library  · Scenario-based parameter sets  · Higher team reuse efficiency
+-- Prompts & skills ------------------------------------------------
+  Save prompts you use often
+  Store prompts as templates and reuse them. Skills let you chain multi-step actions.
+  · Prompt template library  · Reusable skills  · Per-scenario parameters
 
--- LOCAL PRIVACY ------------------------------------------------
-  Local-first strategy for sensitive data
-  Keep core data local by default to reduce exposure risk.
-  · Local-first storage  · Controllable key settings  · Auditable privacy practices
+-- Scheduled tasks -------------------------------------------------
+  Let bots run on a schedule
+  Set a time, and the bot runs the conversation or task automatically.
+  · Cron-like scheduling  · Auto-execution  · Run history
+
+-- Group chats -----------------------------------------------------
+  Multiple bots in one conversation
+  Create a group, add bots with different models, and let them each respond.
+  · Multiple bots  · Different models side by side  · Good for comparison
+
+-- Local storage ---------------------------------------------------
+  Chat history stays on your device
+  All conversations, configs, and attachments are stored locally. Works without an account.
+  · Local SQLite  · API keys never touch our servers  · Optional cloud sync
 </pre>
 </div>
 
@@ -101,17 +97,30 @@ Loaded 4 core modules:
 <pre>
 Cloud link module loaded ... done
 
--- PHONE → PC ---------------------------------------------------
-  Scan to connect your computer instantly
-  Sign in on Android, scan a QR code, and pair with your desktop — control it from anywhere.
-  · One-tap QR pairing  · Works across different networks  · Live connection status
+-- Phone → PC ------------------------------------------------------
+  Scan a QR code to pair
+  Sign in on Android, scan the code on your desktop, and your phone connects to your PC.
+  · QR pairing  · Works across networks  · Live connection status
 
--- REMOTE CONTROL -----------------------------------------------
-  Your desktop in your pocket
-  Check your PC status, run commands, and manage Agent tasks from your phone while on the go.
-  · Remote terminal access  · Manage multiple PCs  · Monitor connection anytime
+-- Remote control --------------------------------------------------
+  Use your PC from your phone
+  Open a terminal, run commands, view the screen, manage agent tasks — all from your phone.
+  · Remote terminal  · Screen viewing  · Manage multiple PCs
 </pre>
-<p style="color:var(--text-muted);font-size:12px;">Sign in to unlock cloud link features; without an account everything still works — data stays fully local.</p>
+<p style="color:var(--text-muted);font-size:12px;">Sign in to use cloud link. Without an account, everything else works — data stays local.</p>
+</div>
+
+<div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --integrations</span></div>
+<div class="term-output">
+<pre>
+Desktop supports chat platform bots:
+
+  · Feishu Bot — works in Feishu groups, with approval workflows
+  · Telegram Bot — connect to Telegram
+  · QQ Bot — connect to QQ
+
+Once configured, messages in the group trigger bot replies and task execution.
+</pre>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --docs</span></div>
@@ -119,23 +128,11 @@ Cloud link module loaded ... done
 <pre>
 Loading doc index ... done
 
-  <a href="en/quick-start/overview">[01] Quick Start .......... Install, configure, send your first message</a>
-  <a href="en/manual/overview">[02] Manual ............... Provider setup, chat flow, and context behavior</a>
-  <a href="en/faq/overview">[03] FAQ .................. Troubleshooting for download, network, and calls</a>
-  <a href="en/faq/privacy-policy">[04] Privacy Policy ....... Review data collection scope and commitments</a>
+  <a href="en/quick-start/overview">[01] Quick Start .......... Install, set up, send your first message</a>
+  <a href="en/manual/overview">[02] Manual ............... Provider setup, chat flow, context behavior</a>
+  <a href="en/faq/overview">[03] FAQ .................. Common issues with downloads, network, and calls</a>
+  <a href="en/faq/privacy-policy">[04] Privacy Policy ....... What data we collect and how we store it</a>
 </pre>
-</div>
-
-<div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --workflows</span></div>
-<div class="term-output">
-<pre>
-Loaded 3 workflow patterns:
-
-  > Researcher:    Question breakdown → Cross-validation → Conclusion packaging
-  > Product Team:  Requirements → Option comparison → Review iteration
-  > Operations:    Archive FAQs → Match templates → Build playbooks
-</pre>
-<p style="color:var(--text-muted);font-size:12px;">Start with Quick Start, then evolve prompts, model routing, and workflow templates into long-term assets.</p>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --community</span></div>
