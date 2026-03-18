@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Resolve base URL
+      - name: Resolve Pages base URL
         run: |
           set -euo pipefail
 
@@ -56,16 +56,45 @@ jobs:
             NORMALIZED_BASE_URL="/$(printf '%s' "$BASE_URL" | sed -E 's#^/+##; s#/+$##')/"
           fi
 
-          echo "NUXT_APP_BASE_URL=$NORMALIZED_BASE_URL" >> "$GITHUB_ENV"
-          echo "Resolved NUXT_APP_BASE_URL=$NORMALIZED_BASE_URL"
+          echo "PAGES_NUXT_APP_BASE_URL=$NORMALIZED_BASE_URL" >> "$GITHUB_ENV"
+          echo "Resolved Pages NUXT_APP_BASE_URL=$NORMALIZED_BASE_URL"
 
-      - name: Build static site
-        run: npx nuxi generate
+      - name: Build static site for GitHub Pages
+        run: |
+          set -euo pipefail
+          rm -rf .output
+          NUXT_APP_BASE_URL="$PAGES_NUXT_APP_BASE_URL" npx nuxi generate
 
-      - name: Upload artifact
+      - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: .output/public
+
+      - name: Resolve CN base URL
+        run: |
+          set -euo pipefail
+
+          BASE_URL_INPUT="${{ vars.CN_NUXT_APP_BASE_URL }}"
+          if [ -n "$BASE_URL_INPUT" ]; then
+            BASE_URL="$BASE_URL_INPUT"
+          else
+            BASE_URL="/"
+          fi
+
+          if [ "$BASE_URL" = "/" ]; then
+            NORMALIZED_BASE_URL="/"
+          else
+            NORMALIZED_BASE_URL="/$(printf '%s' "$BASE_URL" | sed -E 's#^/+##; s#/+$##')/"
+          fi
+
+          echo "CN_NUXT_APP_BASE_URL=$NORMALIZED_BASE_URL" >> "$GITHUB_ENV"
+          echo "Resolved CN NUXT_APP_BASE_URL=$NORMALIZED_BASE_URL"
+
+      - name: Build static site for CN server
+        run: |
+          set -euo pipefail
+          rm -rf .output
+          NUXT_APP_BASE_URL="$CN_NUXT_APP_BASE_URL" npx nuxi generate
 
       - name: Upload site artifact for server deploy
         uses: actions/upload-artifact@v4
