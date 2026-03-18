@@ -154,6 +154,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
+      cloudApiBaseUrl: (process.env.NUXT_PUBLIC_CLOUD_API_BASE_URL || 'https://bothub-api.bookab.info').trim(),
       appVersion: versionJson.version || '',
       downloads: {
         apk: withAppBaseUrl(appBaseUrl, versionJson.android?.url || 'downloads/app-release.apk'),

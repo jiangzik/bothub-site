@@ -2070,6 +2070,7 @@ body:not(:has(.terminal-landing-hero)) div[data-slot="root"].relative.border-b.b
   line-height: 0.92;
   letter-spacing: -0.04em;
   text-shadow: none;
+  overflow-wrap: anywhere;
 }
 
 body:not(:has(.terminal-landing-hero)) div[data-slot="root"].relative.border-b.border-default.py-8 [data-slot="description"] {
@@ -2106,6 +2107,7 @@ body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 h1 {
   letter-spacing: -0.04em;
   color: var(--ink);
   text-shadow: none;
+  overflow-wrap: anywhere;
 }
 
 body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 h2 {
@@ -2113,12 +2115,22 @@ body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 h2 {
   line-height: 1.04;
   letter-spacing: -0.025em;
   color: var(--ink);
+  overflow-wrap: anywhere;
 }
 
 body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 h3 {
   font-size: clamp(1.1rem, 2.2vw, 1.45rem);
   letter-spacing: -0.01em;
   color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+/* Prevent docs meta row from forcing horizontal overflow on narrow screens
+   (English labels are longer than Chinese). */
+body:not(:has(.terminal-landing-hero))
+  div[data-slot="container"].font-medium.text-default.flex.mx-3.whitespace-nowrap {
+  min-width: 0;
+  max-width: 100%;
 }
 
 body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 p,
@@ -2897,6 +2909,23 @@ footer[data-slot="root"] a:hover {
 
   body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky [data-slot="indicator"] {
     display: none;
+  }
+
+  body:not(:has(.terminal-landing-hero))
+    div[data-slot="container"].font-medium.text-default.flex.mx-3.whitespace-nowrap {
+    white-space: normal;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.4rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    text-align: center;
+  }
+
+  body:not(:has(.terminal-landing-hero))
+    div[data-slot="container"].font-medium.text-default.flex.mx-3.whitespace-nowrap > .flex.items-center.gap-2.text-sm.text-muted {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
