@@ -8,7 +8,6 @@ export interface VersionManifest {
   android?: VersionEntry | string
   mac?: VersionEntry | string
   windows?: VersionEntry | string
-  linux?: VersionEntry | string
 }
 
 export interface VersionJson {
@@ -16,5 +15,4 @@ export interface VersionJson {
   android?: VersionEntry
   mac?: VersionEntry
   windows?: VersionEntry
-  linux?: VersionEntry
 }

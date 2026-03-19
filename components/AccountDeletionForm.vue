@@ -211,7 +211,7 @@ onBeforeUnmount(() => {
 
       <button
         type="button"
-        class="btn btn-secondary"
+        class="account-delete-btn account-delete-btn--secondary"
         :disabled="sendingCode || deletingAccount || cooldownSec > 0"
         @click="handleSendCode"
       >
@@ -245,7 +245,7 @@ onBeforeUnmount(() => {
 
       <button
         type="button"
-        class="btn btn-danger"
+        class="account-delete-btn account-delete-btn--danger"
         :disabled="deletingAccount || sendingCode"
         @click="handleDeleteAccount"
       >
@@ -268,7 +268,7 @@ onBeforeUnmount(() => {
 .account-delete-card {
   margin: 1rem 0;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 4px;
   background: var(--cream-light);
   padding: 1rem;
 }
@@ -276,22 +276,24 @@ onBeforeUnmount(() => {
 .account-delete-header h3 {
   margin: 0;
   color: var(--ink);
-  font-size: 1rem;
+  font-size: 13px;
   font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .account-delete-header p {
   margin: 0.5rem 0 0;
   color: var(--text-secondary);
-  font-size: 0.85rem;
-  line-height: 1.6;
+  font-size: 12px;
+  line-height: 1.7;
 }
 
 .account-delete-body {
   margin-top: 0.9rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.7rem;
 }
 
 .field {
@@ -301,23 +303,32 @@ onBeforeUnmount(() => {
 }
 
 .field span {
-  color: var(--text-secondary);
-  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-size: 11px;
 }
 
 .field input {
   width: 100%;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg-page);
+  border-radius: 2px;
+  background: transparent;
   color: var(--text-primary);
-  font-size: 0.85rem;
-  padding: 0.55rem 0.65rem;
+  font-size: 13px;
+  line-height: 1.4;
+  padding: 0.58rem 0.7rem;
   outline: none;
 }
 
-.field input:focus {
+.field input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.9;
+}
+
+.field input:focus,
+.field input:focus-visible {
   border-color: var(--terra);
+  outline: 2px solid rgba(198, 122, 75, 0.2);
+  outline-offset: 1px;
 }
 
 .checkbox-row {
@@ -325,75 +336,80 @@ onBeforeUnmount(() => {
   align-items: flex-start;
   gap: 0.45rem;
   color: var(--text-secondary);
-  font-size: 0.78rem;
-  line-height: 1.5;
+  font-size: 11px;
+  line-height: 1.6;
 }
 
 .checkbox-row input {
-  margin-top: 0.12rem;
+  margin-top: 0.1rem;
+  accent-color: var(--terra);
 }
 
-.btn {
+.account-delete-btn {
   width: 100%;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.84rem;
+  border-radius: 2px;
+  font-size: 11px;
   font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   line-height: 1.2;
-  padding: 0.62rem 0.7rem;
+  padding: 0.68rem 0.7rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
 }
 
-.btn:disabled {
+.account-delete-btn:focus-visible {
+  outline: 2px solid var(--terra);
+  outline-offset: 1px;
+}
+
+.account-delete-btn:disabled {
   cursor: not-allowed;
   opacity: 0.6;
 }
 
-.btn-secondary {
+.account-delete-btn--secondary {
   background: transparent;
   color: var(--terra);
   border-color: var(--terra);
 }
 
-.btn-secondary:hover:not(:disabled) {
+.account-delete-btn--secondary:hover:not(:disabled) {
   background: rgba(198, 122, 75, 0.08);
 }
 
-.btn-danger {
-  background: #b1493f;
+.account-delete-btn--danger {
+  background: var(--state-error);
   color: #fff;
-  border-color: #8d372f;
+  border-color: var(--state-error-border);
 }
 
-.btn-danger:hover:not(:disabled) {
-  background: #9f4138;
+.account-delete-btn--danger:hover:not(:disabled) {
+  background: var(--state-error-hover);
+  border-color: var(--state-error-hover);
+}
+
+.account-delete-btn--danger:focus-visible {
+  outline-color: var(--state-error-border);
 }
 
 .form-message {
   margin: 0;
-  font-size: 0.78rem;
-  line-height: 1.55;
+  font-size: 11px;
+  line-height: 1.6;
 }
 
 .form-message[data-tone="success"] {
-  color: #2f7a4f;
+  color: var(--state-success);
 }
 
 .form-message[data-tone="error"] {
-  color: #b1493f;
+  color: var(--state-error);
 }
 
 .form-message[data-tone="info"] {
   color: var(--text-secondary);
-}
-
-.dark .form-message[data-tone="success"] {
-  color: #7fcf9f;
-}
-
-.dark .form-message[data-tone="error"] {
-  color: #ff9e95;
 }
 
 @media (max-width: 640px) {

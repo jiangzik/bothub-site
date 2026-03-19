@@ -160,13 +160,11 @@ export default defineNuxtConfig({
         apk: withAppBaseUrl(appBaseUrl, versionJson.android?.url || 'downloads/app-release.apk'),
         mac: withAppBaseUrl(appBaseUrl, versionJson.mac?.url),
         windows: withAppBaseUrl(appBaseUrl, versionJson.windows?.url),
-        linux: withAppBaseUrl(appBaseUrl, versionJson.linux?.url),
       },
       versions: {
         android: versionJson.version || '',
         mac: versionJson.version || '',
         windows: versionJson.version || '',
-        linux: versionJson.version || '',
       },
     },
   },

@@ -17,7 +17,7 @@ seo:
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">cat /etc/bothub/motd</span></div>
 <div class="term-output">
-<pre style="font-size:clamp(0.35rem,1.8vw,0.9rem);line-height:1.15;overflow-x:auto;color:var(--terra);">
+<pre class="term-ascii">
  ██████╗  ██████╗ ████████╗██╗  ██╗██╗   ██╗██████╗
  ██╔══██╗██╔═══██╗╚══██╔══╝██║  ██║██║   ██║██╔══██╗
  ██████╔╝██║   ██║   ██║   ███████║██║   ██║██████╔╝
@@ -25,15 +25,15 @@ seo:
  ██████╔╝╚██████╔╝   ██║   ██║  ██║╚██████╔╝██████╔╝
  ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝
 </pre>
-<p style="margin:8px 0 4px;color:var(--ink);font-size:14px;font-weight:700;">用自己的 Key，和各家模型聊天</p>
-<p style="color:var(--text-muted);font-size:12px;">Desktop / Android / iOS &nbsp;|&nbsp; 数据存本地 &nbsp;|&nbsp; 接多家 API</p>
+<p class="term-output-title">用自己的 Key，和各家模型聊天</p>
+<p class="term-output-note">Desktop / Android / iOS &nbsp;|&nbsp; 数据存本地 &nbsp;|&nbsp; 接多家 API</p>
 <version-badge label="版本"></version-badge>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --download</span></div>
 <div class="term-output">
-<p style="color:var(--text-muted);font-size:12px;margin-bottom:8px;">选择目标平台执行安装:</p>
-<div style="display:flex;flex-wrap:wrap;gap:8px;">
+<p class="term-output-note term-output-note--spaced">选择目标平台执行安装:</p>
+<div class="term-output-actions">
 
 :::download-mac-button
 macOS
@@ -43,16 +43,12 @@ macOS
 Windows
 :::
 
-:::download-linux-button
-Linux
-:::
-
 :::download-apk-button
 Android
 :::
 
 </div>
-<p style="color:var(--text-muted);font-size:12px;margin-top:8px;">桌面端功能最全，Android 已上线，iOS 还在做。</p>
+<p class="term-output-note term-output-note--top-spaced">桌面端功能最全，Android 已上线，iOS 还在做。</p>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --capabilities</span></div>
@@ -107,7 +103,7 @@ Android
   出门也能用手机打开终端、执行命令、看屏幕、管理 Agent 任务。
   · 远程终端  · 远程看屏幕  · 同时管多台电脑
 </pre>
-<p style="color:var(--text-muted);font-size:12px;">登录后可用云连接；不登录一样用，数据留在本地。</p>
+<p class="term-output-note">登录后可用云连接；不登录一样用，数据留在本地。</p>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --integrations</span></div>
@@ -137,7 +133,7 @@ Android
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --community</span></div>
 <div class="term-output">
-<p style="color:var(--text-muted);font-size:12px;margin-bottom:8px;">连接到 BotHub 社区网络 ... 完成</p>
+<p class="term-output-note term-output-note--spaced">连接到 BotHub 社区网络 ... 完成</p>
 
 :::join-qq-group-button{id-label="QQ群"}
 加入QQ群
@@ -145,7 +141,7 @@ Android
 
 </div>
 
-<div class="term-cursor-line"><span class="prompt" style="color:var(--sage);">$ </span><span class="cursor-blink">_</span></div>
+<div class="term-cursor-line"><span class="prompt term-cursor-prompt">$ </span><span class="cursor-blink">_</span></div>
 
   </div>
 </div>

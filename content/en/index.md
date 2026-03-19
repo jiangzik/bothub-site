@@ -17,7 +17,7 @@ seo:
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">cat /etc/bothub/motd</span></div>
 <div class="term-output">
-<pre style="font-size:clamp(0.35rem,1.8vw,0.9rem);line-height:1.15;overflow-x:auto;color:var(--terra);">
+<pre class="term-ascii">
  ██████╗  ██████╗ ████████╗██╗  ██╗██╗   ██╗██████╗
  ██╔══██╗██╔═══██╗╚══██╔══╝██║  ██║██║   ██║██╔══██╗
  ██████╔╝██║   ██║   ██║   ███████║██║   ██║██████╔╝
@@ -25,15 +25,15 @@ seo:
  ██████╔╝╚██████╔╝   ██║   ██║  ██║╚██████╔╝██████╔╝
  ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝
 </pre>
-<p style="margin:8px 0 4px;color:var(--ink);font-size:14px;font-weight:700;">Chat with any model, using your own keys</p>
-<p style="color:var(--text-muted);font-size:12px;">Desktop / Android / iOS &nbsp;|&nbsp; Data stays on your device &nbsp;|&nbsp; Bring your own API keys</p>
+<p class="term-output-title">Chat with any model, using your own keys</p>
+<p class="term-output-note">Desktop / Android / iOS &nbsp;|&nbsp; Data stays on your device &nbsp;|&nbsp; Bring your own API keys</p>
 <version-badge label="Version"></version-badge>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --download</span></div>
 <div class="term-output">
-<p style="color:var(--text-muted);font-size:12px;margin-bottom:8px;">Select target platform to install:</p>
-<div style="display:flex;flex-wrap:wrap;gap:8px;">
+<p class="term-output-note term-output-note--spaced">Select target platform to install:</p>
+<div class="term-output-actions">
 
 :::download-mac-button
 macOS
@@ -43,16 +43,12 @@ macOS
 Windows
 :::
 
-:::download-linux-button
-Linux
-:::
-
 :::download-apk-button
 Android
 :::
 
 </div>
-<p style="color:var(--text-muted);font-size:12px;margin-top:8px;">Desktop has the most features. Android is live. iOS is in progress.</p>
+<p class="term-output-note term-output-note--top-spaced">Desktop has the most features. Android is live. iOS is in progress.</p>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --capabilities</span></div>
@@ -107,7 +103,7 @@ Cloud link module loaded ... done
   Open a terminal, run commands, view the screen, manage agent tasks — all from your phone.
   · Remote terminal  · Screen viewing  · Manage multiple PCs
 </pre>
-<p style="color:var(--text-muted);font-size:12px;">Sign in to use cloud link. Without an account, everything else works — data stays local.</p>
+<p class="term-output-note">Sign in to use cloud link. Without an account, everything else works — data stays local.</p>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --integrations</span></div>
@@ -137,7 +133,7 @@ Loading doc index ... done
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --community</span></div>
 <div class="term-output">
-<p style="color:var(--text-muted);font-size:12px;margin-bottom:8px;">Connecting to BotHub community network ... done</p>
+<p class="term-output-note term-output-note--spaced">Connecting to BotHub community network ... done</p>
 
 :::join-qq-group-button{id-label="QQ Group"}
 Join QQ Community
@@ -145,7 +141,7 @@ Join QQ Community
 
 </div>
 
-<div class="term-cursor-line"><span class="prompt" style="color:var(--sage);">$ </span><span class="cursor-blink">_</span></div>
+<div class="term-cursor-line"><span class="prompt term-cursor-prompt">$ </span><span class="cursor-blink">_</span></div>
 
   </div>
 </div>

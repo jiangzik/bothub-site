@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { VersionManifest } from '~/types/version'
 
-type Platform = 'android' | 'mac' | 'windows' | 'linux'
+type Platform = 'android' | 'mac' | 'windows'
 
 const PLATFORM_CONFIG: Record<Platform, {
   icon: string
@@ -12,7 +12,6 @@ const PLATFORM_CONFIG: Record<Platform, {
   android: { icon: 'i-lucide-smartphone', downloadKey: 'android', defaultUrl: '/downloads/app-release.apk', alwaysRender: true },
   mac: { icon: 'i-lucide-apple', downloadKey: 'mac', defaultUrl: '', alwaysRender: false },
   windows: { icon: 'i-lucide-monitor', downloadKey: 'windows', defaultUrl: '', alwaysRender: false },
-  linux: { icon: 'i-lucide-box', downloadKey: 'linux', defaultUrl: '', alwaysRender: false },
 }
 
 const props = withDefaults(defineProps<{ platform: Platform; label?: string }>(), {

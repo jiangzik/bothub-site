@@ -263,6 +263,13 @@ header nav[data-slot="root"][data-state] [data-slot="base"]:hover {
   color: var(--terra);
 }
 
+.mobile-menu-link:focus-visible {
+  outline: 2px solid var(--terra);
+  outline-offset: 1px;
+  color: var(--terra);
+  background: rgba(198, 122, 75, 0.06);
+}
+
 .mobile-menu-prompt {
   color: var(--sage);
   font-weight: 700;
@@ -398,6 +405,43 @@ header [data-slot="base"]:hover {
 .term-output.revealed {
   opacity: 1;
   transform: translateY(0);
+}
+
+.term-ascii {
+  font-size: clamp(0.35rem, 1.8vw, 0.9rem);
+  line-height: 1.15;
+  overflow-x: auto;
+  color: var(--terra);
+}
+
+.term-output-title {
+  margin: 8px 0 4px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.term-output-note {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.term-output-note--spaced {
+  margin-bottom: 8px;
+}
+
+.term-output-note--top-spaced {
+  margin-top: 8px;
+}
+
+.term-output-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.term-cursor-prompt {
+  color: var(--sage);
 }
 
 /* ============================================================
@@ -720,6 +764,12 @@ header [data-slot="base"]:hover {
   border-color: var(--terra) !important;
   background: transparent !important;
   transform: translateY(-1px);
+}
+
+.bothub-search-trigger[data-slot="base"]:focus-visible {
+  outline: 2px solid var(--terra);
+  outline-offset: 1px;
+  border-color: var(--terra) !important;
 }
 
 .bothub-search-trigger [data-slot="trailing"] kbd {
@@ -1899,12 +1949,8 @@ body:not(:has(.terminal-landing-hero)) {
 }
 
 /* Docs pages — top spacing below sticky header */
-body:not(:has(.terminal-landing-hero)) div[class*="min-h-"] {
-  padding-top: 16px;
-}
-
-body:not(:has(.terminal-landing-hero)) [class*="rounded"] {
-  border-radius: 4px !important;
+body:not(:has(.terminal-landing-hero)) div[data-slot="root"].flex.flex-col.lg\:grid {
+  margin-top: 16px;
 }
 
 body:not(:has(.terminal-landing-hero)) .border-dashed {
@@ -2195,7 +2241,7 @@ body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 a {
 
 .bothub-modal-surface {
   border: 2px solid var(--border) !important;
-  border-radius: 12px !important;
+  border-radius: 4px !important;
   background: var(--cream-light) !important;
   box-shadow: 0 8px 40px rgba(61, 43, 31, 0.1) !important;
   outline: none !important;
@@ -2209,11 +2255,6 @@ body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 a {
 .bothub-modal-surface,
 .bothub-modal-surface::before,
 .bothub-modal-surface::after {
-  border-radius: 12px !important;
-}
-
-.bothub-modal-surface *::before,
-.bothub-modal-surface *::after {
   border-radius: 4px !important;
 }
 
@@ -2243,7 +2284,7 @@ body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 a {
 .bothub-modal-surface [data-slot="close"],
 .bothub-modal-surface .bothub-modal__close {
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 2px;
   background: transparent;
   color: var(--text-muted);
 }
@@ -2251,6 +2292,13 @@ body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 a {
 .bothub-modal-surface [data-slot="close"]:hover,
 .bothub-modal-surface .bothub-modal__close:hover {
   color: var(--terra);
+  border-color: var(--terra);
+}
+
+.bothub-modal-surface [data-slot="close"]:focus-visible,
+.bothub-modal-surface .bothub-modal__close:focus-visible {
+  outline: 2px solid var(--terra);
+  outline-offset: 1px;
   border-color: var(--terra);
 }
 
@@ -2348,6 +2396,13 @@ body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 a {
 .term-download-link:hover {
   color: var(--terra-dark);
   text-shadow: none;
+}
+
+.term-download-link:focus-visible {
+  outline: 2px solid var(--terra);
+  outline-offset: 1px;
+  color: var(--terra-dark);
+  text-decoration: none;
 }
 
 .term-prompt {
