@@ -2417,12 +2417,14 @@ body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 a {
 .term-version {
   color: var(--text-muted);
   font-size: 11px;
+  white-space: nowrap;
 }
 
 .term-label {
   color: var(--text-muted);
   font-size: 11px;
   margin-left: 0.3rem;
+  white-space: nowrap;
 }
 
 .term-version-badge {

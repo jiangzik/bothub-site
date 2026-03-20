@@ -14,11 +14,13 @@ const PLATFORM_CONFIG: Record<Platform, {
   windows: { icon: 'i-lucide-monitor', downloadKey: 'windows', defaultUrl: '', alwaysRender: false },
 }
 
-const props = withDefaults(defineProps<{ platform: Platform; label?: string }>(), {
+const props = withDefaults(defineProps<{ platform: Platform; label?: string; channel?: string }>(), {
   label: '',
+  channel: '',
 })
 
 const config = PLATFORM_CONFIG[props.platform]
+const slots = useSlots()
 
 const runtimeConfig = useRuntimeConfig()
 const appBaseURL = runtimeConfig.app.baseURL || '/'
@@ -52,6 +54,8 @@ const versionText = computed(() => {
 })
 
 const shouldRender = computed(() => config.alwaysRender || !!downloadHref.value)
+const installCommand = computed(() => `./install --platform=${props.platform}`)
+const showLabel = computed(() => !!props.label || !!slots.default)
 </script>
 
 <template>
@@ -63,7 +67,8 @@ const shouldRender = computed(() => config.alwaysRender || !!downloadHref.value)
     rel="noopener"
   >
     <span class="term-prompt">&gt;</span>
-    <span class="term-cmd-text">./install --platform={{ props.platform }}</span>
+    <span class="term-cmd-text">{{ installCommand }}</span>
     <span v-if="versionText" class="term-version">v{{ versionText }}</span>
+    <span v-if="showLabel" class="term-label"><slot>{{ props.label }}</slot></span>
   </a>
 </template>

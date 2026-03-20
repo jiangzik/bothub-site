@@ -43,8 +43,12 @@ macOS
 Windows
 :::
 
+:::download-google-play-button
+Google Play
+:::
+
 :::download-apk-button
-Android
+APK
 :::
 
 </div>

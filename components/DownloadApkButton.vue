@@ -1,7 +1,7 @@
 <script setup lang="ts">
-withDefaults(defineProps<{ label?: string }>(), { label: 'Android' })
+withDefaults(defineProps<{ label?: string }>(), { label: 'APK' })
 </script>
 
 <template>
-  <DownloadButton platform="android" :label="label"><slot /></DownloadButton>
+  <DownloadButton platform="android" channel="apk" :label="label"><slot /></DownloadButton>
 </template>

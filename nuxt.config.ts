@@ -16,6 +16,7 @@ const readVersionJson = (relativePath: string): VersionJson => {
 }
 
 const versionJson = readVersionJson('public/version.json')
+const defaultGooglePlayUrl = 'https://play.google.com/store/apps/details?id=com.jiangzikang.bothub'
 
 const CONTENT_ROOT = resolve(process.cwd(), 'content')
 const ORDER_PREFIX_RE = /^\d+\./
@@ -158,6 +159,10 @@ export default defineNuxtConfig({
       appVersion: versionJson.version || '',
       downloads: {
         apk: withAppBaseUrl(appBaseUrl, versionJson.android?.url || 'downloads/app-release.apk'),
+        googlePlay: withAppBaseUrl(
+          appBaseUrl,
+          (process.env.NUXT_PUBLIC_DOWNLOAD_GOOGLE_PLAY || versionJson.androidGooglePlay?.url || defaultGooglePlayUrl).trim(),
+        ),
         mac: withAppBaseUrl(appBaseUrl, versionJson.mac?.url),
         windows: withAppBaseUrl(appBaseUrl, versionJson.windows?.url),
       },
