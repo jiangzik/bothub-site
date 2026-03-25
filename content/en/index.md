@@ -104,13 +104,13 @@ Desktop can connect to Feishu, Telegram, and QQ bots.
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --docs</span></div>
 <div class="term-output">
-<pre>
+<pre class="term-doc-index">
 Loading doc index ... done
 
-  <a href="en/quick-start/overview">[01] Quick Start .......... Install, set up, send your first message</a>
-  <a href="en/manual/overview">[02] Manual ............... Models, conversations, skills, MCP, scheduled tasks</a>
-  <a href="en/faq/overview">[03] FAQ .................. Downloads, network, model calls, MCP, tasks</a>
-  <a href="en/faq/privacy-policy">[04] Privacy Policy ....... What data we collect and how we store it</a>
+<a class="term-doc-index-link" href="en/quick-start/overview">[01] Quick Start .......... Install, set up, send your first message</a>
+<a class="term-doc-index-link" href="en/manual/overview">[02] Manual ............... Models, conversations, skills, MCP, scheduled tasks</a>
+<a class="term-doc-index-link" href="en/faq/overview">[03] FAQ .................. Downloads, network, model calls, MCP, tasks</a>
+<a class="term-doc-index-link" href="en/faq/privacy-policy">[04] Privacy Policy ....... What data we collect and how we store it</a>
 </pre>
 </div>
 

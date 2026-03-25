@@ -102,13 +102,13 @@ APK
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --docs</span></div>
 <div class="term-output">
-<pre>
+<pre class="term-doc-index">
 读取文档索引 ... 完成
 
-  <a href="zh/quick-start/overview">[01] 快速开始 ............. 装好、配好、发出第一条消息</a>
-  <a href="zh/manual/overview">[02] 使用手册 ............. 模型配置、对话管理、技能、MCP、定时任务等</a>
-  <a href="zh/faq/overview">[03] 常见问题 ............. 下载、网络、模型调用、MCP、定时任务</a>
-  <a href="zh/faq/privacy-policy">[04] 隐私政策 ............. 我们收集什么数据、怎么存的</a>
+<a class="term-doc-index-link" href="zh/quick-start/overview">[01] 快速开始 ............. 装好、配好、发出第一条消息</a>
+<a class="term-doc-index-link" href="zh/manual/overview">[02] 使用手册 ............. 模型配置、对话管理、技能、MCP、定时任务等</a>
+<a class="term-doc-index-link" href="zh/faq/overview">[03] 常见问题 ............. 下载、网络、模型调用、MCP、定时任务</a>
+<a class="term-doc-index-link" href="zh/faq/privacy-policy">[04] 隐私政策 ............. 我们收集什么数据、怎么存的</a>
 </pre>
 </div>
 

@@ -440,6 +440,21 @@ header [data-slot="base"]:hover {
   gap: 8px;
 }
 
+.term-doc-index {
+  text-align: left;
+  white-space: pre-wrap;
+}
+
+.term-doc-index-link {
+  display: block;
+  color: var(--terra);
+  text-decoration: none;
+}
+
+.term-doc-index-link:hover {
+  color: var(--terra-dark);
+}
+
 .term-cursor-prompt {
   color: var(--sage);
 }
