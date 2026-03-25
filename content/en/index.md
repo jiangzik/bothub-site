@@ -26,7 +26,7 @@ seo:
  ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝
 </pre>
 <p class="term-output-title">Chat with any model, using your own keys</p>
-<p class="term-output-note">Desktop / Android / iOS &nbsp;|&nbsp; Data stays on your device &nbsp;|&nbsp; Bring your own API keys</p>
+<p class="term-output-note">Desktop / Android / iOS &nbsp;|&nbsp; Bring your own API keys &nbsp;|&nbsp; Cloud sync with account</p>
 <version-badge label="Version"></version-badge>
 </div>
 
@@ -58,37 +58,27 @@ APK
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --capabilities</span></div>
 <div class="term-output">
 <pre>
-Loaded 6 modules:
+Here's what you can do with it:
 
--- Multi-model switching -------------------------------------------
-  Use models from different providers in one place
-  Add your API keys for OpenAI, Claude, Gemini, etc. Switch models mid-conversation.
-  · Dozens of providers  · Switch models anytime  · Each bot can use a different model
+  Add your API keys for OpenAI, Claude, Gemini, or dozens of other providers.
+  Want to switch models mid-conversation? Just switch. No need to start over.
+  Each bot can be bound to a different model.
 
--- MCP tools -------------------------------------------------------
-  Let models use files, browsers, and search
-  Connect MCP servers so models can read/write files, control a browser, or search the web.
-  · Filesystem access  · Browser automation (Playwright)  · Web search
+  Models can do more than chat. They can run bash commands, read/write files,
+  control a browser, take screenshots, and search the web.
+  Need more tools? Connect an MCP server.
 
--- Prompts & skills ------------------------------------------------
-  Save prompts you use often
-  Store prompts as templates and reuse them. Skills let you chain multi-step actions.
-  · Prompt template library  · Reusable skills  · Per-scenario parameters
+  Give each bot its own personality and rules. Save common workflows as skills.
+  Skills can be imported from GitHub or written from scratch.
 
--- Scheduled tasks -------------------------------------------------
-  Let bots run on a schedule
-  Set a time, and the bot runs the conversation or task automatically.
-  · Cron-like scheduling  · Auto-execution  · Run history
+  Scheduled tasks: set a cron schedule or a timer, and the bot runs on its own.
+  Results can go into a conversation, or be sent to Feishu, Telegram, or a webhook.
 
--- Group chats -----------------------------------------------------
-  Multiple bots in one conversation
-  Create a group, add bots with different models, and let them each respond.
-  · Multiple bots  · Different models side by side  · Good for comparison
+  Group chats: create a group, add a few bots, send a message and they each reply.
+  Each member can have its own prompt. They can quote each other too.
 
--- Local storage ---------------------------------------------------
-  Chat history stays on your device
-  All conversations, configs, and attachments are stored locally. Works without an account.
-  · Local SQLite  · API keys never touch our servers  · Optional cloud sync
+  Sign in and your conversations, attachments, and settings sync across devices.
+  Switch to a new device and everything is already there.
 </pre>
 </div>
 
@@ -97,29 +87,18 @@ Loaded 6 modules:
 <pre>
 Cloud link module loaded ... done
 
--- Phone → PC ------------------------------------------------------
-  Scan a QR code to pair
-  Sign in on Android, scan the code on your desktop, and your phone connects to your PC.
-  · QR pairing  · Works across networks  · Live connection status
-
--- Remote control --------------------------------------------------
-  Use your PC from your phone
-  Open a terminal, run commands, view the screen, manage agent tasks — all from your phone.
-  · Remote terminal  · Screen viewing  · Manage multiple PCs
+Sign in with the same account on your phone and PC, and they connect.
+  Doesn't matter if they're on different networks.
+  Once connected you can open a terminal, run commands, see the screen,
+  click and type — all from your phone. Works with multiple PCs.
 </pre>
-<p class="term-output-note">Sign in to use cloud link. Without an account, everything else works — data stays local.</p>
 </div>
 
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --integrations</span></div>
 <div class="term-output">
 <pre>
-Desktop supports chat platform bots:
-
-  · Feishu Bot — works in Feishu groups, with approval workflows
-  · Telegram Bot — connect to Telegram
-  · QQ Bot — connect to QQ
-
-Once configured, messages in the group trigger bot replies and task execution.
+Desktop can connect to Feishu, Telegram, and QQ bots.
+  Once set up, group messages trigger your bot. Feishu also supports approval workflows.
 </pre>
 </div>
 
@@ -129,8 +108,8 @@ Once configured, messages in the group trigger bot replies and task execution.
 Loading doc index ... done
 
   <a href="en/quick-start/overview">[01] Quick Start .......... Install, set up, send your first message</a>
-  <a href="en/manual/overview">[02] Manual ............... Provider setup, chat flow, context behavior</a>
-  <a href="en/faq/overview">[03] FAQ .................. Common issues with downloads, network, and calls</a>
+  <a href="en/manual/overview">[02] Manual ............... Models, conversations, skills, MCP, scheduled tasks</a>
+  <a href="en/faq/overview">[03] FAQ .................. Downloads, network, model calls, MCP, tasks</a>
   <a href="en/faq/privacy-policy">[04] Privacy Policy ....... What data we collect and how we store it</a>
 </pre>
 </div>
