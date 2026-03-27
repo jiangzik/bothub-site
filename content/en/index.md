@@ -77,6 +77,9 @@ Here's what you can do with it:
   Group chats: create a group, add a few bots, send a message and they each reply.
   Each member can have its own prompt. They can quote each other too.
 
+  Sub-agents: bots can break down complex tasks and spin up sub-agents
+  to work on them in parallel. Supported on both Desktop and Android.
+
   Sign in and your conversations, attachments, and settings sync across devices.
   Switch to a new device and everything is already there.
 </pre>
@@ -97,7 +100,7 @@ Sign in with the same account on your phone and PC, and they connect.
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --integrations</span></div>
 <div class="term-output">
 <pre>
-Desktop can connect to Feishu, Telegram, and QQ bots.
+Desktop can connect to Feishu, Telegram, QQ, and WeChat bots.
   Once set up, group messages trigger your bot. Feishu also supports approval workflows.
 </pre>
 </div>

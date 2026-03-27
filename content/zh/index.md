@@ -76,6 +76,9 @@ APK
   群聊：建个群，拉几个 Bot 进来，发一条消息它们各自回复。
   每个成员可以有自己的提示词，也能互相引用。
 
+  子代理：Bot 干活的时候可以自己拆任务，分给几个子代理同时跑。
+  桌面端和 Android 都支持。复杂任务不用干等，让它自己拆开搞。
+
   登录账号后，对话、附件、配置会自动同步到手机和电脑。
   换设备不用重新配，东西都在。
 </pre>
@@ -95,7 +98,7 @@ APK
 <div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --integrations</span></div>
 <div class="term-output">
 <pre>
-桌面端可以接飞书、Telegram、QQ 的机器人。
+桌面端可以接飞书、Telegram、QQ、微信的机器人。
   配好之后群里发消息就能触发 Bot 干活，飞书还支持审批流程。
 </pre>
 </div>
