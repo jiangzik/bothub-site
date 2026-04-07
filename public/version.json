@@ -1,5 +1,5 @@
 {
-  "version": "1.0.39",
+  "version": "1.0.40",
   "android": {
     "url": "https://bothub.bookab.info/downloads/app-web-release.apk",
     "notes": "问题修复与知识库稳定性改进"
@@ -9,11 +9,11 @@
     "notes": "Google Play 下载"
   },
   "mac": {
-    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.39-arm64.dmg",
-    "notes": "知识库，问题修复与稳定性改进"
+    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.40-arm64.dmg",
+    "notes": "问题修复与稳定性改进"
   },
   "windows": {
-    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.39.exe",
-    "notes": "知识库，问题修复与稳定性改进"
+    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.40.exe",
+    "notes": "问题修复与稳定性改进"
   }
 }
