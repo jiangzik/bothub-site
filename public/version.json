@@ -1,19 +1,19 @@
 {
-  "version": "1.0.40",
+  "version": "1.0.41",
   "android": {
     "url": "https://bothub.bookab.info/downloads/app-web-release.apk",
     "notes": "问题修复与知识库稳定性改进"
   },
   "androidGooglePlay": {
     "url": "https://play.google.com/store/apps/details?id=com.jiangzikang.bothub",
-    "notes": "Google Play 下载"
+    "notes": "知识库"
   },
   "mac": {
-    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.40-arm64.dmg",
-    "notes": "问题修复与稳定性改进"
+    "url": "https://bothub.bookab.info/downloads/BotHub-1.0.41-arm64.dmg",
+    "notes": "知识库"
   },
   "windows": {
-    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.40.exe",
-    "notes": "问题修复与稳定性改进"
+    "url": "https://bothub.bookab.info/downloads/BotHub Setup 1.0.41.exe",
+    "notes": "知识库"
   }
 }
