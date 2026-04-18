@@ -18,12 +18,9 @@ const links = computed(() => appConfig.github && appConfig.github.url
 
 <template>
   <UHeader
-    :ui="{ center: 'hidden lg:flex flex-1' }"
     :to="localePath('/')"
     :title="appConfig.header?.title || site.name"
   >
-    <AppHeaderCenter />
-
     <template #title>
       <AppHeaderLogo class="w-auto shrink-0" />
     </template>
@@ -50,10 +47,6 @@ const links = computed(() => appConfig.github && appConfig.github.url
         <UColorModeButton />
       </ClientOnly>
 
-      <ClientOnly>
-        <UContentSearchButton class="lg:hidden" />
-      </ClientOnly>
-
       <template v-if="links?.length">
         <UButton
           v-for="(link, index) of links"
@@ -64,29 +57,24 @@ const links = computed(() => appConfig.github && appConfig.github.url
     </template>
 
     <template #body>
-      <div class="mobile-menu-body">
-        <div class="mobile-menu-cmd">$ bothub --navigate</div>
-        <UContentSearchButton class="w-full mobile-menu-btn" />
+      <div class="bothub-mobile-menu">
         <NuxtLink
           :to="localePath('/quick-start/overview')"
-          class="mobile-menu-link"
+          class="bothub-mobile-menu-link"
         >
-          <span class="mobile-menu-prompt">&gt;</span>
-          {{ $t('docs.links') === 'Community' ? 'quick-start' : 'quick-start' }}
+          快速开始 · Quick Start
         </NuxtLink>
         <NuxtLink
           :to="localePath('/manual/overview')"
-          class="mobile-menu-link"
+          class="bothub-mobile-menu-link"
         >
-          <span class="mobile-menu-prompt">&gt;</span>
-          {{ $t('docs.links') === 'Community' ? 'manual' : 'manual' }}
+          功能手册 · Manual
         </NuxtLink>
         <NuxtLink
           :to="localePath('/faq/overview')"
-          class="mobile-menu-link"
+          class="bothub-mobile-menu-link"
         >
-          <span class="mobile-menu-prompt">&gt;</span>
-          {{ $t('docs.links') === 'Community' ? 'faq' : 'faq' }}
+          常见问题 · FAQ
         </NuxtLink>
       </div>
     </template>

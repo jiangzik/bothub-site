@@ -5,13 +5,16 @@ type Platform = 'android' | 'mac' | 'windows'
 
 const PLATFORM_CONFIG: Record<Platform, {
   icon: string
+  symbol: string
+  defaultMainLabel: string
+  defaultSubLabel: string
   downloadKey: keyof VersionManifest
   defaultUrl: string
   alwaysRender: boolean
 }> = {
-  android: { icon: 'i-lucide-smartphone', downloadKey: 'android', defaultUrl: '/downloads/app-release.apk', alwaysRender: true },
-  mac: { icon: 'i-lucide-apple', downloadKey: 'mac', defaultUrl: '', alwaysRender: false },
-  windows: { icon: 'i-lucide-monitor', downloadKey: 'windows', defaultUrl: '', alwaysRender: false },
+  android: { icon: 'i-lucide-smartphone', symbol: '⬇', defaultMainLabel: 'Android APK', defaultSubLabel: 'APK · sideload', downloadKey: 'android', defaultUrl: '/downloads/app-release.apk', alwaysRender: true },
+  mac: { icon: 'i-lucide-apple', symbol: '', defaultMainLabel: 'macOS', defaultSubLabel: 'DMG', downloadKey: 'mac', defaultUrl: '', alwaysRender: false },
+  windows: { icon: 'i-lucide-monitor', symbol: '', defaultMainLabel: 'Windows', defaultSubLabel: 'EXE · Win 10+', downloadKey: 'windows', defaultUrl: '', alwaysRender: false },
 }
 
 const props = withDefaults(defineProps<{ platform: Platform; label?: string; channel?: string }>(), {
@@ -54,21 +57,27 @@ const versionText = computed(() => {
 })
 
 const shouldRender = computed(() => config.alwaysRender || !!downloadHref.value)
-const installCommand = computed(() => `./install --platform=${props.platform}`)
-const showLabel = computed(() => !!props.label || !!slots.default)
+const hasSlot = computed(() => !!props.label || !!slots.default)
 </script>
 
 <template>
   <a
     v-if="shouldRender"
     :href="downloadHref"
-    class="term-download-link"
+    class="bothub-dl-card"
+    :data-platform="platform"
     target="_blank"
     rel="noopener"
   >
-    <span class="term-prompt">&gt;</span>
-    <span class="term-cmd-text">{{ installCommand }}</span>
-    <span v-if="versionText" class="term-version">v{{ versionText }}</span>
-    <span v-if="showLabel" class="term-label"><slot>{{ props.label }}</slot></span>
+    <span class="bothub-dl-icon">
+      <UIcon :name="config.icon" />
+    </span>
+    <span class="bothub-dl-body">
+      <span class="bothub-dl-main">{{ config.defaultMainLabel }}</span>
+      <span class="bothub-dl-sub">
+        <slot>{{ props.label || config.defaultSubLabel }}</slot>
+      </span>
+    </span>
+    <span v-if="versionText" class="bothub-dl-version">v{{ versionText }}</span>
   </a>
 </template>

@@ -1,3332 +1,1330 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap");
-
 /* ============================================================
-   1. CSS Variables — Dune Terminal Palette (Light)
+   BotHub site · Vercel-inspired light theme
    ============================================================ */
+
+/* ------------------------------------------------------------
+   1. Design tokens
+   ------------------------------------------------------------ */
 :root {
-  --ui-header-height: 36px;
+  --bothub-bg: #ffffff;
+  --bothub-bg-soft: #fafafa;
+  --bothub-surface: #f5f5f5;
+  --bothub-surface-2: #eeeeee;
+  --bothub-border: #ebebeb;
+  --bothub-border-strong: #d4d4d4;
+  --bothub-text: #0a0a0a;
+  --bothub-text-dim: #525252;
+  --bothub-text-mute: #8a8a8a;
+  --bothub-accent: #ea580c;
+  --bothub-accent-hover: #c2410c;
+  --bothub-accent-soft: #fff4ed;
+  --bothub-accent-ring: rgba(234, 88, 12, 0.18);
+  --bothub-success: #16a34a;
+
+  --ui-primary: #ea580c;
+  --ui-color-primary-400: #fb923c;
+  --ui-color-primary-500: #f97316;
+  --ui-color-primary-600: #ea580c;
+
+  --ui-header-height: 60px;
   --floating-header-top-offset: 0;
-  --ui-primary: #c67a4b;
-  --ui-color-primary-400: #c67a4b;
-  --ui-color-primary-500: #c67a4b;
-  --ui-color-primary-600: #a8603a;
 
-  --bg-page: #f5f0e8;
-  --bg-alt: #f0ebe4;
-  --cream: #f5f0e8;
-  --cream-light: #faf7f2;
-  --sand: #e8dcc8;
-  --border: #e0d5c5;
-  --terra: #c67a4b;
-  --terra-dark: #a8603a;
-  --sage: #7a8c6e;
-  --ink: #3d2b1f;
-  --text-primary: #3d2b1f;
-  --text-secondary: #5c4535;
-  --text-muted: #9a8b7a;
-  --state-success: #2f7a4f;
-  --state-error: #b1493f;
-  --state-error-hover: #9f4138;
-  --state-error-border: #8d372f;
-  --state-error-soft: rgba(177, 73, 63, 0.12);
-
-  --font: "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
-    "Noto Sans SC", monospace;
+  --bothub-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Noto Sans SC', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+  --bothub-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
 }
 
-/* Dark mode palette */
 .dark {
-  --ui-primary: #d4915e;
-  --ui-color-primary-400: #d4915e;
-  --ui-color-primary-500: #d4915e;
-  --ui-color-primary-600: #c67a4b;
-
-  --bg-page: #1a1512;
-  --bg-alt: #211c17;
-  --cream: #1a1512;
-  --cream-light: #211c17;
-  --sand: #2a231c;
-  --border: #3d3229;
-  --terra: #d4915e;
-  --terra-dark: #e0a574;
-  --sage: #8fa87e;
-  --ink: #e8dcc8;
-  --text-primary: #d5c9b8;
-  --text-secondary: #b0a290;
-  --text-muted: #7a6e60;
-  --state-success: #8fd8aa;
-  --state-error: #bc5f55;
-  --state-error-hover: #cf6a5f;
-  --state-error-border: #d97b72;
-  --state-error-soft: rgba(217, 123, 114, 0.16);
+  --bothub-bg: #0a0a0a;
+  --bothub-bg-soft: #111111;
+  --bothub-surface: #171717;
+  --bothub-surface-2: #1f1f1f;
+  --bothub-border: #262626;
+  --bothub-border-strong: #333333;
+  --bothub-text: #fafafa;
+  --bothub-text-dim: #a3a3a3;
+  --bothub-text-mute: #737373;
+  --bothub-accent: #fb923c;
+  --bothub-accent-hover: #fdba74;
+  --bothub-accent-soft: rgba(251, 146, 60, 0.12);
+  --bothub-accent-ring: rgba(251, 146, 60, 0.25);
 }
 
-/* ============================================================
-   2. Global Resets
-   ============================================================ */
+/* ------------------------------------------------------------
+   2. Global resets
+   ------------------------------------------------------------ */
 html {
   scroll-behavior: smooth;
 }
 
-* {
-  font-family: var(--font) !important;
-}
-
 body {
-  font-family: var(--font);
-  background: var(--bg-page);
-  color: var(--text-primary);
-  font-size: 13px;
-  line-height: 1.8;
-  min-height: 100vh;
-  overflow-x: hidden;
+  font-family: var(--bothub-font);
+  font-feature-settings: 'ss01', 'cv11';
+  background: var(--bothub-bg);
+  color: var(--bothub-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.55;
 }
 
-/* Strip all Docus default gradients/backgrounds */
-body,
-body::before,
-body::after {
-  background-image: none;
-}
-
-/* No CRT scanlines in Dune theme */
-body::after {
-  display: none;
-}
-
-/* Force all pre/code blocks to Dune light style */
+code,
+kbd,
 pre,
-pre[class*="shiki"],
-pre[class*="language-"],
-[data-slot="base"][data-highlight] pre,
-.prose pre,
-div > pre {
-  background: rgba(232, 220, 200, 0.2) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 4px !important;
-  padding: 16px 20px !important;
-  font-family: var(--font) !important;
-  font-size: 13px !important;
-  line-height: 1.8 !important;
+samp,
+.mono {
+  font-family: var(--bothub-mono);
 }
 
-pre code,
-pre[class*="shiki"] code,
-.prose pre code {
-  background: transparent !important;
-  color: var(--text-primary) !important;
-  font-family: var(--font) !important;
-  padding: 0 !important;
-}
-
-code:not(pre code) {
-  background: rgba(198, 122, 75, 0.08) !important;
-  color: var(--terra) !important;
-  padding: 2px 6px !important;
-  border-radius: 4px !important;
-  font-family: var(--font) !important;
-  font-size: 12px !important;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-[data-slot="headline"],
-[data-slot="title"] {
-  font-family: var(--font);
-  color: var(--ink);
-  text-shadow: none;
-  letter-spacing: 0.02em;
-}
-
-a {
-  color: var(--terra);
-  text-decoration: none;
-}
-
-a:hover {
-  color: var(--terra-dark);
-  text-shadow: none;
-}
-
-/* ============================================================
-   3. Custom Scrollbar
-   ============================================================ */
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-alt);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border: 1px solid var(--bg-alt);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--terra);
-}
-
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) var(--bg-alt);
-}
-
-/* ============================================================
-   4. Header — Terminal Titlebar
-   ============================================================ */
-header[data-slot="root"] {
-  top: var(--floating-header-top-offset);
-  width: 100%;
-  max-width: 100%;
-  margin-inline: auto;
-  border: none;
-  border-bottom: 2px solid var(--border);
-  border-radius: 0;
-  overflow: hidden;
-  background: var(--sand);
-  box-shadow: none;
-  backdrop-filter: none;
-}
-
-header [data-slot="container"] {
-  min-height: 36px;
-  background: var(--sand);
-}
-
-/* Mobile menu panel — Dune terminal theme */
-header nav[data-slot="root"][data-state] {
-  background: var(--sand) !important;
-  border-top: 1px solid var(--border);
-  color: var(--text-primary);
-}
-
-header nav[data-slot="root"][data-state] [data-slot="base"] {
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 2px !important;
-  background: var(--cream-light) !important;
-  font-family: var(--font) !important;
-  font-size: 12px !important;
-  letter-spacing: 0.04em;
-}
-
-header nav[data-slot="root"][data-state] [data-slot="base"]:hover {
-  color: var(--terra) !important;
-  border-color: var(--terra) !important;
-  background: var(--cream-light) !important;
-}
-
-/* Mobile menu body — terminal style */
-.mobile-menu-body {
-  padding: 12px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.mobile-menu-cmd {
-  font-family: var(--font);
-  font-size: 11px;
-  color: var(--terra);
-  padding: 6px 0;
-  margin-bottom: 4px;
-  border-bottom: 1px solid var(--border);
-}
-
-.mobile-menu-link {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font);
-  font-size: 13px;
-  color: var(--text-primary);
-  padding: 8px 10px;
-  border-radius: 2px;
-  transition: all 0.15s;
-  text-decoration: none;
-}
-
-.mobile-menu-link:hover {
-  background: rgba(198, 122, 75, 0.06);
-  color: var(--terra);
-}
-
-.mobile-menu-link:focus-visible {
-  outline: 2px solid var(--terra);
-  outline-offset: 1px;
-  color: var(--terra);
-  background: rgba(198, 122, 75, 0.06);
-}
-
-.mobile-menu-prompt {
-  color: var(--sage);
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-header [data-slot="title"] {
-  color: var(--ink);
-  text-shadow: none;
-}
-
-header [data-slot="title"] img {
-  filter: none;
-}
-
-header [data-slot="base"] {
-  color: var(--text-primary) !important;
-  background: transparent !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 2px !important;
-  box-shadow: none !important;
-  font-size: 11px;
-}
-
-header [data-slot="base"]:hover {
-  color: var(--terra) !important;
-  border-color: var(--terra) !important;
-  background: transparent !important;
-}
-
-/* ============================================================
-   5. Terminal Window Frame
-   ============================================================ */
-.terminal-window {
-  max-width: 960px;
-  margin: 16px auto 16px;
-  background: var(--cream-light);
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  box-shadow: 0 8px 40px rgba(61, 43, 31, 0.1);
-  overflow: hidden;
-}
-
-.terminal-titlebar {
-  height: 36px;
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  background: var(--sand);
-  border-bottom: 1px solid var(--border);
-  gap: 8px;
-  position: relative;
-}
-
-.terminal-titlebar-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-.terminal-dot {
   width: 10px;
   height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
 }
-
-.terminal-dot.red {
-  background: var(--terra);
-}
-
-.terminal-dot.yellow {
-  background: var(--sand);
-  border: 1px solid var(--terra);
-}
-
-.terminal-dot.green {
-  background: var(--sage);
-}
-
-.terminal-body {
-  padding: 20px 24px;
-  min-height: 200px;
-  font-size: 13px;
-  line-height: 1.8;
-  overflow-x: hidden;
-}
-
-.terminal-body pre {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* ============================================================
-   6. Terminal Command Prompts
-   ============================================================ */
-.term-cmd {
-  font-size: 13px;
-  color: var(--terra);
-  font-family: var(--font);
-  line-height: 1.8;
-  margin-bottom: 16px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-
-.term-cmd .prompt {
-  color: var(--sage);
-  font-weight: 700;
-  flex-shrink: 0;
-  text-shadow: none;
-}
-
-.term-cmd .cmd-text {
-  color: var(--terra);
-  text-shadow: none;
-}
-
-/* ============================================================
-   7. Terminal Output
-   ============================================================ */
-.term-output {
-  opacity: 1;
-}
-
-.term-output.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.term-ascii {
-  font-size: clamp(0.35rem, 1.8vw, 0.9rem);
-  line-height: 1.15;
-  overflow-x: auto;
-  color: var(--terra);
-}
-
-.term-output-title {
-  margin: 8px 0 4px;
-  color: var(--ink);
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.term-output-note {
-  color: var(--text-muted);
-  font-size: 12px;
-}
-
-.term-output-note--spaced {
-  margin-bottom: 8px;
-}
-
-.term-output-note--top-spaced {
-  margin-top: 8px;
-}
-
-.term-output-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.term-doc-index {
-  text-align: left;
-  white-space: pre-wrap;
-}
-
-.term-doc-index-link {
-  display: block;
-  color: var(--terra);
-  text-decoration: none;
-}
-
-.term-doc-index-link:hover {
-  color: var(--terra-dark);
-}
-
-.term-cursor-prompt {
-  color: var(--sage);
-}
-
-/* ============================================================
-   8. ASCII Elements
-   ============================================================ */
-.ascii-box {
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 16px 20px;
-  margin: 8px 0 16px;
-  background: rgba(232, 220, 200, 0.2);
-}
-
-.ascii-box-title {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--terra);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  text-shadow: none;
-}
-
-.ascii-box-title::before {
-  content: "-- ";
-  color: var(--border);
-}
-
-.ascii-box-title::after {
-  content: " --";
-  color: var(--border);
-}
-
-.ascii-score-bar {
-  font-family: var(--font);
-  font-size: 13px;
-  color: var(--text-primary);
-  line-height: 1.8;
-}
-
-.ascii-table {
-  font-family: var(--font);
-  font-size: 13px;
-  white-space: pre;
-  color: var(--text-primary);
-  line-height: 1.8;
-}
-
-/* ============================================================
-   9. Landing Hero — Dune Terminal
-   ============================================================ */
-.landing-hero[data-slot="root"] {
-  overflow: hidden;
-  background: var(--bg-page) !important;
-}
-
-.landing-hero [data-slot="container"],
-.terminal-landing-hero [data-slot="container"] {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  gap: 0 !important;
+::-webkit-scrollbar-track {
   background: transparent;
 }
-
-.landing-hero [data-slot="wrapper"],
-.terminal-landing-hero [data-slot="wrapper"] {
-  position: relative;
-  max-width: none;
-  margin-inline: auto;
-  padding: 0 !important;
-  border: none;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  overflow: hidden;
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 10px;
+  border: 2px solid var(--bothub-bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-color: var(--bothub-bg);
 }
 
-/* Dim watermark — disabled (wrapper is transparent) */
-.landing-hero [data-slot="wrapper"]::before {
-  display: none;
+/* ------------------------------------------------------------
+   3. Header (UHeader)
+   ------------------------------------------------------------ */
+header[data-slot='base'],
+.u-header {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.78);
+  border-bottom: 1px solid var(--bothub-border);
+}
+.dark header[data-slot='base'],
+.dark .u-header {
+  background: rgba(10, 10, 10, 0.72);
+  border-bottom-color: var(--bothub-border);
 }
 
-.landing-hero [data-slot="headline"],
-.landing-hero [data-slot="title"],
-.landing-hero [data-slot="description"],
-.landing-hero [data-slot="footer"],
-.terminal-landing-hero [data-slot="headline"],
-.terminal-landing-hero [data-slot="title"],
-.terminal-landing-hero [data-slot="description"],
-.terminal-landing-hero [data-slot="footer"] {
-  position: relative;
-  z-index: 1;
+.bothub-search-trigger {
+  border-radius: 10px !important;
+  font-family: var(--bothub-font) !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  background: var(--bothub-bg-soft) !important;
+  --tw-ring-color: var(--bothub-border) !important;
+  --tw-ring-inset: inset !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  box-shadow: inset 0 0 0 1px var(--bothub-border) !important;
+  color: var(--bothub-text-mute) !important;
+  width: auto !important;
+  max-width: 260px !important;
+  min-width: 220px;
+  height: 34px !important;
+  padding: 0 12px !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  margin: 0 auto;
 }
-
-.terminal-landing-hero [data-slot="title"] {
-  font-size: inherit !important;
-  line-height: inherit !important;
-  letter-spacing: inherit !important;
+.bothub-search-trigger:hover {
+  background: var(--bothub-bg) !important;
+  box-shadow: inset 0 0 0 1px var(--bothub-border-strong) !important;
+  color: var(--bothub-text-dim) !important;
 }
-
-.terminal-landing-hero [data-slot="header"] {
-  gap: 0 !important;
+.bothub-search-trigger [data-slot='leadingIcon'] {
+  color: var(--bothub-text-mute);
+  margin-right: 2px !important;
 }
-
-.landing-hero [data-slot="headline"] {
-  margin-bottom: 1.05rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.74rem;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: var(--terra);
-  text-shadow: none;
+.bothub-search-trigger [data-slot='label'] {
+  font-weight: 400;
 }
-
-.landing-hero [data-slot="headline"]::before {
-  content: "$";
-  color: var(--sage);
-  margin-right: 0.2rem;
-  text-shadow: none;
-}
-
-/* ============================================================
-   10. Hero Title — Dune Terminal Style
-   ============================================================ */
-.terminal-hero-title {
-  font-size: clamp(2.7rem, 8.8vw, 7.4rem);
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  color: var(--ink);
-  margin: 0;
-}
-
-.terminal-hero-title .line {
-  display: block;
-  overflow: hidden;
-}
-
-.terminal-hero-title .line-inner {
-  display: block;
-  transform: translateY(108%);
-  animation: lineReveal 0.82s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.terminal-hero-title .line:nth-child(2) .line-inner {
-  animation-delay: 0.14s;
-}
-
-.terminal-hero-title .accent-word {
-  position: relative;
-  display: inline-block;
-  color: var(--terra);
-}
-
-.terminal-hero-title .accent-word::after {
-  content: "";
-  position: absolute;
-  bottom: 0.06em;
-  left: 0;
-  width: 100%;
-  height: 0.08em;
-  background: var(--terra);
-  opacity: 0.4;
-}
-
-/* ASCII logo in hero */
-.ascii-logo {
-  font-size: clamp(0.55rem, 1.6vw, 0.85rem);
-  line-height: 1.15;
-  color: var(--terra);
-  margin: 0 0 0.5rem;
-  white-space: pre;
-  overflow: hidden;
-}
-
-/* ============================================================
-   11. Hero Meta / Subtitle / Stats
-   ============================================================ */
-.terminal-hero-meta {
-  margin-top: 1.16rem;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1.4rem;
-}
-
-.hero-subtitle {
-  margin: 0;
-  max-width: 430px;
-  color: var(--text-muted);
-  font-size: 13px;
-  line-height: 1.8;
-}
-
-.hero-stats {
-  min-width: min(560px, 100%);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: var(--border);
-  overflow: hidden;
-}
-
-.hero-stat {
-  background: color-mix(in srgb, var(--sand) 20%, transparent);
-  padding: 0.7rem 0.82rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.24rem;
-  min-height: 74px;
-}
-
-.hero-stat .label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.hero-stat strong {
-  color: var(--sage);
-  font-size: 13px;
-  line-height: 1.35;
-  letter-spacing: 0.01em;
-  text-shadow: none;
-}
-
-.landing-version {
-  margin-top: 0.86rem;
-}
-
-.landing-version p {
-  margin: 0;
-  color: var(--terra);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-shadow: none;
-}
-
-/* ============================================================
-   12. Hero Links / Buttons
-   ============================================================ */
-.landing-hero [data-slot="footer"],
-.terminal-landing-hero [data-slot="footer"] {
-  margin-top: 0;
-}
-
-.landing-hero [data-slot="links"] {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 0.45rem;
-}
-
-.landing-hero [data-slot="links"] [data-slot="base"] {
-  min-height: 2.62rem;
-  border-radius: 2px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-primary);
-  padding-inline: 0.95rem;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  transition: all 0.2s;
-  text-shadow: none;
-}
-
-.landing-hero [data-slot="links"] [data-slot="base"]:hover {
-  color: var(--terra);
-  border-color: var(--terra);
-  background: transparent;
-  text-shadow: none;
-  transform: translateY(-1px);
-}
-
-.landing-hero [data-slot="links"] [data-color="primary"] {
-  background: var(--terra);
-  color: #fff;
-  border-color: var(--terra);
-  text-shadow: none;
-}
-
-.landing-hero [data-slot="links"] [data-color="primary"]:hover {
-  background: var(--terra-dark);
-  border-color: var(--terra-dark);
-  color: #fff;
-  text-shadow: none;
-}
-
-/* ============================================================
-   13. Search Trigger Button
-   ============================================================ */
-.bothub-search-trigger[data-slot="base"] {
-  min-height: 2.62rem;
-  border-radius: 2px;
-  border: 1px solid var(--border) !important;
-  background: transparent !important;
-  color: var(--text-primary) !important;
-  box-shadow: none !important;
-  padding-inline: 0.95rem;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-}
-
-.bothub-search-trigger[data-slot="base"]:hover {
-  color: var(--terra) !important;
-  border-color: var(--terra) !important;
-  background: transparent !important;
-  transform: translateY(-1px);
-}
-
-.bothub-search-trigger[data-slot="base"]:focus-visible {
-  outline: 2px solid var(--terra);
-  outline-offset: 1px;
-  border-color: var(--terra) !important;
-}
-
-.bothub-search-trigger [data-slot="trailing"] kbd {
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  background: var(--cream-light);
-  color: var(--text-muted);
-  box-shadow: none;
-}
-
-.bothub-search-trigger [data-slot="trailing"] kbd:last-child {
-  min-width: 1.35rem;
-}
-
-/* ============================================================
-   14. Landing Kinetic Strip (Marquee)
-   ============================================================ */
-.landing-kinetic-strip {
-  width: min(960px, calc(100% - 1rem));
-  margin: 0 auto 0.9rem;
-  border: 1px solid var(--border);
-  border-top: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  background: var(--sand);
-  color: var(--terra);
-}
-
-.landing-kinetic-track {
-  display: inline-flex;
-  animation: landingMarquee 20s linear infinite;
-}
-
-.landing-kinetic-text {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7rem;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  padding: 0.62rem 1.15rem;
-  color: var(--terra);
-  text-shadow: none;
-}
-
-.landing-kinetic-strip .dot {
-  color: var(--sage);
-}
-
-/* ============================================================
-   15. Section Headers — Terminal Prompt Style
-   ============================================================ */
-.terminal-section[data-slot="root"] {
-  background: transparent !important;
-}
-
-.terminal-section [data-slot="container"] {
-  max-width: 960px;
-  margin-inline: auto;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-.terminal-section [data-slot="title"],
-.terminal-section [data-slot="description"] {
-  display: none;
-}
-
-.terminal-section h2,
-.terminal-section h3,
-.terminal-section p {
-  margin: 0;
-}
-
-.section-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1.2rem;
-  margin-bottom: 16px;
-}
-
-.terminal-prompt {
-  font-size: 13px;
-  color: var(--terra);
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-  display: block;
-  width: 100%;
-}
-
-.terminal-prompt::before {
-  content: "";
-}
-
-.section-title-group {
-  display: flex;
-  align-items: baseline;
-  gap: 0.9rem;
-}
-
-.section-number {
-  font-size: clamp(2.2rem, 6.2vw, 3.6rem);
-  font-weight: 700;
-  color: var(--border);
-  line-height: 0.9;
-  letter-spacing: -0.05em;
-}
-
-.section-title {
-  font-size: clamp(1.65rem, 4.4vw, 2.55rem);
-  font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-  text-shadow: none;
-}
-
-.section-nav {
-  display: flex;
-  gap: 4px;
-}
-
-.nav-btn {
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0;
-  border-radius: 2px;
-  transition: all 0.2s;
-}
-
-.nav-btn:hover {
-  border-color: var(--terra);
-  color: var(--terra);
-}
-
-/* ============================================================
-   16. Terminal Block (code blocks in sections)
-   ============================================================ */
-/* ============================================================
-   Comment Grid / Cards — Terminal log style (from reference)
-   ============================================================ */
-.comment-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin: 16px 0;
-}
-
-.comment-card {
-  background: transparent;
-  border: none;
-  border-left: 2px solid var(--border);
-  border-radius: 0;
-  padding: 8px 16px;
-}
-
-.comment-card:hover {
-  border-left-color: var(--terra);
-}
-
-.comment-card-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.comment-card-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.comment-card-title {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--terra);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-family: var(--font);
-}
-
-.comment-card-title::before {
-  content: "[";
-  color: var(--border);
-}
-
-.comment-card-title::after {
-  content: "]";
-  color: var(--border);
-}
-
-.comment-card-body {
-  font-size: 12px;
-  line-height: 1.9;
-  color: var(--text-secondary);
-  font-family: var(--font);
-}
-
-.terminal-block {
-  margin: 8px 0 16px;
-}
-
-.terminal-block pre {
-  border: 1px solid var(--border) !important;
+.bothub-search-trigger kbd {
+  background: var(--bothub-surface) !important;
+  --tw-ring-color: var(--bothub-border) !important;
+  box-shadow: inset 0 0 0 1px var(--bothub-border) !important;
+  color: var(--bothub-text-mute) !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  font-size: 10.5px !important;
   border-radius: 4px !important;
-  padding: 16px 20px !important;
-  background: rgba(232, 220, 200, 0.2) !important;
-  color: var(--text-primary) !important;
-  font-size: 13px;
-  line-height: 1.8;
+  padding: 0 4px !important;
+}
+/* center slot: keep search trigger compact rather than stretched */
+header [data-slot='center'] {
+  flex: 1 1 auto;
+  justify-content: center !important;
 }
 
-.terminal-block code {
-  color: var(--text-primary) !important;
-  background: transparent !important;
-}
-
-/* ============================================================
-   17. Report Grid / Cards — Dune ASCII Boxes
-   ============================================================ */
-.report-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  grid-template-rows: auto auto auto;
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.report-card {
-  position: relative;
+.bothub-mobile-menu {
+  padding: 16px;
   display: flex;
-  gap: 0.72rem;
-  align-items: center;
-  padding: 0.82rem;
-  background: var(--cream-light);
+  flex-direction: column;
+  gap: 8px;
+}
+.bothub-mobile-menu-search {
+  margin-bottom: 8px;
+}
+.bothub-mobile-menu-link {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--bothub-surface);
+  color: var(--bothub-text);
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
   transition: background 0.15s;
 }
-
-.report-card:hover {
-  background: rgba(232, 220, 200, 0.4);
+.bothub-mobile-menu-link:hover {
+  background: var(--bothub-surface-2);
 }
 
-.report-card-visual {
-  position: relative;
-  width: 56px;
-  height: 56px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: var(--cream-light);
-  overflow: hidden;
-  transition: border-color 0.2s, transform 0.2s;
-  flex-shrink: 0;
-}
-
-.report-card:hover .report-card-visual {
-  border-color: var(--terra);
-  transform: translateY(-1px);
-}
-
-.report-card-visual::before,
-.report-card-visual::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-}
-
-.report-visual-orbit {
-  background:
-    radial-gradient(circle at 65% 28%, rgba(198, 122, 75, 0.12) 0, transparent 34%),
-    var(--cream-light);
-}
-
-.report-visual-orbit::before {
-  inset: 10% 12%;
-  border: 1px solid var(--terra);
-  border-radius: 999px;
-  transform: rotate(-16deg);
-  opacity: 0.4;
-}
-
-.report-visual-orbit::after {
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  background: var(--terra);
-  top: 16%;
-  right: 18%;
-  opacity: 0.7;
-}
-
-.report-visual-console {
-  background:
-    repeating-linear-gradient(90deg, transparent 0 10px, var(--border) 10px 11px),
-    var(--cream-light);
-}
-
-.report-visual-console::before {
-  left: 8px;
-  right: 8px;
-  top: 9px;
-  bottom: 9px;
-  border: 1px solid var(--terra);
-  opacity: 0.3;
-}
-
-.report-visual-console::after {
-  left: 14px;
-  right: 14px;
-  top: 18px;
-  height: 1px;
-  background: var(--terra);
-  opacity: 0.4;
-  box-shadow: 0 10px 0 var(--terra), 0 20px 0 var(--terra);
-}
-
-.report-visual-pulse {
-  background:
-    radial-gradient(circle at 24% 70%, rgba(122, 140, 110, 0.12) 0 14%, transparent 35%),
-    var(--cream-light);
-}
-
-.report-visual-pulse::before {
-  left: 7px;
-  right: 7px;
-  top: 50%;
-  height: 1px;
-  background: var(--border);
-}
-
-.report-visual-pulse::after {
-  left: 11px;
-  right: 11px;
-  top: 50%;
-  height: 1px;
-  background: var(--sage);
-  clip-path: polygon(
-    0 50%,
-    14% 50%,
-    22% 8%,
-    36% 84%,
-    48% 24%,
-    63% 50%,
-    100% 50%,
-    100% 100%,
-    0 100%
-  );
-}
-
-.report-visual-flow {
-  background:
-    linear-gradient(
-      130deg,
-      rgba(198, 122, 75, 0.06) 20%,
-      var(--cream-light) 20% 46%,
-      rgba(198, 122, 75, 0.06) 46%
-    ),
-    var(--cream-light);
-}
-
-.report-visual-flow::before {
-  inset: 8px;
-  border: 1px dashed var(--border);
-}
-
-.report-visual-flow::after {
-  width: 20px;
-  height: 20px;
-  border-top: 2px solid var(--terra);
-  border-right: 2px solid var(--terra);
-  transform: rotate(45deg);
-  right: 9px;
-  bottom: 8px;
-  opacity: 0.5;
-}
-
-.report-card-info {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.16rem;
-}
-
-.report-card-name {
-  color: var(--ink);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: -0.015em;
-  text-shadow: none;
-}
-
-.report-card-desc {
-  color: var(--text-muted);
-  font-size: 11px;
-  line-height: 1.6;
-}
-
-.report-card-score {
-  margin-left: auto;
-  width: 42px;
-  height: 42px;
-  border: 1px solid var(--terra);
-  border-radius: 4px;
-  background: rgba(198, 122, 75, 0.08);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--terra);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  flex-shrink: 0;
-  text-shadow: none;
-}
-
-.report-card-featured {
-  grid-row: 1 / 4;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0.9rem;
-}
-
-.report-card-featured .report-card-visual {
+/* ------------------------------------------------------------
+   4. Landing page container
+   ------------------------------------------------------------ */
+.bothub-landing {
   width: 100%;
-  height: 180px;
 }
 
-.report-card-featured .report-card-info {
-  gap: 0.3rem;
-}
-
-.report-card-featured .report-card-name {
-  font-size: 1rem;
-}
-
-.report-card-featured .report-card-desc {
-  font-size: 12px;
-}
-
-.report-card-featured .report-card-score {
-  position: absolute;
-  top: 0.78rem;
-  right: 0.78rem;
+/* Neutralise the prose styling Nuxt Content auto-applies to every
+   h1/h2/h3/h4/p/ul/li/a in the markdown body. Using :where() so the
+   specificity is 0 — our bothub-* classes trivially override. */
+.bothub-landing :where(h1, h2, h3, h4, h5, h6) {
   margin: 0;
-  width: 48px;
-  height: 48px;
-  font-size: 0.93rem;
-}
-
-/* ============================================================
-   18. Content Grid / Cards
-   ============================================================ */
-.content-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.content-card {
-  background: var(--cream-light);
-  overflow: hidden;
-  transition: background 0.16s;
-}
-
-.content-card:hover {
-  background: rgba(232, 220, 200, 0.4);
-}
-
-.content-card-img {
-  width: 100%;
-  height: 190px;
-  object-fit: cover;
-  display: block;
-  filter: sepia(0.2) brightness(0.95);
-  transition: filter 0.25s;
-}
-
-.content-card:hover .content-card-img {
-  filter: sepia(0.1) brightness(1);
-}
-
-.content-card-body {
-  padding: 0.78rem;
-}
-
-.content-card-title {
-  color: var(--ink);
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.44;
-  letter-spacing: -0.01em;
-}
-
-.content-card-views {
-  margin-top: 0.32rem;
-  font-size: 11px;
-  color: var(--text-muted);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.content-card-featured {
-  grid-column: 1 / 3;
-}
-
-.content-card-featured .content-card-img {
-  height: 250px;
-}
-
-/* ============================================================
-   19. Desktop Story Grid
-   ============================================================ */
-.desktop-story-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.desktop-story-visual,
-.desktop-story-panel {
-  background: var(--cream-light);
-}
-
-.desktop-story-visual {
-  display: flex;
-  flex-direction: column;
-}
-
-.desktop-story-image {
-  width: 100%;
-  height: clamp(280px, 34vh, 420px);
-  object-fit: contain;
-  object-position: center;
-  background: var(--cream-light);
-  padding: 0.32rem;
-  box-sizing: border-box;
-  border-bottom: 1px solid var(--border);
-  filter: sepia(0.15) brightness(0.95);
-  transition: filter 0.2s;
-  display: block;
-}
-
-.desktop-story-visual:hover .desktop-story-image {
-  filter: sepia(0.05) brightness(1);
-}
-
-.desktop-story-caption {
-  padding: 0.9rem;
-}
-
-.desktop-story-kicker {
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.desktop-story-title {
-  margin-top: 0.4rem;
-  color: var(--ink);
-  font-size: 1.06rem;
-  font-weight: 700;
-  line-height: 1.26;
-  letter-spacing: -0.02em;
-  text-shadow: none;
-}
-
-.desktop-story-desc {
-  margin-top: 0.5rem;
-  color: var(--text-muted);
-  font-size: 12px;
-  line-height: 1.58;
-}
-
-.desktop-story-panel {
-  padding: 0.92rem;
-}
-
-.panel-kicker {
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.panel-title {
-  margin-top: 0.38rem;
-  color: var(--ink);
-  font-size: 0.95rem;
-  font-weight: 700;
-  line-height: 1.32;
-  letter-spacing: -0.01em;
-  text-shadow: none;
-}
-
-.panel-desc {
-  margin-top: 0.45rem;
-  color: var(--text-muted);
-  font-size: 12px;
-  line-height: 1.52;
-}
-
-.panel-grid {
-  margin-top: 0.72rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.panel-item {
-  background: var(--cream-light);
-  padding: 0.58rem 0.56rem;
-}
-
-.panel-item span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 22px;
-  border: 1px solid var(--terra);
-  border-radius: 2px;
-  color: var(--terra);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.panel-item p {
-  margin-top: 0.36rem;
-  color: var(--text-primary);
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.45;
-}
-
-/* ============================================================
-   20. Ranking Grid
-   ============================================================ */
-.ranking-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.ranking-card {
-  display: flex;
-  gap: 0.72rem;
-  align-items: center;
-  padding: 0.82rem;
-  background: var(--cream-light);
-  transition: background 0.15s;
-}
-
-.ranking-card:hover {
-  background: rgba(232, 220, 200, 0.4);
-}
-
-.ranking-card-img {
-  width: 56px;
-  height: 56px;
-  object-fit: cover;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  filter: sepia(0.15) brightness(0.95);
-  transition: filter 0.2s;
-  flex-shrink: 0;
-}
-
-.ranking-card:hover .ranking-card-img {
-  filter: sepia(0.05) brightness(1);
-}
-
-.ranking-card-info {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.16rem;
-}
-
-.ranking-card-name {
-  color: var(--ink);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: -0.015em;
-}
-
-.ranking-card-count {
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-/* ============================================================
-   21. Mobile Story Grid
-   ============================================================ */
-.mobile-story-grid {
-  display: grid;
-  grid-template-columns: 1.05fr 1fr 1fr;
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.mobile-story-visual {
-  grid-row: 1 / 3;
-  background: var(--cream-light);
-  display: flex;
-  flex-direction: column;
-}
-
-.mobile-story-image {
-  width: 100%;
-  height: clamp(260px, 36vh, 420px);
-  object-fit: contain;
-  object-position: center;
-  background: var(--cream-light);
-  padding: 0.3rem;
-  box-sizing: border-box;
-  border-bottom: 1px solid var(--border);
-  filter: sepia(0.15) brightness(0.95);
-  transition: filter 0.2s;
-  display: block;
-}
-
-.mobile-story-visual:hover .mobile-story-image {
-  filter: sepia(0.05) brightness(1);
-}
-
-.mobile-story-caption {
-  padding: 0.88rem;
-}
-
-.mobile-story-card,
-.mobile-story-flow {
-  background: var(--cream-light);
-  padding: 0.88rem;
-}
-
-.mobile-story-flow {
-  grid-column: 2 / 4;
-}
-
-.mobile-story-kicker,
-.flow-kicker {
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.mobile-story-title,
-.flow-title {
-  margin-top: 0.38rem;
-  color: var(--ink);
-  font-size: 0.92rem;
-  font-weight: 700;
-  line-height: 1.32;
-  letter-spacing: -0.01em;
-  text-shadow: none;
-}
-
-.mobile-story-desc {
-  margin-top: 0.48rem;
-  color: var(--text-muted);
-  font-size: 12px;
-  line-height: 1.52;
-}
-
-.mobile-story-list {
-  margin: 0.6rem 0 0;
   padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--border);
-}
-
-.mobile-story-list li {
-  margin: 0;
-  padding: 0.42rem 0;
-  border-bottom: 1px solid var(--border);
-  color: var(--text-primary);
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.44;
-}
-
-.mobile-story-list li::before {
-  content: ">";
-  color: var(--terra);
-  margin-right: 0.42rem;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.mobile-flow-grid {
-  margin-top: 0.62rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--border);
-}
-
-.mobile-flow-item {
-  min-height: 50px;
-  display: grid;
-  grid-template-columns: 34px 1fr;
-  align-items: center;
-  gap: 0.44rem;
-  background: var(--cream-light);
-  padding: 0.4rem;
-  border: 1px solid var(--border);
-}
-
-.mobile-flow-index {
-  width: 34px;
-  height: 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--terra);
-  border-radius: 2px;
-  background: rgba(198, 122, 75, 0.08);
-  color: var(--terra);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.mobile-flow-item p {
-  color: var(--text-primary);
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-/* ============================================================
-   22. Tools Grid / Cards — Terminal List Items
-   ============================================================ */
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.tool-card {
-  display: flex;
-  align-items: center;
-  gap: 0.82rem;
-  padding: 0.95rem;
-  background: var(--cream-light);
-  text-decoration: none;
-  transition: background 0.15s;
-}
-
-.tool-card:hover {
-  background: rgba(232, 220, 200, 0.4);
-}
-
-.tool-card-icon {
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--terra);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  flex-shrink: 0;
-  transition: all 0.2s;
-}
-
-.tool-card:hover .tool-card-icon {
-  background: var(--terra);
-  border-color: var(--terra);
-  color: #fff;
-}
-
-.tool-card-info {
-  min-width: 0;
-}
-
-.tool-card-name {
-  color: var(--ink);
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-.tool-card-desc {
-  margin-top: 0.14rem;
-  color: var(--text-muted);
-  font-size: 11px;
-  line-height: 1.45;
-}
-
-/* ============================================================
-   23. Compare Grid / Boxes
-   ============================================================ */
-.compare-grid {
-  margin-top: 0.9rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.9rem;
-}
-
-.compare-box {
-  padding: 0.95rem;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: rgba(232, 220, 200, 0.2);
-}
-
-.compare-box-title {
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  margin-bottom: 0.58rem;
-}
-
-.compare-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-}
-
-.compare-desc {
-  color: var(--text-muted);
-  font-size: 12px;
-  line-height: 1.52;
-}
-
-.compare-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  border: 1px solid var(--terra);
-  border-radius: 2px;
-  background: rgba(198, 122, 75, 0.08);
-  color: var(--terra);
-  text-decoration: none;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 0.62rem 0.7rem;
-  transition: all 0.15s;
-  text-shadow: none;
-}
-
-.compare-btn:hover {
-  border-color: var(--terra-dark);
-  background: rgba(198, 122, 75, 0.15);
-  color: var(--terra-dark);
-}
-
-/* ============================================================
-   24. Capability Grid / Cards — ASCII Boxes
-   ============================================================ */
-.capability-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.capability-card {
-  background: var(--cream-light);
-  padding: 1rem 0.95rem 0.9rem;
-  transition: background 0.15s;
-}
-
-.capability-card:hover {
-  background: rgba(232, 220, 200, 0.4);
-}
-
-.capability-kicker {
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.capability-title {
-  margin-top: 0.42rem;
-  color: var(--ink);
-  font-size: 1.06rem;
-  font-weight: 700;
+  scroll-margin-top: 0;
+  font-family: var(--bothub-font);
+  color: var(--bothub-text);
   line-height: 1.2;
-  letter-spacing: -0.02em;
-  text-shadow: none;
+  font-weight: 600;
 }
-
-.capability-desc {
-  margin-top: 0.5rem;
-  color: var(--text-muted);
-  font-size: 12px;
-  line-height: 1.58;
-}
-
-.capability-list {
-  margin: 0.75rem 0 0;
+.bothub-landing :where(h1, h2, h3, h4) > :where(a) {
+  color: inherit;
+  text-decoration: none;
+  border: 0;
+  font-weight: inherit;
+  background: none;
   padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--border);
 }
-
-.capability-list li {
+.bothub-landing :where(p) {
   margin: 0;
-  padding: 0.44rem 0;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  color: var(--text-primary);
-  border-bottom: 1px solid var(--border);
+  line-height: inherit;
+  color: inherit;
 }
-
-.capability-list li::before {
-  content: ">";
-  color: var(--sage);
-  margin-right: 0.42rem;
-  font-size: 11px;
-  font-weight: 700;
+.bothub-landing :where(ul, ol) {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-
-/* ============================================================
-   25. Workflow Grid / Cards — Terminal Output
-   ============================================================ */
-.workflow-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.workflow-card {
-  background: var(--cream-light);
-  padding: 0.95rem 0.9rem;
-  transition: background 0.15s;
-}
-
-.workflow-card:hover {
-  background: rgba(232, 220, 200, 0.4);
-}
-
-.workflow-label {
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.workflow-title {
-  margin-top: 0.42rem;
-  color: var(--ink);
-  font-size: 0.96rem;
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-  text-shadow: none;
-}
-
-.workflow-steps {
-  margin-top: 0.66rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.workflow-step {
-  display: grid;
-  grid-template-columns: 40px 1fr;
-  gap: 0.5rem;
-  align-items: center;
-  min-height: 46px;
-  padding: 0.4rem;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  background: var(--cream-light);
-}
-
-.step-index {
-  width: 40px;
-  height: 30px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--terra);
-  border-radius: 2px;
-  background: rgba(198, 122, 75, 0.08);
-  color: var(--terra);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.workflow-step p {
-  color: var(--text-primary);
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.45;
-}
-
-.workflow-footnote {
-  margin-top: 0.88rem;
-  padding: 0.7rem 0.78rem;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: rgba(232, 220, 200, 0.2);
-  color: var(--text-muted);
-  font-size: 12px;
+.bothub-landing :where(li) {
+  margin: 0;
+  padding: 0;
   line-height: 1.5;
+  list-style: none;
 }
-
-/* ============================================================
-   26. Docs Pages — Dune Terminal Theme
-   ============================================================ */
-body:not(:has(.terminal-landing-hero)) {
-  background: var(--bg-page);
+.bothub-landing :where(li)::marker {
+  content: '';
 }
-
-/* Docs pages — top spacing below sticky header */
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"].flex.flex-col.lg\:grid {
-  margin-top: 16px;
+.bothub-landing :where(a) {
+  color: inherit;
+  text-decoration: none;
+  border: 0;
 }
-
-body:not(:has(.terminal-landing-hero)) .border-dashed {
-  border-style: solid !important;
+.bothub-landing :where(code) {
+  background: transparent;
+  padding: 0;
+  border: 0;
+  font-family: var(--bothub-mono);
+  font-size: inherit;
+  color: inherit;
 }
-
-body:not(:has(.terminal-landing-hero)) .backdrop-blur {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
-body:not(:has(.terminal-landing-hero)) header [data-slot="base"] {
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  background: transparent !important;
-  color: var(--text-primary);
-  box-shadow: none;
-}
-
-body:not(:has(.terminal-landing-hero)) header [data-slot="base"]:hover {
-  background: transparent !important;
-  color: var(--terra);
-  border-color: var(--terra);
-}
-
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"].relative.border-b.border-default.py-8 [data-slot="base"] {
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  background: transparent !important;
-  color: var(--text-primary);
-  box-shadow: none;
-}
-
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"].relative.border-b.border-default.py-8 [data-slot="base"]:hover {
-  background: transparent !important;
-  color: var(--terra);
-}
-
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"].grid.grid-cols-1.sm\:grid-cols-2.gap-8 [data-slot="link"] {
-  border: 1px solid var(--border);
+.bothub-landing .bothub-msg :where(code) {
+  background: var(--bothub-surface-2);
+  padding: 1px 6px;
   border-radius: 4px;
-  background: var(--cream-light);
-  box-shadow: none;
+  font-size: 12px;
 }
 
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"].grid.grid-cols-1.sm\:grid-cols-2.gap-8 [data-slot="link"]:hover {
-  background: rgba(232, 220, 200, 0.4);
+.bothub-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"].grid.grid-cols-1.sm\:grid-cols-2.gap-8 [data-slot="link"] [data-slot="linkLeading"] {
-  border: 1px solid var(--border);
-  border-radius: 2px !important;
-  background: transparent !important;
-  color: var(--text-primary);
-  box-shadow: none;
-  padding: 0.65rem;
+.bothub-section {
+  padding: 110px 0;
 }
-
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"].grid.grid-cols-1.sm\:grid-cols-2.gap-8 [data-slot="link"] [data-slot="linkLeadingIcon"] {
-  color: currentColor !important;
-}
-
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"].grid.grid-cols-1.sm\:grid-cols-2.gap-8 [data-slot="link"]:hover [data-slot="linkLeading"] {
-  border-color: var(--terra);
-  background: rgba(198, 122, 75, 0.08) !important;
-  color: var(--terra);
-}
-
-body:not(:has(.terminal-landing-hero)) footer[data-slot="root"] [data-slot="container"] {
-  border-top: 1px solid var(--border);
-  background: var(--bg-page);
-}
-
-/* Docs grid — align sidebar and content tops */
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"].flex.flex-col.lg\:grid {
-  align-items: start;
-  gap: 16px !important;
+.bothub-section-tight {
   padding-top: 0;
 }
 
-body:not(:has(.terminal-landing-hero)) aside[data-slot="left"] {
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: var(--cream-light);
-  padding: 0.55rem;
-  box-shadow: none;
-  padding-top: 0.55rem !important;
-  top: calc(var(--ui-header-height) + 16px) !important;
+.bothub-section-head {
+  max-width: 720px;
+  margin: 0 auto 56px;
+  text-align: center;
 }
 
-body:not(:has(.terminal-landing-hero)) aside[data-slot="left"] nav[data-slot="root"] {
-  border: 0;
-  background: transparent;
-  padding: 0;
-}
-
-body:not(:has(.terminal-landing-hero)) aside[data-slot="left"] [data-slot="link"] {
-  border-left: 2px solid transparent;
-  border-radius: 0;
-  padding: 0.42rem 0.58rem;
-  color: var(--text-primary);
+.bothub-section-eyebrow {
   font-size: 12px;
+  color: var(--bothub-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
   font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  margin-bottom: 14px;
 }
 
-body:not(:has(.terminal-landing-hero)) aside[data-slot="left"] [data-slot="link"][class*="text-primary"] {
-  border-left-color: var(--terra);
-  background: rgba(198, 122, 75, 0.06);
-  color: var(--terra);
-}
-
-body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky [data-slot="link"] {
-  border-left: 0;
-  border-radius: 0;
-  padding: 0.32rem 0.44rem;
-  color: var(--text-primary);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0;
-  text-transform: none;
-}
-
-body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky [data-slot="link"][class*="text-primary"] {
-  border-left: 3px solid var(--terra);
-  padding-left: 0.56rem;
-  background: transparent;
-  color: var(--terra);
-}
-
-body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky {
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: var(--cream-light);
-  padding: 0.55rem;
-  margin-top: 0.55rem;
-  box-shadow: none;
-}
-
-body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky [data-slot="container"] {
-  border-bottom: 1px solid var(--border);
-}
-
-body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky [data-slot="title"] {
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky [data-slot="indicator"] {
-  background: var(--terra);
-  width: 2px;
-}
-
-body:not(:has(.terminal-landing-hero)) nav[data-slot="root"] [data-slot="link"]::after {
-  background: var(--terra) !important;
-}
-
-/* Hide the right-side/tablet "On this page" TOC block entirely. */
-body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky {
-  display: none !important;
-}
-
-/* Expand article area when TOC column is removed. */
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"]:has(> nav[data-slot="root"].sticky) > div[data-slot="center"] {
-  grid-column: 1 / -1;
-}
-
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"].relative.border-b.border-default.py-8 {
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: var(--cream-light);
-  padding: clamp(1rem, 2vw, 1.25rem);
-  margin-top: 0;
-  box-shadow: none;
-}
-
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"].relative.border-b.border-default.py-8 [data-slot="headline"] {
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.19em;
-  text-transform: uppercase;
-}
-
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"].relative.border-b.border-default.py-8 [data-slot="title"] {
-  color: var(--ink);
-  font-size: clamp(2rem, 5vw, 3.3rem);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-  text-shadow: none;
-  overflow-wrap: anywhere;
-}
-
-body:not(:has(.terminal-landing-hero)) div[data-slot="root"].relative.border-b.border-default.py-8 [data-slot="description"] {
-  color: var(--text-muted);
-  max-width: 52ch;
-}
-
-body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 {
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: var(--cream-light);
-  padding: clamp(0.95rem, 2.1vw, 1.55rem);
-  margin-top: 16px !important;
-  margin-bottom: 16px !important;
-  padding-bottom: clamp(0.95rem, 2.1vw, 1.55rem) !important;
-  box-shadow: none;
-}
-
-body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 > div {
-  padding-bottom: 1.25rem;
-  margin-bottom: 1.25rem;
-  border-bottom: 1px solid var(--border);
-}
-
-body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 > div:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: 0;
-}
-
-body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 h1 {
-  font-size: clamp(2.15rem, 4.8vw, 3.25rem);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-  color: var(--ink);
-  text-shadow: none;
-  overflow-wrap: anywhere;
-}
-
-body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 h2 {
-  font-size: clamp(1.45rem, 3.1vw, 2.1rem);
-  line-height: 1.04;
+.bothub-landing h2,
+.bothub-landing .bothub-section-head h2 {
+  font-size: clamp(28px, 3.4vw, 40px);
   letter-spacing: -0.025em;
-  color: var(--ink);
-  overflow-wrap: anywhere;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  font-weight: 700;
+  color: var(--bothub-text);
 }
 
-body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 h3 {
-  font-size: clamp(1.1rem, 2.2vw, 1.45rem);
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  overflow-wrap: anywhere;
+.bothub-landing .bothub-section-head p {
+  color: var(--bothub-text-dim);
+  font-size: 16px;
+  margin: 0 auto;
+  line-height: 1.6;
+  max-width: 560px;
 }
 
-/* Prevent docs meta row from forcing horizontal overflow on narrow screens
-   (English labels are longer than Chinese). */
-body:not(:has(.terminal-landing-hero))
-  div[data-slot="container"].font-medium.text-default.flex.mx-3.whitespace-nowrap {
-  min-width: 0;
-  max-width: 100%;
-}
-
-body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 p,
-body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 li {
-  color: var(--text-primary);
-}
-
-body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 code {
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  background: rgba(232, 220, 200, 0.3);
-  color: var(--terra);
-}
-
-body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 pre {
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: var(--cream-light) !important;
-}
-
-body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 a {
-  color: var(--terra);
-  text-shadow: none;
-}
-
-/* ============================================================
-   27. Modal Surfaces (Search)
-   ============================================================ */
-[data-slot="overlay"]:has(+ .bothub-modal-surface) {
-  background: rgba(61, 43, 31, 0.3);
-  backdrop-filter: blur(2px);
-}
-
-.bothub-modal-surface {
-  border: 2px solid var(--border) !important;
-  border-radius: 4px !important;
-  background: var(--cream-light) !important;
-  box-shadow: 0 8px 40px rgba(61, 43, 31, 0.1) !important;
-  outline: none !important;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-ring-offset-shadow: 0 0 #0000;
-  overflow: hidden !important;
-}
-
-.bothub-modal-surface,
-.bothub-modal-surface::before,
-.bothub-modal-surface::after {
-  border-radius: 4px !important;
-}
-
-.bothub-modal-surface [data-slot="header"],
-.bothub-modal-surface .bothub-modal__header {
-  border-bottom: 1px solid var(--border);
-  padding: 0.9rem 1rem 0.78rem;
-  background: var(--sand);
-}
-
-.bothub-modal-surface [data-slot="title"],
-.bothub-modal-surface .bothub-modal__title {
-  font-family: var(--font);
-  font-size: 11px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--terra);
-}
-
-.bothub-modal-surface [data-slot="description"],
-.bothub-modal-surface .bothub-modal__description {
-  margin-top: 0.34rem;
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-.bothub-modal-surface [data-slot="close"],
-.bothub-modal-surface .bothub-modal__close {
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  background: transparent;
-  color: var(--text-muted);
-}
-
-.bothub-modal-surface [data-slot="close"]:hover,
-.bothub-modal-surface .bothub-modal__close:hover {
-  color: var(--terra);
-  border-color: var(--terra);
-}
-
-.bothub-modal-surface [data-slot="close"]:focus-visible,
-.bothub-modal-surface .bothub-modal__close:focus-visible {
-  outline: 2px solid var(--terra);
-  outline-offset: 1px;
-  border-color: var(--terra);
-}
-
-.bothub-modal-surface [data-slot="body"],
-.bothub-modal-surface .bothub-modal__body {
-  background: var(--cream-light);
-}
-
-.bothub-modal-surface [data-slot="footer"],
-.bothub-modal-surface .bothub-modal__footer {
-  border-top: 1px solid var(--border);
-  background: var(--sand);
-}
-
-.bothub-modal-surface [data-slot="footer"] [data-slot="base"],
-.bothub-modal-surface .bothub-modal__footer [data-slot="base"] {
-  border-radius: 2px;
-}
-
-/* Search modal */
-.bothub-modal--search [data-slot="input"] {
-  border-bottom: 1px solid var(--border);
-  border-radius: 0 !important;
-  overflow: hidden;
-}
-
-.bothub-modal--search [data-slot="root"],
-.bothub-modal--search [data-slot="content"],
-.bothub-modal--search [data-slot="viewport"] {
-  border-radius: 0 !important;
-  background: var(--cream-light);
-}
-
-.bothub-modal--search [data-slot="input"] [data-slot="base"],
-.bothub-modal--search [data-slot="input"] input {
-  min-height: 3rem;
-  font-family: var(--font);
-  font-size: 13px;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-ring-offset-shadow: 0 0 #0000;
-  background: var(--cream-light);
-  color: var(--text-primary);
-}
-
-.bothub-modal--search [data-slot="viewport"] {
-  padding: 0.28rem;
-}
-
-.bothub-modal--search [data-slot="label"] {
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.bothub-modal--search [data-slot="item"] {
+/* ------------------------------------------------------------
+   5. Buttons
+   ------------------------------------------------------------ */
+.bothub-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
   border: 1px solid transparent;
-  border-radius: 4px !important;
-  color: var(--text-primary);
-}
-
-.bothub-modal--search [data-slot="item"]::before {
-  border-radius: 4px !important;
-}
-
-.bothub-modal--search [data-slot="item"][data-highlighted] {
-  border-color: var(--terra);
-  background: rgba(198, 122, 75, 0.06);
-}
-
-.bothub-modal--search [data-slot="itemLabelBase"] mark,
-.bothub-modal--search [data-slot="itemLabelSuffix"] mark {
-  background: var(--terra);
-  color: #fff;
-}
-
-/* ============================================================
-   28. Download / Interactive Component Classes
-   ============================================================ */
-.term-download-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--terra);
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-  padding: 0.4rem 0;
-  transition: all 0.2s;
-  text-shadow: none;
-}
-
-.term-download-link:hover {
-  color: var(--terra-dark);
-  text-shadow: none;
-}
-
-.term-download-link:focus-visible {
-  outline: 2px solid var(--terra);
-  outline-offset: 1px;
-  color: var(--terra-dark);
-  text-decoration: none;
-}
-
-.term-prompt {
-  color: var(--sage);
-  font-weight: 700;
-}
-
-.term-cmd-text {
-  color: var(--terra);
-}
-
-.term-version {
-  color: var(--text-muted);
-  font-size: 11px;
-  white-space: nowrap;
-}
-
-.term-label {
-  color: var(--text-muted);
-  font-size: 11px;
-  margin-left: 0.3rem;
-  white-space: nowrap;
-}
-
-.term-version-badge {
-  margin: 0;
-  color: var(--terra);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.term-sys {
-  color: var(--sage);
-  font-weight: 700;
-}
-
-.term-link {
-  color: var(--terra);
-  text-decoration: none;
-  transition: all 0.2s;
-  text-shadow: none;
-}
-
-.term-link:hover {
-  text-decoration: underline;
-  color: var(--terra-dark);
-}
-
-/* Download grid layout */
-.download-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
-  margin: 8px 0 16px;
-}
-
-/* Community block */
-.community-block {
-  margin: 8px 0 16px;
-}
-
-/* ============================================================
-   29. UButton Global Override — Dune Terminal Style
-   ============================================================ */
-[data-slot="base"].btn,
-button[data-slot="base"] {
-  border-radius: 2px;
-  font-family: var(--font);
-}
-
-/* Generic btn classes from reference */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 12px;
-  font-size: 11px;
-  font-weight: 600;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-primary);
-  border-radius: 2px;
+  transition: all 0.15s ease;
   cursor: pointer;
-  font-family: var(--font);
-  transition: all 0.15s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.bothub-btn-lg {
+  padding: 13px 22px;
+  font-size: 15px;
+}
+.bothub-btn-primary {
+  background: var(--bothub-text);
+  color: var(--bothub-bg);
+}
+.bothub-btn-primary:hover {
+  background: #262626;
+}
+.dark .bothub-btn-primary {
+  background: #fafafa;
+  color: #0a0a0a;
+}
+.dark .bothub-btn-primary:hover {
+  background: #e5e5e5;
+}
+.bothub-btn-ghost {
+  background: var(--bothub-bg);
+  color: var(--bothub-text);
+  border-color: var(--bothub-border-strong);
+}
+.bothub-btn-ghost:hover {
+  background: var(--bothub-surface);
+  border-color: var(--bothub-text-mute);
+}
+.dark .bothub-btn-ghost {
+  background: var(--bothub-bg-soft);
 }
 
-.btn:hover {
-  border-color: var(--terra);
-  color: var(--terra);
+/* ------------------------------------------------------------
+   6. Hero
+   ------------------------------------------------------------ */
+.bothub-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 108px 0 40px;
 }
-
-.btn-primary {
-  background: var(--terra);
-  border-color: var(--terra);
-  color: #fff;
+.bothub-hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 450px at 50% -10%, rgba(251, 146, 60, 0.16), transparent 60%),
+    radial-gradient(700px 300px at 90% 30%, rgba(244, 114, 182, 0.08), transparent 60%);
+  pointer-events: none;
 }
-
-.btn-primary:hover {
-  background: var(--terra-dark);
-  border-color: var(--terra-dark);
-  color: #fff;
+.dark .bothub-hero-bg {
+  background:
+    radial-gradient(900px 450px at 50% -10%, rgba(251, 146, 60, 0.22), transparent 60%),
+    radial-gradient(700px 300px at 90% 30%, rgba(244, 114, 182, 0.1), transparent 60%);
 }
-
-/* ============================================================
-   30. Terminal Footer Cursor
-   ============================================================ */
-.terminal-footer-cursor {
+.bothub-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(10, 10, 10, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 10, 10, 0.035) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
+  pointer-events: none;
+}
+.dark .bothub-hero-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+.bothub-hero-inner {
+  position: relative;
+  text-align: center;
   max-width: 960px;
-  margin: 20px auto 40px;
-  padding: 0 24px;
+  margin: 0 auto;
+}
+
+.bothub-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--bothub-bg);
+  border: 1px solid var(--bothub-border);
+  font-size: 12.5px;
+  color: var(--bothub-text-dim);
+  margin-bottom: 28px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.bothub-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bothub-accent);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.18);
+}
+.bothub-eyebrow-sep {
+  color: var(--bothub-text-mute);
+}
+
+.bothub-landing .bothub-hero-title {
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: 1.1;
+  letter-spacing: -0.028em;
+  font-weight: 700;
+  margin: 0 auto 22px;
+  color: var(--bothub-text);
+  max-width: 14ch;
+}
+.bothub-landing .bothub-hero-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, #f97316 0%, #e11d48 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bothub-hero-lead {
+  font-size: 17px;
+  color: var(--bothub-text-dim);
+  max-width: 580px;
+  margin: 0 auto 36px;
+  line-height: 1.6;
+}
+/* Beat Tailwind my-5 utility that Nuxt Content adds to every <p> */
+.bothub-landing .bothub-hero-lead {
+  margin-top: 0;
+  margin-bottom: 36px;
+}
+
+.bothub-hero-cta {
+  display: inline-flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bothub-hero-meta {
+  margin-top: 22px;
   font-size: 13px;
+  color: var(--bothub-text-mute);
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.bothub-hero-sep {
+  color: var(--bothub-text-mute);
+  opacity: 0.5;
 }
 
-/* ============================================================
-   31. Animations
-   ============================================================ */
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
+/* ------------------------------------------------------------
+   7. Product mock
+   ------------------------------------------------------------ */
+.bothub-mock-wrap {
+  position: relative;
+  margin: 64px auto 0;
+  max-width: 1080px;
 }
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+.bothub-mock-glow {
+  position: absolute;
+  inset: -40px -20px auto -20px;
+  height: 220px;
+  background: radial-gradient(closest-side, rgba(251, 146, 60, 0.22), transparent);
+  filter: blur(40px);
+  pointer-events: none;
 }
-
-@keyframes lineReveal {
-  to {
-    transform: translateY(0);
-  }
+.bothub-mock {
+  position: relative;
+  background: var(--bothub-bg);
+  border: 1px solid var(--bothub-border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 80px -20px rgba(10, 10, 10, 0.18),
+    0 10px 30px -10px rgba(10, 10, 10, 0.08);
+  text-align: left;
 }
-
-@keyframes landingMarquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+.dark .bothub-mock {
+  box-shadow:
+    0 30px 80px -20px rgba(0, 0, 0, 0.6),
+    0 10px 30px -10px rgba(0, 0, 0, 0.4);
 }
-
-@keyframes landingRise {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.bothub-mock-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--bothub-border);
+  background: linear-gradient(180deg, var(--bothub-bg-soft), var(--bothub-surface));
 }
-
-/* Blinking cursor utility */
-.cursor-blink {
-  animation: blink 1s step-end infinite;
-  color: var(--terra);
+.bothub-mock-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #ddd;
 }
-
-.cursor-blink::after {
-  content: "";
+.bothub-mock-dot.r { background: #ff5f57; }
+.bothub-mock-dot.y { background: #febc2e; }
+.bothub-mock-dot.g { background: #28c840; }
+.bothub-mock-title {
+  margin-left: 12px;
+  font-size: 12px;
+  color: var(--bothub-text-mute);
+  font-family: var(--bothub-mono);
 }
-
-/* Scroll reveal */
-[data-animate] {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+.bothub-mock-body {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 440px;
 }
-
-[data-animate].revealed {
-  opacity: 1;
-  transform: translateY(0);
+.bothub-mock-side {
+  border-right: 1px solid var(--bothub-border);
+  padding: 16px 12px;
+  background: var(--bothub-bg-soft);
 }
-
-/* Rise animation for landing components */
-.landing-hero [data-slot="wrapper"],
-.landing-kinetic-strip,
-.report-card,
-.content-card,
-.desktop-story-visual,
-.desktop-story-panel,
-.ranking-card,
-.mobile-story-visual,
-.mobile-story-card,
-.mobile-story-flow,
-.tool-card,
-.compare-box,
-.capability-card,
-.workflow-card,
-.workflow-footnote {
-  animation: landingRise 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+.bothub-landing .bothub-mock-side h4 {
+  font-size: 10.5px;
+  color: var(--bothub-text-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 10px;
+  padding: 0 8px;
+  font-weight: 600;
 }
-
-.report-card:nth-child(2),
-.content-card:nth-child(2),
-.ranking-card:nth-child(2),
-.tool-card:nth-child(2),
-.capability-card:nth-child(2),
-.workflow-card:nth-child(2) {
-  animation-delay: 70ms;
+.bothub-landing .bothub-mock-side li {
+  padding: 7px 10px;
+  border-radius: 8px;
 }
-
-.report-card:nth-child(3),
-.content-card:nth-child(3),
-.ranking-card:nth-child(3),
-.tool-card:nth-child(3),
-.capability-card:nth-child(3),
-.workflow-card:nth-child(3) {
-  animation-delay: 140ms;
+.bothub-landing .bothub-plat-card li {
+  padding: 6px 0;
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px dashed var(--bothub-border);
 }
-
-/* ============================================================
-   32. Footer Override — Dune Terminal Style
-   ============================================================ */
-footer[data-slot="root"] {
-  background: var(--bg-page) !important;
-  border-top: 1px solid var(--border);
+.bothub-landing .bothub-plat-card li:last-child {
+  border-bottom: none;
 }
-
-footer[data-slot="root"] [data-slot="container"] {
-  background: var(--bg-page);
-  color: var(--text-muted);
+.bothub-mock-side ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
 }
-
-footer[data-slot="root"] a {
-  color: var(--terra);
+.bothub-mock-side li {
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--bothub-text-dim);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
 }
-
-footer[data-slot="root"] a:hover {
-  color: var(--terra-dark);
-  text-shadow: none;
+.bothub-mock-side li.active {
+  background: var(--bothub-bg);
+  color: var(--bothub-text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--bothub-border);
 }
+.bothub-mock-side li.dim {
+  color: var(--bothub-text-mute);
+}
+.bothub-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  flex: 0 0 20px;
+  font-size: 10px;
+  color: #fff;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+.bothub-avatar-1 { background: linear-gradient(135deg, #fb923c, #db2777); }
+.bothub-avatar-2 { background: linear-gradient(135deg, #60a5fa, #8b5cf6); }
+.bothub-avatar-3 { background: linear-gradient(135deg, #34d399, #0891b2); }
 
-/* ============================================================
-   33. Story Shell (carousel wrapper)
-   ============================================================ */
-.story-shell {
+.bothub-mock-main {
   display: flex;
   flex-direction: column;
-  gap: 0.44rem;
 }
-
-.story-top-nav {
+.bothub-mock-chat {
+  padding: 22px 26px;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 4px;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--bothub-bg);
+  flex: 1;
 }
-
-.story-progress {
-  min-width: 72px;
-  height: 34px;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  background: transparent;
-  color: var(--text-muted);
+.bothub-msg {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.bothub-msg.user {
+  align-self: flex-end;
+  background: var(--bothub-text);
+  color: var(--bothub-bg);
+}
+.dark .bothub-msg.user {
+  background: #fafafa;
+  color: #0a0a0a;
+}
+.bothub-msg.bot {
+  align-self: flex-start;
+  background: var(--bothub-surface);
+  border: 1px solid var(--bothub-border);
+  color: var(--bothub-text);
+}
+.bothub-msg.bot code {
+  background: var(--bothub-surface-2);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.bothub-tool {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: var(--bothub-accent-soft);
+  color: var(--bothub-accent);
+  font-family: var(--bothub-mono);
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-weight: 500;
 }
-
-.story-top-nav .nav-btn:hover {
-  border-color: var(--terra);
-  color: var(--terra);
-}
-
-.story-top-nav .nav-btn:focus-visible {
-  outline: 2px solid var(--terra);
-  outline-offset: 1px;
-}
-
-/* ============================================================
-   34. Comment / Log Style
-   ============================================================ */
-.term-log {
-  border-left: 2px solid var(--border);
-  padding-left: 16px;
-  margin: 8px 0;
-}
-
-.term-log-title {
-  color: var(--terra);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.term-log-title::before {
-  content: "[";
-  color: var(--border);
-}
-
-.term-log-title::after {
-  content: "]";
-  color: var(--border);
-}
-
-/* ============================================================
-   35. Params Key-Value Style
-   ============================================================ */
-.params-row {
+.bothub-mock-input {
+  margin: 10px 26px 20px;
+  padding: 12px 14px;
+  border: 1px solid var(--bothub-border);
+  border-radius: 12px;
   display: flex;
-  align-items: baseline;
-  padding: 4px 0;
-  border-bottom: 1px dotted var(--border);
+  justify-content: space-between;
+  align-items: center;
+  color: var(--bothub-text-mute);
   font-size: 13px;
-  line-height: 1.8;
+  background: var(--bothub-bg);
+}
+.bothub-model-chip {
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: var(--bothub-surface);
+  color: var(--bothub-text-dim);
+  font-family: var(--bothub-mono);
+  font-size: 11px;
 }
 
-.params-name {
-  color: var(--text-muted);
-  flex-shrink: 0;
+/* ------------------------------------------------------------
+   8. Provider logos strip
+   ------------------------------------------------------------ */
+.bothub-logos {
+  padding: 60px 0 52px;
+  border-top: 1px solid var(--bothub-border);
+  border-bottom: 1px solid var(--bothub-border);
+  background: var(--bothub-bg-soft);
 }
-
-.params-dots {
-  flex: 1;
-  border-bottom: 1px dotted var(--border);
-  margin: 0 8px;
-  height: 0;
-  align-self: center;
+.bothub-logos-label {
+  text-align: center;
+  font-size: 12px;
+  color: var(--bothub-text-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+  margin-bottom: 24px;
 }
-
-.params-value {
-  color: var(--sage);
-  flex-shrink: 0;
+.bothub-logos-row {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+  color: var(--bothub-text-mute);
+  font-size: 15px;
   font-weight: 600;
+  opacity: 0.82;
+}
+.bothub-logos-row span {
+  letter-spacing: -0.01em;
 }
 
-/* ============================================================
-   36. Responsive — max-width 1100px
-   ============================================================ */
-@media (max-width: 1100px) {
-  .terminal-hero-meta {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hero-stats {
-    min-width: 100%;
-  }
-
-  .report-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-  }
-
-  .report-card-featured {
-    grid-row: auto;
-  }
-
-  .report-card-featured .report-card-visual {
-    height: 160px;
-  }
-
-  .content-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .content-card-featured {
-    grid-column: 1 / -1;
-  }
-
-  .desktop-story-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .desktop-story-image {
-    height: clamp(260px, 48vw, 430px);
-    padding: 0.26rem;
-  }
-
-  .panel-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .ranking-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .mobile-story-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .mobile-story-visual {
-    grid-row: auto;
-    grid-column: 1 / -1;
-  }
-
-  .mobile-story-image {
-    height: clamp(300px, 52vw, 460px);
-  }
-
-  .mobile-story-flow {
-    grid-column: 1 / -1;
-  }
-
-  .tools-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .workflow-grid {
-    grid-template-columns: 1fr;
-  }
+/* ------------------------------------------------------------
+   9. Features grid
+   ------------------------------------------------------------ */
+.bothub-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--bothub-border);
+  border: 1px solid var(--bothub-border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.bothub-feature {
+  background: var(--bothub-bg);
+  padding: 36px 30px;
+  transition: background 0.2s ease;
+}
+.bothub-feature:hover {
+  background: var(--bothub-bg-soft);
+}
+.bothub-feature-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--bothub-bg);
+  border: 1px solid var(--bothub-border-strong);
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+  color: var(--bothub-accent);
+  font-size: 17px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.bothub-landing .bothub-feature h3 {
+  font-size: 16px;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  color: var(--bothub-text);
+}
+.bothub-landing .bothub-feature p {
+  font-size: 14px;
+  color: var(--bothub-text-dim);
+  margin: 0;
+  line-height: 1.6;
+}
+.bothub-feature-meta {
+  margin-top: 12px;
+  font-size: 11.5px;
+  color: var(--bothub-text-mute);
+  font-family: var(--bothub-mono);
 }
 
-/* ============================================================
-   37. Responsive — max-width 900px (Terminal frame adjusts)
-   ============================================================ */
-@media (max-width: 900px) {
-  .terminal-window {
-    margin: 16px 16px;
-    border-radius: 8px;
-  }
-
-  .terminal-body {
-    padding: 16px 18px;
-  }
-
-  .terminal-section [data-slot="container"] {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
+/* ------------------------------------------------------------
+   10. Showcase (screenshot placeholders)
+   ------------------------------------------------------------ */
+.bothub-showcase {
+  display: grid;
+  gap: 24px;
+}
+.bothub-showcase-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.bothub-shot {
+  position: relative;
+  border: 1px solid var(--bothub-border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--bothub-bg-soft), var(--bothub-surface));
+  aspect-ratio: 16 / 10;
+  display: grid;
+  place-items: center;
+}
+.bothub-shot.wide {
+  aspect-ratio: 16 / 7;
+  grid-column: span 2;
+}
+.bothub-shot-tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--bothub-border);
+  font-size: 11px;
+  color: var(--bothub-text-dim);
+  font-weight: 500;
+  font-family: var(--bothub-mono);
+  backdrop-filter: blur(4px);
+}
+.dark .bothub-shot-tag {
+  background: rgba(20, 20, 20, 0.9);
+}
+.bothub-shot-ph {
+  text-align: center;
+  color: var(--bothub-text-mute);
+  font-size: 13px;
+  padding: 20px;
+}
+.bothub-shot-ph-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+  opacity: 0.5;
+}
+.bothub-shot-ph-label {
+  font-family: var(--bothub-mono);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.bothub-shot-ph-label .dim {
+  opacity: 0.6;
 }
 
-/* ============================================================
-   38. Responsive — max-width 768px (Mobile)
-   ============================================================ */
-@media (max-width: 768px) {
-  :root {
-    --ui-header-height: 36px;
-  }
-
-  /* Terminal frame adjustments */
-  .terminal-window {
-    margin: 16px 8px;
-    border-radius: 8px;
-  }
-
-  .terminal-body {
-    padding: 12px 14px;
-  }
-
-  .terminal-body pre {
-    font-size: 11px !important;
-    overflow-x: auto;
-  }
-
-  header[data-slot="root"] {
-    width: 100%;
-  }
-
-  header [data-slot="container"] {
-    min-height: 36px;
-  }
-
-  .landing-hero [data-slot="container"],
-  .terminal-landing-hero [data-slot="container"] {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  .landing-hero [data-slot="wrapper"] {
-    padding: 0;
-  }
-
-  .terminal-hero-title {
-    font-size: clamp(2.2rem, 13vw, 3.7rem);
-  }
-
-  .landing-hero [data-slot="links"] [data-slot="base"] {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .bothub-modal-surface {
-    width: calc(100vw - 0.7rem);
-    box-shadow: none;
-  }
-
-  .bothub-modal-surface [data-slot="header"],
-  .bothub-modal-surface .bothub-modal__header {
-    padding: 0.78rem 0.82rem 0.65rem;
-  }
-
-  .bothub-modal-surface [data-slot="description"],
-  .bothub-modal-surface .bothub-modal__description {
-    font-size: 12px;
-  }
-
-  .landing-kinetic-strip {
-    width: calc(100% - 0.7rem);
-  }
-
-  .terminal-section [data-slot="container"] {
-    padding-top: 16px;
-    padding-bottom: 16px;
-  }
-
-  .section-header {
-    margin-bottom: 12px;
-  }
-
-  .section-nav {
-    display: none;
-  }
-
-  /* Stack all grids to single column */
-  .content-grid,
-  .ranking-grid,
-  .compare-grid,
-  .desktop-story-grid,
-  .capability-grid,
-  .workflow-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .mobile-story-grid,
-  .mobile-flow-grid,
-  .panel-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .mobile-story-flow,
-  .mobile-story-visual {
-    grid-column: auto;
-  }
-
-  .mobile-story-image {
-    height: min(62vh, 420px);
-    padding: 0.24rem;
-  }
-
-  .content-card-featured .content-card-img {
-    height: 195px;
-  }
-
-  .desktop-story-image {
-    height: min(58vh, 380px);
-    padding: 0.22rem;
-  }
-
-  .hero-stats {
-    grid-template-columns: 1fr;
-  }
-
-  body:not(:has(.terminal-landing-hero)) aside[data-slot="left"],
-  body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky,
-  body:not(:has(.terminal-landing-hero)) div[data-slot="root"].relative.border-b.border-default.py-8,
-  body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 {
-    box-shadow: none;
-  }
-
-  body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky {
-    margin-top: 0.3rem;
-    padding: 0.4rem;
-  }
-
-  body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky [data-slot="title"] {
-    font-size: 12px;
-    letter-spacing: 0;
-    text-transform: none;
-  }
-
-  body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky [data-slot="container"] {
-    border-bottom: 0;
-    padding-top: 0.2rem;
-    padding-bottom: 0.1rem;
-  }
-
-  body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky [data-slot="content"] {
-    max-height: 34vh;
-    overflow-y: auto;
-  }
-
-  body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky [data-slot="indicator"] {
-    display: none;
-  }
-
-  body:not(:has(.terminal-landing-hero))
-    div[data-slot="container"].font-medium.text-default.flex.mx-3.whitespace-nowrap {
-    white-space: normal;
-    flex-wrap: wrap;
-    justify-content: center;
-    row-gap: 0.4rem;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-    text-align: center;
-  }
-
-  body:not(:has(.terminal-landing-hero))
-    div[data-slot="container"].font-medium.text-default.flex.mx-3.whitespace-nowrap > .flex.items-center.gap-2.text-sm.text-muted {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+/* ------------------------------------------------------------
+   11. Platform matrix
+   ------------------------------------------------------------ */
+.bothub-platform-matrix {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.bothub-plat-card {
+  border: 1px solid var(--bothub-border);
+  border-radius: 16px;
+  padding: 28px 26px;
+  background: var(--bothub-bg);
+  transition: all 0.2s;
+}
+.bothub-plat-card:hover {
+  border-color: var(--bothub-border-strong);
+  transform: translateY(-2px);
+}
+.bothub-plat-card.featured {
+  background: linear-gradient(180deg, #fff7ed, var(--bothub-bg));
+  border-color: #fdba74;
+}
+.dark .bothub-plat-card.featured {
+  background: linear-gradient(180deg, rgba(251, 146, 60, 0.08), var(--bothub-bg));
+  border-color: rgba(251, 146, 60, 0.35);
+}
+.bothub-plat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.bothub-plat-name {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bothub-plat-badge {
+  font-size: 10.5px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--bothub-success);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.bothub-plat-badge.soon {
+  background: var(--bothub-surface);
+  color: var(--bothub-text-mute);
+  border: 1px solid var(--bothub-border);
+}
+.bothub-plat-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--bothub-text-dim);
+}
+.bothub-plat-card li {
+  display: flex;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--bothub-border);
+}
+.bothub-plat-card li:last-child {
+  border-bottom: none;
+}
+.bothub-plat-card li::before {
+  content: '→';
+  color: var(--bothub-accent);
+  font-weight: 600;
+  flex: 0 0 12px;
 }
 
-/* ============================================================
-   39. Responsive — max-width 480px (Small screens)
-   ============================================================ */
-@media (max-width: 480px) {
-  .terminal-window {
-    margin: 12px 4px;
-    border-radius: 6px;
-  }
-
-  .terminal-body {
-    padding: 8px 10px;
-  }
-
-  .terminal-body pre {
-    font-size: 10px !important;
-    line-height: 1.4 !important;
-    overflow-x: auto;
-  }
-
-  .term-cmd {
-    font-size: 11px;
-  }
-
-  .tools-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .download-grid {
-    flex-direction: column;
-  }
+/* ------------------------------------------------------------
+   12. Integrations chip strip
+   ------------------------------------------------------------ */
+.bothub-integrations {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 32px;
+}
+.bothub-int-chip {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--bothub-bg);
+  border: 1px solid var(--bothub-border);
+  font-size: 13px;
+  color: var(--bothub-text-dim);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.bothub-int-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bothub-success);
 }
 
-/* ============================================================
-   40. Reduced Motion
-   ============================================================ */
-@media (prefers-reduced-motion: reduce) {
-  .landing-kinetic-track,
-  .terminal-hero-title .line-inner {
-    animation: none;
-    transform: none;
-  }
-
-  .landing-hero [data-slot="wrapper"],
-  .landing-kinetic-strip,
-  .report-card,
-  .content-card,
-  .desktop-story-visual,
-  .desktop-story-panel,
-  .ranking-card,
-  .mobile-story-visual,
-  .mobile-story-card,
-  .mobile-story-flow,
-  .tool-card,
-  .compare-box,
-  .capability-card,
-  .workflow-card,
-  .workflow-footnote {
-    animation: none;
-  }
-
-  .landing-hero [data-slot="links"] [data-slot="base"],
-  .report-card,
-  .report-card-visual,
-  .content-card,
-  .content-card-img,
-  .desktop-story-image,
-  .ranking-card,
-  .ranking-card-img,
-  .mobile-story-image,
-  .tool-card,
-  .compare-btn,
-  .capability-card,
-  .workflow-card {
-    transition: none;
-  }
-
-  .cursor-blink {
-    animation: none;
-  }
+/* ------------------------------------------------------------
+   13. Download box
+   ------------------------------------------------------------ */
+.bothub-download-box {
+  position: relative;
+  border: 1px solid var(--bothub-border);
+  border-radius: 24px;
+  padding: 56px 48px;
+  background:
+    radial-gradient(700px 300px at 100% 0%, rgba(251, 146, 60, 0.12), transparent 60%),
+    radial-gradient(500px 300px at 0% 100%, rgba(244, 114, 182, 0.05), transparent 60%),
+    var(--bothub-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+.bothub-landing .bothub-download-box .bothub-section-eyebrow {
+  margin-bottom: 14px;
+}
+.bothub-landing .bothub-download-left {
+  max-width: 620px;
+  margin-bottom: 40px;
+}
+.bothub-landing .bothub-download-left h2 {
+  font-size: clamp(32px, 3.6vw, 44px);
+  letter-spacing: -0.03em;
+  margin: 0 0 14px;
+  line-height: 1.1;
+  font-weight: 700;
+}
+.bothub-landing .bothub-download-lead {
+  color: var(--bothub-text-dim);
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 520px;
+}
+.bothub-download-right {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.bothub-download-right > p {
+  display: contents;
+}
+.bothub-version-line {
+  margin-top: 20px;
+  font-size: 12.5px;
+  color: var(--bothub-text-mute);
+  font-family: var(--bothub-mono);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
 }
 
-/* ============================================================
-   41. Dark Mode Force — Always use Dune Light palette
-   ============================================================ */
-.dark body,
-.dark {
-  background: var(--bg-page) !important;
-  color: var(--text-primary) !important;
+/* Bigger download cards — these are the primary CTA of the section */
+.bothub-download-right .bothub-dl-card {
+  padding: 18px 18px;
+  border-width: 1.5px;
+  text-align: left;
+}
+.bothub-download-right .bothub-dl-card:hover {
+  border-color: var(--bothub-accent);
+  box-shadow: 0 10px 28px -8px rgba(234, 88, 12, 0.22);
+  transform: translateY(-3px);
+}
+.bothub-download-right .bothub-dl-card .bothub-dl-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 19px;
+  flex: 0 0 40px;
+}
+.bothub-download-right .bothub-dl-card .bothub-dl-main {
+  font-size: 15px;
 }
 
-.dark h1,
-.dark h2,
-.dark h3,
-.dark h4,
-.dark h5,
-.dark h6 {
-  color: var(--ink) !important;
-  text-shadow: none !important;
+@media (max-width: 960px) {
+  .bothub-download-right { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .bothub-download-right { grid-template-columns: 1fr; }
 }
 
-.dark a {
-  color: var(--terra);
+/* Download card (used by DownloadButton + DownloadGooglePlayButton) */
+.bothub-dl-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--bothub-border);
+  border-radius: 12px;
+  background: var(--bothub-bg);
+  transition: all 0.15s ease;
+  text-decoration: none;
+  color: var(--bothub-text);
+  min-width: 0;
+}
+.bothub-dl-card:hover {
+  border-color: var(--bothub-border-strong);
+  box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+.bothub-dl-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  border-radius: 10px;
+  background: var(--bothub-surface);
+  color: var(--bothub-text);
+  flex: 0 0 36px;
+}
+.bothub-dl-card[data-platform='google-play'] .bothub-dl-icon {
+  background: linear-gradient(135deg, #22c55e, #10b981);
+  color: #fff;
+}
+.bothub-dl-card[data-platform='mac'] .bothub-dl-icon {
+  background: #0a0a0a;
+  color: #fff;
+}
+.bothub-dl-card[data-platform='windows'] .bothub-dl-icon {
+  background: #0078d4;
+  color: #fff;
+}
+.bothub-dl-card[data-platform='android'] .bothub-dl-icon {
+  background: #3ddc84;
+  color: #0a0a0a;
+}
+.bothub-dl-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+.bothub-dl-main {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bothub-text);
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+}
+.bothub-dl-sub {
+  font-size: 11.5px;
+  color: var(--bothub-text-mute);
+  font-family: var(--bothub-mono);
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+}
+.bothub-dl-sub p {
+  margin: 0;
+  font-size: inherit;
+}
+.bothub-dl-version {
+  font-size: 11px;
+  color: var(--bothub-text-mute);
+  font-family: var(--bothub-mono);
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--bothub-surface);
+  flex-shrink: 0;
 }
 
-.dark a:hover {
-  color: var(--terra-dark);
+/* ------------------------------------------------------------
+   14. Resources / link cards
+   ------------------------------------------------------------ */
+.bothub-link-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.bothub-link-card {
+  border: 1px solid var(--bothub-border);
+  border-radius: 14px;
+  padding: 22px 20px;
+  background: var(--bothub-bg);
+  transition: all 0.15s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.bothub-link-card:hover {
+  background: var(--bothub-bg-soft);
+  border-color: var(--bothub-border-strong);
+}
+.bothub-landing .bothub-link-card h4 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--bothub-text);
+}
+.bothub-link-card h4 .arrow {
+  color: var(--bothub-text-mute);
+  transition: transform 0.15s, color 0.15s;
+}
+.bothub-link-card:hover h4 .arrow {
+  transform: translateX(3px);
+  color: var(--bothub-accent);
+}
+.bothub-landing .bothub-link-card p {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--bothub-text-dim);
+  line-height: 1.5;
 }
 
-.dark header[data-slot="root"] {
-  background: var(--sand) !important;
-  border-color: var(--border) !important;
+.bothub-community {
+  margin-top: 48px;
+  display: flex;
+  justify-content: center;
 }
 
-.dark header [data-slot="container"] {
-  background: var(--sand) !important;
+/* QQ button */
+.bothub-qq-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: var(--bothub-bg);
+  border: 1px solid var(--bothub-border);
+  color: var(--bothub-text);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.bothub-qq-button:hover {
+  border-color: var(--bothub-border-strong);
+  box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+.bothub-qq-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #60a5fa, #1e40af);
+  color: #fff;
+  font-weight: 700;
+  font-size: 11px;
+  display: grid;
+  place-items: center;
+}
+.bothub-qq-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bothub-qq-id {
+  font-family: var(--bothub-mono);
+  color: var(--bothub-text-mute);
+  font-size: 12px;
 }
 
-.dark footer[data-slot="root"] {
-  background: var(--bg-page) !important;
+/* ------------------------------------------------------------
+   15. Content / Docs pages (UPage, prose)
+   ------------------------------------------------------------ */
+.bothub-landing + *,
+article.prose,
+.prose {
+  font-family: var(--bothub-font);
 }
 
-.dark footer[data-slot="root"] [data-slot="container"] {
-  background: var(--bg-page) !important;
-  color: var(--text-muted) !important;
+/* Prose headings */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  letter-spacing: -0.02em;
+  color: var(--bothub-text);
 }
-
-/* Ensure Nuxt UI color variables match Dune in dark mode */
-.dark [data-slot="base"] {
-  --tw-ring-color: var(--terra);
+.prose h1 { font-size: 36px; line-height: 1.1; font-weight: 700; }
+.prose h2 { font-size: 26px; line-height: 1.2; font-weight: 700; margin-top: 2em; }
+.prose h3 { font-size: 19px; line-height: 1.3; font-weight: 600; }
+.prose p,
+.prose li {
+  color: var(--bothub-text-dim);
+  font-size: 15.5px;
+  line-height: 1.75;
 }
-
-/* Dark mode: terminal window shadow */
-.dark .terminal-window {
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+.prose a {
+  color: var(--bothub-accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(234, 88, 12, 0.3);
+  transition: border-color 0.15s;
 }
-
-/* Dark mode: pre/code backgrounds */
-.dark pre,
-.dark pre[class*="shiki"],
-.dark pre[class*="language-"],
-.dark .prose pre,
-.dark div > pre {
-  background: rgba(42, 35, 28, 0.6) !important;
-  border-color: var(--border) !important;
+.prose a:hover {
+  border-bottom-color: var(--bothub-accent);
 }
-
-.dark code:not(pre code) {
-  background: rgba(212, 145, 94, 0.12) !important;
-  color: var(--terra) !important;
+.prose code:not(pre code) {
+  background: var(--bothub-surface);
+  padding: 1px 7px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  color: var(--bothub-text);
+  border: 1px solid var(--bothub-border);
 }
-
-/* Dark mode: scrollbar */
-.dark ::-webkit-scrollbar-track {
-  background: var(--bg-alt);
+.prose pre {
+  background: var(--bothub-bg-soft);
+  border: 1px solid var(--bothub-border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  overflow-x: auto;
 }
-
-.dark ::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-color: var(--bg-alt);
-}
-
-/* Dark mode: landing hero watermark */
-.dark .landing-hero [data-slot="wrapper"]::before {
-  color: rgba(212, 145, 94, 0.04);
-}
-
-/* Dark mode: color mode toggle button */
-.dark header [data-slot="base"] {
-  color: var(--text-primary) !important;
-  border-color: var(--border) !important;
-}
-
-/* ============================================================
-   42. UPageHero / UPageSection — Strip defaults
-   ============================================================ */
-[data-ui="PageHero"],
-.terminal-landing-hero[data-slot="root"] {
+.prose pre code {
   background: transparent !important;
-  background-image: none !important;
-  padding: 0 !important;
+  padding: 0;
+  font-size: inherit;
+  color: var(--bothub-text);
+  border: none;
+}
+.prose blockquote {
+  border-left: 3px solid var(--bothub-accent);
+  background: var(--bothub-accent-soft);
+  padding: 12px 20px;
+  border-radius: 0 10px 10px 0;
+  color: var(--bothub-text-dim);
+  font-style: normal;
+}
+.prose table {
+  font-size: 14px;
+  border: 1px solid var(--bothub-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.prose th,
+.prose td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--bothub-border);
+}
+.prose th {
+  background: var(--bothub-bg-soft);
+  font-weight: 600;
+  color: var(--bothub-text);
+  text-align: left;
 }
 
-[data-ui="PageSection"],
-.terminal-section[data-slot="root"] {
-  background: transparent !important;
-  background-image: none !important;
+/* ------------------------------------------------------------
+   16. Search modal (content-search / UContentSearch)
+   ------------------------------------------------------------ */
+.bothub-modal-surface {
+  border-radius: 16px !important;
+  border: 1px solid var(--bothub-border) !important;
+  background: var(--bothub-bg) !important;
+  box-shadow:
+    0 20px 60px -10px rgba(10, 10, 10, 0.25),
+    0 10px 30px -10px rgba(10, 10, 10, 0.12) !important;
+  overflow: hidden !important;
 }
-
-/* ============================================================
-   43. AppHeaderLogo Component Color Override
-   ============================================================ */
-.terminal-logo-prompt {
-  color: var(--terra) !important;
-}
-
-.terminal-logo-text {
-  color: var(--ink) !important;
-}
-
-/* ============================================================
-   44. Dark Mode — Additional Overrides
-   ============================================================ */
-.dark body,
-.dark body::before,
-.dark body::after {
-  background-image: none;
-}
-
-.dark header[data-slot="root"] {
-  background: var(--sand);
-  border-bottom-color: var(--border);
-}
-
-.dark header [data-slot="container"] {
-  background: var(--sand);
-}
-
-.dark .terminal-titlebar {
-  background: var(--sand);
-  border-bottom-color: var(--border);
-}
-
-.dark .terminal-dot.red {
-  background: var(--terra);
-}
-
-.dark .terminal-dot.yellow {
-  background: var(--sand);
-  border-color: var(--terra);
-}
-
-.dark .terminal-dot.green {
-  background: var(--sage);
-}
-
-.dark .ascii-box {
-  background: rgba(42, 35, 28, 0.4);
-}
-
 .dark .bothub-modal-surface {
-  background: var(--cream-light) !important;
-  border-color: var(--border) !important;
+  box-shadow:
+    0 20px 60px -10px rgba(0, 0, 0, 0.7),
+    0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
+}
+.bothub-modal--search {
+  max-width: min(1180px, calc(100vw - 2rem));
 }
 
-.dark .bothub-modal__header,
-.dark .bothub-modal__title {
-  color: var(--ink) !important;
+/* ------------------------------------------------------------
+   17. Footer (UFooter) — tone down
+   ------------------------------------------------------------ */
+footer,
+.u-footer {
+  border-top: 1px solid var(--bothub-border);
+  background: var(--bothub-bg-soft);
+  color: var(--bothub-text-mute);
+  font-size: 13px;
 }
 
-.dark .bothub-modal__description {
-  color: var(--text-muted) !important;
+/* ------------------------------------------------------------
+   18. Responsive
+   ------------------------------------------------------------ */
+@media (max-width: 960px) {
+  .bothub-features { grid-template-columns: repeat(2, 1fr); }
+  .bothub-platform-matrix { grid-template-columns: 1fr; }
+  .bothub-showcase-row { grid-template-columns: 1fr; }
+  .bothub-shot.wide { grid-column: auto; }
+  .bothub-download-box { grid-template-columns: 1fr; padding: 40px 28px; }
+  .bothub-link-grid { grid-template-columns: repeat(2, 1fr); }
+  .bothub-mock-body { grid-template-columns: 1fr; }
+  .bothub-mock-side { display: none; }
+}
+@media (max-width: 640px) {
+  .bothub-features { grid-template-columns: 1fr; }
+  .bothub-link-grid { grid-template-columns: 1fr; }
+  .bothub-download-right { grid-template-columns: 1fr; }
+  .bothub-section { padding: 72px 0; }
+  .bothub-hero { padding: 80px 0 20px; }
+  .bothub-logos-row { gap: 24px; font-size: 13.5px; }
 }
 
-.dark footer[data-slot="root"] {
-  background: var(--bg-page) !important;
-  color: var(--text-muted) !important;
-}
-
-.dark footer[data-slot="root"] [data-slot="container"] {
-  border-top-color: var(--border);
-}
-
-/* Dark mode: docs page overrides */
-.dark body:not(:has(.terminal-landing-hero)) aside[data-slot="left"],
-.dark body:not(:has(.terminal-landing-hero)) nav[data-slot="root"].sticky,
-.dark body:not(:has(.terminal-landing-hero)) div[data-slot="root"].relative.border-b.border-default.py-8,
-.dark body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 {
-  background: var(--cream-light);
-  border-color: var(--border);
-}
-
-.dark body:not(:has(.terminal-landing-hero)) div[data-slot="root"].grid.grid-cols-1.sm\:grid-cols-2.gap-8 [data-slot="link"] {
-  background: var(--cream-light);
-  border-color: var(--border);
-}
-
-.dark body:not(:has(.terminal-landing-hero)) div[data-slot="root"].grid.grid-cols-1.sm\:grid-cols-2.gap-8 [data-slot="link"]:hover {
-  background: var(--sand);
-}
-
-.dark body:not(:has(.terminal-landing-hero)) div[data-slot="root"].grid.grid-cols-1.sm\:grid-cols-2.gap-8 [data-slot="link"] [data-slot="linkLeading"] {
-  border-color: var(--border);
-  background: transparent !important;
-  color: var(--text-primary);
-}
-
-.dark body:not(:has(.terminal-landing-hero)) div[data-slot="root"].grid.grid-cols-1.sm\:grid-cols-2.gap-8 [data-slot="link"]:hover [data-slot="linkLeading"] {
-  border-color: var(--terra);
-  background: rgba(212, 145, 94, 0.14) !important;
-  color: var(--terra);
-}
-
-.dark body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 pre {
-  background: var(--bg-alt) !important;
-  border-color: var(--border);
-}
-
-.dark body:not(:has(.terminal-landing-hero)) .mt-8.pb-24.space-y-12 code {
-  background: rgba(212, 145, 94, 0.12);
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+  .bothub-link-card:hover h4 .arrow,
+  .bothub-dl-card:hover,
+  .bothub-plat-card:hover { transform: none; }
 }

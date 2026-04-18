@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BotHub — Preview (Light)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #fafafa;
+    --surface: #f5f5f5;
+    --surface-2: #eeeeee;
+    --border: #ebebeb;
+    --border-strong: #d4d4d4;
+    --text: #0a0a0a;
+    --text-dim: #525252;
+    --text-mute: #8a8a8a;
+    --accent: #ea580c;
+    --accent-soft: #fff4ed;
+    --ring: rgba(234, 88, 12, 0.18);
+    --success: #16a34a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+  }
+  a { color: inherit; text-decoration: none; }
+  code, pre, .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(14px);
+    background: rgba(255,255,255,0.8);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -0.015em; }
+  .brand-mark {
+    width: 26px; height: 26px; border-radius: 7px;
+    background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+    display: grid; place-items: center;
+    color: #fff; font-weight: 800; font-size: 13px;
+    box-shadow: 0 1px 2px rgba(234,88,12,0.25);
+  }
+  .nav-links { display: flex; gap: 28px; font-size: 14px; color: var(--text-dim); }
+  .nav-links a { transition: color .15s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { display: flex; gap: 8px; align-items: center; }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 16px; border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+    border: 1px solid transparent;
+    transition: all .15s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-primary { background: #0a0a0a; color: #fff; }
+  .btn-primary:hover { background: #262626; }
+  .btn-ghost { background: transparent; color: var(--text); border-color: var(--border-strong); }
+  .btn-ghost:hover { background: var(--surface); border-color: #a3a3a3; }
+  .btn-lg { padding: 13px 22px; font-size: 15px; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; overflow: hidden;
+    padding: 108px 0 40px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(900px 450px at 50% -10%, rgba(251,146,60,0.16), transparent 60%),
+      radial-gradient(700px 300px at 90% 30%, rgba(244,114,182,0.08), transparent 60%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(10,10,10,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,10,10,0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; text-align: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 999px;
+    background: #fff; border: 1px solid var(--border);
+    font-size: 12px; color: var(--text-dim);
+    margin-bottom: 28px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(234,88,12,0.18); }
+  .hero h1 {
+    font-size: clamp(40px, 5.6vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    margin: 0 0 22px;
+    color: #0a0a0a;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #f97316 0%, #e11d48 70%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero p.lead {
+    font-size: 19px; color: var(--text-dim);
+    max-width: 680px; margin: 0 auto 36px;
+    line-height: 1.55;
+  }
+  .hero-cta { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .hero-meta {
+    margin-top: 22px; font-size: 13px; color: var(--text-mute);
+    display: flex; gap: 18px; justify-content: center; flex-wrap: wrap;
+  }
+
+  /* ---------- Product mock ---------- */
+  .mock-wrap {
+    position: relative; margin: 64px auto 0;
+    max-width: 1080px;
+  }
+  .mock-glow {
+    position: absolute; inset: -40px -20px auto -20px; height: 220px;
+    background: radial-gradient(closest-side, rgba(251,146,60,0.22), transparent);
+    filter: blur(40px); pointer-events: none;
+  }
+  .mock {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow:
+      0 30px 80px -20px rgba(10,10,10,0.18),
+      0 10px 30px -10px rgba(10,10,10,0.08),
+      0 0 0 1px rgba(255,255,255,0.6) inset;
+  }
+  .mock-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, #fafafa, #f5f5f5);
+  }
+  .mock-dot { width: 11px; height: 11px; border-radius: 50%; background: #ddd; }
+  .mock-dot.r { background: #ff5f57; } .mock-dot.y { background: #febc2e; } .mock-dot.g { background: #28c840; }
+  .mock-title { margin-left: 12px; font-size: 12px; color: var(--text-mute); font-family: 'JetBrains Mono', monospace; }
+  .mock-body {
+    display: grid; grid-template-columns: 240px 1fr;
+    min-height: 440px;
+  }
+  .mock-side { border-right: 1px solid var(--border); padding: 16px 12px; background: #fafafa; }
+  .mock-side h4 { font-size: 10.5px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 10px; padding: 0 8px; font-weight: 600; }
+  .mock-side ul { list-style: none; padding: 0; margin: 0 0 20px; }
+  .mock-side li {
+    padding: 7px 10px; border-radius: 8px; font-size: 13px; color: var(--text-dim);
+    display: flex; align-items: center; gap: 8px; margin-bottom: 2px;
+  }
+  .mock-side li.active { background: #fff; color: var(--text); box-shadow: 0 1px 2px rgba(0,0,0,0.04); border: 1px solid var(--border); }
+  .mock-side li .avatar {
+    width: 20px; height: 20px; border-radius: 6px; flex: 0 0 20px;
+    background: linear-gradient(135deg, #fb923c, #db2777);
+    font-size: 10px; color: #fff; font-weight: 700;
+    display: grid; place-items: center;
+  }
+  .mock-side li:nth-of-type(2) .avatar { background: linear-gradient(135deg, #60a5fa, #8b5cf6); }
+  .mock-side li:nth-of-type(3) .avatar { background: linear-gradient(135deg, #34d399, #0891b2); }
+
+  .mock-chat { padding: 22px 26px; display: flex; flex-direction: column; gap: 14px; background: #fff; }
+  .msg { max-width: 80%; padding: 10px 14px; border-radius: 12px; font-size: 13.5px; line-height: 1.55; }
+  .msg.user { align-self: flex-end; background: #0a0a0a; color: #fff; }
+  .msg.bot { align-self: flex-start; background: var(--surface); border: 1px solid var(--border); color: var(--text); }
+  .msg.bot .tool {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 8px; padding: 4px 9px; border-radius: 6px;
+    background: var(--accent-soft); color: var(--accent);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
+  }
+  .mock-input {
+    margin: 10px 26px 20px;
+    padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--text-mute); font-size: 13px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .mock-input .model-chip {
+    padding: 3px 9px; border-radius: 6px; background: var(--surface); color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  }
+
+  /* ---------- Provider logos strip ---------- */
+  .logos {
+    padding: 60px 0 40px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-soft);
+  }
+  .logos-label {
+    text-align: center; font-size: 12px; color: var(--text-mute);
+    text-transform: uppercase; letter-spacing: 0.14em; font-weight: 500;
+    margin-bottom: 24px;
+  }
+  .logos-row {
+    display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+    color: var(--text-mute); font-size: 15px; font-weight: 600;
+    opacity: 0.75;
+  }
+  .logos-row span { letter-spacing: -0.01em; }
+
+  /* ---------- Section ---------- */
+  section { padding: 110px 0; }
+  .section-head { max-width: 720px; margin: 0 auto 56px; text-align: center; }
+  .section-eyebrow { font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; margin-bottom: 14px; }
+  .section-head h2 {
+    font-size: clamp(30px, 3.8vw, 46px);
+    letter-spacing: -0.028em; line-height: 1.1; margin: 0 0 16px;
+    font-weight: 700; color: var(--text);
+  }
+  .section-head p { color: var(--text-dim); font-size: 17px; margin: 0; line-height: 1.55; }
+
+  /* ---------- Feature grid ---------- */
+  .features {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 20px; overflow: hidden;
+  }
+  .feature {
+    background: var(--bg);
+    padding: 36px 30px;
+    transition: background .2s ease;
+    position: relative;
+  }
+  .feature:hover { background: var(--bg-soft); }
+  .feature .icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: #fff;
+    border: 1px solid var(--border-strong);
+    display: grid; place-items: center; margin-bottom: 18px;
+    color: var(--accent);
+    font-size: 17px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .feature h3 { font-size: 17px; margin: 0 0 8px; letter-spacing: -0.01em; font-weight: 600; color: var(--text); }
+  .feature p { font-size: 14px; color: var(--text-dim); margin: 0; line-height: 1.55; }
+  .feature .meta { margin-top: 12px; font-size: 11.5px; color: var(--text-mute); font-family: 'JetBrains Mono', monospace; }
+
+  /* ---------- Screenshot showcase ---------- */
+  .showcase { display: grid; gap: 24px; }
+  .showcase-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .shot {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #fafafa, #f0f0f0);
+    aspect-ratio: 16 / 10;
+    display: grid; place-items: center;
+  }
+  .shot.wide { aspect-ratio: 16 / 7; grid-column: span 2; }
+  .shot-tag {
+    position: absolute; top: 16px; left: 16px;
+    padding: 4px 10px; border-radius: 999px;
+    background: rgba(255,255,255,0.9); border: 1px solid var(--border);
+    font-size: 11px; color: var(--text-dim); font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+    backdrop-filter: blur(4px);
+  }
+  .shot-placeholder {
+    text-align: center; color: var(--text-mute); font-size: 13px;
+  }
+  .shot-placeholder .ph-icon {
+    font-size: 32px; margin-bottom: 10px; opacity: 0.4;
+  }
+  .shot-placeholder .ph-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  }
+
+  /* ---------- Platform matrix ---------- */
+  .platform-matrix {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .plat-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 26px;
+    background: var(--bg);
+    transition: all .2s;
+  }
+  .plat-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+  .plat-card.featured { background: linear-gradient(180deg, #fff7ed, #ffffff); border-color: #fdba74; }
+  .plat-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .plat-name { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; }
+  .plat-badge {
+    font-size: 10.5px; padding: 3px 8px; border-radius: 999px;
+    background: var(--success); color: #fff; font-weight: 600; letter-spacing: 0.02em;
+  }
+  .plat-badge.soon { background: var(--surface); color: var(--text-mute); border: 1px solid var(--border); }
+  .plat-card ul { list-style: none; padding: 0; margin: 0; font-size: 13.5px; color: var(--text-dim); }
+  .plat-card li { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px dashed var(--border); }
+  .plat-card li:last-child { border-bottom: none; }
+  .plat-card li::before { content: '→'; color: var(--accent); font-weight: 600; flex: 0 0 12px; }
+
+  /* ---------- Integrations strip ---------- */
+  .integrations {
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 32px;
+  }
+  .int-chip {
+    padding: 10px 16px; border-radius: 10px;
+    background: var(--bg); border: 1px solid var(--border);
+    font-size: 13px; color: var(--text-dim); font-weight: 500;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .int-chip .d { width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
+
+  /* ---------- Download section ---------- */
+  .download-box {
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 56px 48px;
+    background:
+      radial-gradient(700px 300px at 100% 0%, rgba(251,146,60,0.14), transparent 60%),
+      radial-gradient(500px 300px at 0% 100%, rgba(244,114,182,0.06), transparent 60%),
+      #fff;
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center;
+  }
+  .download-box h2 { font-size: 40px; letter-spacing: -0.025em; margin: 0 0 14px; line-height: 1.1; font-weight: 700; }
+  .download-box p.lead2 { color: var(--text-dim); margin: 0 0 24px; font-size: 16px; line-height: 1.55; }
+  .dl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .dl {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px; border: 1px solid var(--border);
+    border-radius: 12px; background: #fff;
+    transition: all .15s ease;
+  }
+  .dl:hover { border-color: var(--border-strong); box-shadow: 0 4px 14px -4px rgba(0,0,0,0.1); transform: translateY(-1px); }
+  .dl .dl-icon { width: 28px; height: 28px; display: grid; place-items: center; font-size: 18px; }
+  .dl .dl-label { font-size: 11.5px; color: var(--text-mute); font-weight: 500; letter-spacing: 0.02em; }
+  .dl .dl-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .version-line { margin-top: 16px; font-size: 12px; color: var(--text-mute); font-family: 'JetBrains Mono', monospace; }
+
+  /* ---------- FAQ / Docs links ---------- */
+  .link-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .link-card {
+    border: 1px solid var(--border); border-radius: 14px;
+    padding: 22px 20px; background: var(--bg);
+    transition: all .15s;
+  }
+  .link-card:hover { background: var(--bg-soft); border-color: var(--border-strong); }
+  .link-card h4 { margin: 0 0 6px; font-size: 14px; font-weight: 600; letter-spacing: -0.005em; display: flex; align-items: center; justify-content: space-between; }
+  .link-card h4 .arrow { color: var(--text-mute); transition: transform .15s; }
+  .link-card:hover h4 .arrow { transform: translateX(3px); color: var(--accent); }
+  .link-card p { margin: 0; font-size: 12.5px; color: var(--text-dim); line-height: 1.5; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 56px 0 44px; margin-top: 40px;
+    color: var(--text-mute); font-size: 13px;
+    background: var(--bg-soft);
+  }
+  .foot-main {
+    display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 40px;
+    margin-bottom: 40px;
+  }
+  .foot-col h5 { font-size: 12px; color: var(--text); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 14px; font-weight: 600; }
+  .foot-col a { display: block; padding: 4px 0; color: var(--text-dim); }
+  .foot-col a:hover { color: var(--text); }
+  .foot-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 24px; border-top: 1px solid var(--border);
+    flex-wrap: wrap; gap: 16px;
+  }
+
+  @media (max-width: 880px) {
+    .features { grid-template-columns: repeat(2, 1fr); }
+    .platform-matrix { grid-template-columns: 1fr; }
+    .showcase-row { grid-template-columns: 1fr; }
+    .shot.wide { grid-column: auto; }
+    .download-box { grid-template-columns: 1fr; padding: 36px 28px; }
+    .mock-body { grid-template-columns: 1fr; }
+    .mock-side { display: none; }
+    .nav-links { display: none; }
+    .link-grid { grid-template-columns: repeat(2, 1fr); }
+    .foot-main { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .features { grid-template-columns: 1fr; }
+    .link-grid { grid-template-columns: 1fr; }
+    .foot-main { grid-template-columns: 1fr; }
+    section { padding: 76px 0; }
+    .hero { padding: 76px 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <div class="brand">
+      <div class="brand-mark">B</div>
+      <span>BotHub</span>
+    </div>
+    <div class="nav-links">
+      <a href="#features">功能</a>
+      <a href="#platforms">平台</a>
+      <a href="#download">下载</a>
+      <a href="#docs">文档</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="#docs">文档</a>
+      <a class="btn btn-primary" href="#download">下载 →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="container hero-inner">
+    <span class="eyebrow">
+      <span class="dot"></span>
+      v1.0.44 · Google Play 已上架
+    </span>
+    <h1>你的 Key，你的数据<br/>和<em>所有模型</em>聊天</h1>
+    <p class="lead">
+      一个本地聊天客户端 — 接你自己的 API Key，切换模型、跑 bash、操控浏览器、
+      跑定时任务、建群让多个 Bot 互相协作。桌面 · Android · iOS。
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary btn-lg" href="#download">立即下载</a>
+      <a class="btn btn-ghost btn-lg" href="#features">查看功能 →</a>
+    </div>
+    <div class="hero-meta">
+      <span>本地优先 · 端到端同步</span>
+      <span>·</span>
+      <span>macOS · Windows · Android · iOS（筹备中）</span>
+    </div>
+
+    <!-- Product mock -->
+    <div class="mock-wrap">
+      <div class="mock-glow"></div>
+      <div class="mock">
+        <div class="mock-bar">
+          <span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span>
+          <span class="mock-title">BotHub · ~/projects/site-redesign</span>
+        </div>
+        <div class="mock-body">
+          <aside class="mock-side">
+            <h4>Bots</h4>
+            <ul>
+              <li class="active"><span class="avatar">K</span>Kira · Claude Opus</li>
+              <li><span class="avatar">R</span>Rex · GPT-5</li>
+              <li><span class="avatar">N</span>Nova · Gemini 2.5</li>
+            </ul>
+            <h4>项目</h4>
+            <ul>
+              <li style="color:var(--text-mute)">· 网站改版</li>
+              <li style="color:var(--text-mute)">· 每日晨报</li>
+              <li style="color:var(--text-mute)">· 研究速览</li>
+            </ul>
+            <h4>群聊</h4>
+            <ul>
+              <li style="color:var(--text-mute)">· 产品评审室</li>
+            </ul>
+          </aside>
+          <div style="display: flex; flex-direction: column; flex: 1;">
+            <div class="mock-chat" style="flex:1;">
+              <div class="msg user">帮我把首页改成浅色 Vercel 风，保留文档路由和账号删除页。</div>
+              <div class="msg bot">
+                好，先扫一遍当前组件和文档结构。
+                <div><span class="tool">🔧 read_dir · components/</span></div>
+                <div><span class="tool">🔧 read_file · content/zh/index.md</span></div>
+                <div><span class="tool">🔧 bash · grep -r "AccountDeletion"</span></div>
+              </div>
+              <div class="msg user">顺便派个子代理去同步改 en 版本。</div>
+              <div class="msg bot">子代理 <code>#2</code> 已派发，并行处理中。我继续首页。</div>
+            </div>
+            <div class="mock-input">
+              <span>输入消息，或按 / 插入技能…</span>
+              <span class="model-chip">claude-opus-4-7</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Provider logos strip -->
+<div class="logos">
+  <div class="container">
+    <div class="logos-label">支持所有主流模型厂商 · 自带 Key，按量计费</div>
+    <div class="logos-row">
+      <span>OpenAI</span>
+      <span>Anthropic</span>
+      <span>Google Gemini</span>
+      <span>DeepSeek</span>
+      <span>硅基流动</span>
+      <span>Ollama</span>
+      <span>自定义 OpenAI 兼容端点</span>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<section id="features">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Built for power users</div>
+      <h2>一个客户端，把 AI 工具链装进来</h2>
+      <p>不是聚合转发，不是订阅服务。请求直达模型厂商，数据存你本地。</p>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="icon">⚡</div>
+        <h3>自带 API Key</h3>
+        <p>OpenAI、Anthropic、Google、DeepSeek、Ollama，或任意 OpenAI 兼容端点。多 Key 轮询，按量计费，无中间商。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">⇄</div>
+        <h3>随时切换模型</h3>
+        <p>聊到一半换模型不用新建对话。每个 Bot 可以绑不同模型，不同任务用不同模型。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🛠</div>
+        <h3>工具调用</h3>
+        <p>bash、文件读写、浏览器自动化、截屏、剪贴板、系统信息。模型不够用？接 MCP Server 扩展。</p>
+        <div class="meta">desktop-only · macOS · Windows</div>
+      </div>
+      <div class="feature">
+        <div class="icon">📚</div>
+        <h3>知识库 RAG</h3>
+        <p>上传 PDF / DOCX / XLSX / 图片 / 网页，向量检索 + 语义重排 + 实体图谱，自动注入上下文。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">⚙</div>
+        <h3>技能 & MCP</h3>
+        <p>把常用操作存成技能，从 GitHub 一键导入。接任意 MCP Server，工具按需授权，每次可审批。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">⏱</div>
+        <h3>定时任务</h3>
+        <p>Cron 或倒计时，Bot 到点自己跑。结果写回对话，或推送到 Webhook / 飞书 / Telegram。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">💬</div>
+        <h3>群聊多 Bot</h3>
+        <p>建群，拉几个 Bot 进来，每个成员可以有不同模型和提示词，互相 @ 引用、接力回复。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">◈</div>
+        <h3>子代理并发</h3>
+        <p>Bot 干活时自己拆任务，派子代理并行跑，结果汇总。复杂任务不用干等。</p>
+      </div>
+      <div class="feature">
+        <div class="icon">☁</div>
+        <h3>本地优先 · 可云同步</h3>
+        <p>离线能用，Key 存系统钥匙串，不经我们服务器。登录后跨端同步对话、Bot、技能。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Screenshot showcase -->
+<section id="showcase" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">In action</div>
+      <h2>看它怎么干活</h2>
+      <p>真实界面，不是营销图。以下为截图占位，替换为发布版截图即可。</p>
+    </div>
+    <div class="showcase">
+      <div class="shot wide">
+        <span class="shot-tag">SHOT · chat + tool-call</span>
+        <div class="shot-placeholder">
+          <div class="ph-icon">🖥</div>
+          <div class="ph-label">主界面：多 Bot 侧栏 + 对话 + 工具调用时间线<br/><span style="opacity:.6">建议尺寸 1920 × 1080</span></div>
+        </div>
+      </div>
+      <div class="showcase-row">
+        <div class="shot">
+          <span class="shot-tag">SHOT · skills</span>
+          <div class="shot-placeholder">
+            <div class="ph-icon">⚙</div>
+            <div class="ph-label">技能编辑器 / MCP 工具管理<br/><span style="opacity:.6">建议尺寸 1600 × 1000</span></div>
+          </div>
+        </div>
+        <div class="shot">
+          <span class="shot-tag">SHOT · knowledge-base</span>
+          <div class="shot-placeholder">
+            <div class="ph-icon">📚</div>
+            <div class="ph-label">知识库 · 文档 + 向量检索<br/><span style="opacity:.6">建议尺寸 1600 × 1000</span></div>
+          </div>
+        </div>
+        <div class="shot">
+          <span class="shot-tag">SHOT · group-chat</span>
+          <div class="shot-placeholder">
+            <div class="ph-icon">💬</div>
+            <div class="ph-label">群聊：多 Bot 协作 / @ 引用<br/><span style="opacity:.6">建议尺寸 1600 × 1000</span></div>
+          </div>
+        </div>
+        <div class="shot">
+          <span class="shot-tag">SHOT · cron</span>
+          <div class="shot-placeholder">
+            <div class="ph-icon">⏱</div>
+            <div class="ph-label">定时任务 · 运行历史<br/><span style="opacity:.6">建议尺寸 1600 × 1000</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Platforms -->
+<section id="platforms" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Platforms</div>
+      <h2>桌面端功能最全，Android 不缩水</h2>
+      <p>核心体验三端一致。每端都有各自的独家能力。</p>
+    </div>
+
+    <div class="platform-matrix">
+      <div class="plat-card featured">
+        <div class="plat-head">
+          <div class="plat-name">🖥 Desktop</div>
+          <span class="plat-badge">FULL</span>
+        </div>
+        <ul>
+          <li>Bash / 文件 / 浏览器自动化</li>
+          <li>剪贴板 / 截屏 / 系统控制</li>
+          <li>飞书 / Telegram / QQ / 微信机器人</li>
+          <li>嵌入式终端 & 会话时间线</li>
+          <li>本地文件附件最大 10 MB</li>
+          <li>macOS · Windows</li>
+        </ul>
+      </div>
+      <div class="plat-card">
+        <div class="plat-head">
+          <div class="plat-name">📱 Android</div>
+          <span class="plat-badge">GOOGLE PLAY</span>
+        </div>
+        <ul>
+          <li>电脑控制 Agent（屏幕 + 手势）</li>
+          <li>系统分享处理：Ask / 翻译 / 总结 / 改写</li>
+          <li>系统 TTS 朗读回复</li>
+          <li>悬浮 Agent 概览 UI</li>
+          <li>云同步、群聊、子代理</li>
+          <li>Google Play · APK 直装</li>
+        </ul>
+      </div>
+      <div class="plat-card">
+        <div class="plat-head">
+          <div class="plat-name">🍎 iOS</div>
+          <span class="plat-badge soon">筹备中</span>
+        </div>
+        <ul>
+          <li>核心对话 · 云同步</li>
+          <li>通过 Mac 桌面共享工具能力</li>
+          <li>上架时间：等 TestFlight 通知</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="integrations">
+      <span class="int-chip"><span class="d"></span>飞书 Bot</span>
+      <span class="int-chip"><span class="d"></span>Telegram</span>
+      <span class="int-chip"><span class="d"></span>QQ 频道</span>
+      <span class="int-chip"><span class="d"></span>微信 iLink</span>
+      <span class="int-chip"><span class="d"></span>Webhook 出站</span>
+      <span class="int-chip"><span class="d"></span>S3 / WebDAV 备份</span>
+    </div>
+  </div>
+</section>
+
+<!-- Download -->
+<section id="download" style="padding-top: 0;">
+  <div class="container">
+    <div class="download-box">
+      <div>
+        <div class="section-eyebrow">Available now</div>
+        <h2>选个平台，开始用</h2>
+        <p class="lead2">下载后自带免费额度可体验，之后填入自己的 API Key 即可。</p>
+        <a class="btn btn-primary btn-lg" href="#docs">阅读快速开始 →</a>
+        <div class="version-line">version 1.0.44 · updated just now</div>
+      </div>
+      <div class="dl-grid">
+        <a class="dl" href="#">
+          <div class="dl-icon">🍎</div>
+          <div><div class="dl-label">MACOS · DMG</div><div class="dl-name">Apple Silicon / Intel</div></div>
+        </a>
+        <a class="dl" href="#">
+          <div class="dl-icon">🪟</div>
+          <div><div class="dl-label">WINDOWS · EXE</div><div class="dl-name">Win 10+</div></div>
+        </a>
+        <a class="dl" href="#">
+          <div class="dl-icon">▶</div>
+          <div><div class="dl-label">GOOGLE PLAY</div><div class="dl-name">Android · 推荐</div></div>
+        </a>
+        <a class="dl" href="#">
+          <div class="dl-icon">⬇</div>
+          <div><div class="dl-label">APK · 直装</div><div class="dl-name">Android</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Docs / FAQ / Privacy quick links -->
+<section id="docs" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Resources</div>
+      <h2>需要帮助？</h2>
+      <p>快速开始、功能手册、FAQ、隐私与账号。</p>
+    </div>
+
+    <div class="link-grid">
+      <a class="link-card" href="#">
+        <h4>快速开始<span class="arrow">→</span></h4>
+        <p>5 分钟跑通：安装、填 Key、发第一条消息。</p>
+      </a>
+      <a class="link-card" href="#">
+        <h4>功能手册<span class="arrow">→</span></h4>
+        <p>API 提供商、对话与上下文、MCP、技能、定时任务。</p>
+      </a>
+      <a class="link-card" href="#">
+        <h4>常见问题<span class="arrow">→</span></h4>
+        <p>下载慢、安装报错、API 失败等常见处理。</p>
+      </a>
+      <a class="link-card" href="#">
+        <h4>隐私 & 账号删除<span class="arrow">→</span></h4>
+        <p>我们收集什么、存在哪，以及如何删除云端账号。</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="foot-main">
+      <div>
+        <div class="brand" style="font-size: 14px; margin-bottom: 12px;">
+          <div class="brand-mark">B</div>
+          <span>BotHub</span>
+        </div>
+        <p style="margin: 0; color: var(--text-mute); font-size: 12.5px; max-width: 280px; line-height: 1.55;">
+          一个聊天客户端，把所有 AI 工具链装进本地。
+        </p>
+      </div>
+      <div class="foot-col">
+        <h5>产品</h5>
+        <a href="#features">功能</a>
+        <a href="#download">下载</a>
+        <a href="#">更新日志</a>
+        <a href="#">路线图</a>
+      </div>
+      <div class="foot-col">
+        <h5>文档</h5>
+        <a href="#">快速开始</a>
+        <a href="#">功能手册</a>
+        <a href="#">常见问题</a>
+        <a href="#">API 提供商</a>
+      </div>
+      <div class="foot-col">
+        <h5>其他</h5>
+        <a href="#">隐私政策</a>
+        <a href="#">账号删除</a>
+        <a href="#">加入 QQ 群</a>
+        <a href="#">切换语言</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 BotHub · v1.0.44</span>
+      <span style="color:var(--text-mute);">Made with ❤ · 中文 / English</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

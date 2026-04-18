@@ -11,13 +11,15 @@ const QQ_GROUP_ID = '292036480'
 <template>
   <a
     :href="QQ_GROUP_URL"
-    class="term-download-link"
+    class="bothub-qq-button"
     target="_blank"
     rel="noopener"
     :title="`${props.idLabel}: ${QQ_GROUP_ID}`"
   >
-    <span class="term-prompt">&gt;</span>
-    <span class="term-cmd-text">connect --group={{ QQ_GROUP_ID }}</span>
-    <span class="term-label"><slot>{{ props.label }}</slot></span>
+    <span class="bothub-qq-icon">QQ</span>
+    <span class="bothub-qq-text">
+      <slot>{{ props.label }}</slot>
+      <span class="bothub-qq-id">#{{ QQ_GROUP_ID }}</span>
+    </span>
   </a>
 </template>

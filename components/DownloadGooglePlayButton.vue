@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{ label?: string }>(), {
-  label: 'Google Play',
+  label: 'Recommended',
 })
 
 const DEFAULT_GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.jiangzikang.bothub'
@@ -26,12 +26,20 @@ const downloadHref = computed(() => {
 <template>
   <a
     :href="downloadHref"
-    class="term-download-link"
+    class="bothub-dl-card"
+    data-platform="google-play"
     target="_blank"
     rel="noopener"
   >
-    <span class="term-prompt">&gt;</span>
-    <span class="term-cmd-text">./install --platform=android</span>
-    <span class="term-label"><slot>{{ props.label }}</slot></span>
+    <span class="bothub-dl-icon">
+      <UIcon name="i-lucide-play" />
+    </span>
+    <span class="bothub-dl-body">
+      <span class="bothub-dl-main">Google Play</span>
+      <span class="bothub-dl-sub">
+        <slot>{{ props.label }}</slot>
+      </span>
+    </span>
+    <span class="bothub-dl-version">Android</span>
   </a>
 </template>
