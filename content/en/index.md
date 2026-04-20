@@ -15,8 +15,8 @@ seo:
 <span class="bothub-eyebrow-sep">·</span>
 <span>Now on Google Play</span>
 </span>
-<h1 class="bothub-hero-title">Your keys. Your data.<br/>Chat with <em>any model</em>.</h1>
-<p class="bothub-hero-lead">A local chat client that uses your own API keys. Switch models, run bash, drive a browser, schedule tasks, or spin up a group of bots that work together. Desktop · Android · iOS.</p>
+<h1 class="bothub-hero-title">Run <em>Claude Code / Codex</em><br/>from your phone.</h1>
+<p class="bothub-hero-lead">A local chat client. Pair your phone with the Mac or Windows at home or at work — open a terminal, run commands, approve actions, watch output from your pocket. Plus your own API keys, model switching, bash, scheduled tasks, and group chats with multiple bots. Desktop · Android · iOS.</p>
 <div class="bothub-hero-cta">
 <a href="#download" class="bothub-btn bothub-btn-primary">Download</a>
 <a href="#features" class="bothub-btn bothub-btn-ghost">See features →</a>
@@ -97,6 +97,12 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 </div>
 <div class="bothub-features">
 <div class="bothub-feature">
+<div class="bothub-feature-icon">📲</div>
+<h3>Run Claude Code / Codex from your phone</h3>
+<p>Sign in on your phone and you're already connected to your Mac or Windows at home or at work. Open a terminal, run Claude Code or Codex, approve actions, watch output — all from your pocket. Works across networks.</p>
+<div class="bothub-feature-meta">mobile → desktop</div>
+</div>
+<div class="bothub-feature">
 <div class="bothub-feature-icon">⚡</div>
 <h3>Bring your own key</h3>
 <p>OpenAI, Anthropic, Google, DeepSeek, Ollama — or any OpenAI-compatible endpoint. Multi-key rotation. Pay by usage, no middleman.</p>
@@ -136,12 +142,6 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 <div class="bothub-feature-icon">◈</div>
 <h3>Parallel sub-agents</h3>
 <p>Bots can split a task into sub-agents and run them in parallel. Complex work doesn't block on a single thread.</p>
-</div>
-<div class="bothub-feature">
-<div class="bothub-feature-icon">📲</div>
-<h3>Run Claude Code / Codex from your phone</h3>
-<p>Sign in on your phone and you're already connected to your Mac or Windows at home or at work. Open a terminal, run Claude Code or Codex, approve actions, watch output — all from your pocket. Works across networks.</p>
-<div class="bothub-feature-meta">mobile → desktop</div>
 </div>
 </div>
 </div>
@@ -215,8 +215,8 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 <div class="bothub-download-right">
 <download-mac-button label="Apple Silicon / Intel"></download-mac-button>
 <download-windows-button label="Win 10+"></download-windows-button>
-<download-google-play-button label="Recommended"></download-google-play-button>
-<download-apk-button label="APK · sideload"></download-apk-button>
+<download-google-play-button label="Auto-update"></download-google-play-button>
+<download-apk-button label="Latest build · sideload"></download-apk-button>
 </div>
 <div class="bothub-version-line"><version-badge label=""></version-badge> · latest release</div>
 </div>

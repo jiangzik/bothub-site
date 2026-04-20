@@ -15,8 +15,8 @@ seo:
 <span class="bothub-eyebrow-sep">·</span>
 <span>Google Play 已上架</span>
 </span>
-<h1 class="bothub-hero-title">你的 Key，你的数据<br/>和<em>所有模型</em>聊天</h1>
-<p class="bothub-hero-lead">一个本地聊天客户端 — 接你自己的 API Key，切换模型、跑 bash、操控浏览器、跑定时任务、建群让多个 Bot 互相协作。桌面 · Android · iOS。</p>
+<h1 class="bothub-hero-title">用手机跑<br/><em>Claude Code / Codex</em></h1>
+<p class="bothub-hero-lead">一个本地聊天客户端 — 手机连回家里或公司的 Mac / Win，开终端跑命令、审批操作、看输出。也能接自己的 Key 切换模型，跑 bash、定时任务、多 Bot 群聊。桌面 · Android · iOS。</p>
 <div class="bothub-hero-cta">
 <a href="#download" class="bothub-btn bothub-btn-primary">立即下载</a>
 <a href="#features" class="bothub-btn bothub-btn-ghost">查看功能 →</a>
@@ -97,6 +97,12 @@ seo:
 </div>
 <div class="bothub-features">
 <div class="bothub-feature">
+<div class="bothub-feature-icon">📲</div>
+<h3>手机远程跑 Claude Code / Codex</h3>
+<p>手机登录同一个账号，就能连回家里或公司的 Mac / Win。开终端、跑 Claude Code 或 Codex、审批操作、看输出，都在口袋里搞定。不在同一个网络也能连。</p>
+<div class="bothub-feature-meta">mobile → desktop</div>
+</div>
+<div class="bothub-feature">
 <div class="bothub-feature-icon">⚡</div>
 <h3>自带 API Key</h3>
 <p>OpenAI、Anthropic、Google、DeepSeek、Ollama，或任意 OpenAI 兼容端点。多 Key 轮询，按量计费，无中间商。</p>
@@ -136,12 +142,6 @@ seo:
 <div class="bothub-feature-icon">◈</div>
 <h3>子代理并发</h3>
 <p>Bot 干活时自己拆任务，派子代理并行跑，结果汇总。复杂任务不用干等。</p>
-</div>
-<div class="bothub-feature">
-<div class="bothub-feature-icon">📲</div>
-<h3>手机远程跑 Claude Code / Codex</h3>
-<p>手机登录同一个账号，就能连回家里或公司的 Mac / Win。开终端、跑 Claude Code 或 Codex、审批操作、看输出，都在口袋里搞定。不在同一个网络也能连。</p>
-<div class="bothub-feature-meta">mobile → desktop</div>
 </div>
 </div>
 </div>
@@ -215,8 +215,8 @@ seo:
 <div class="bothub-download-right">
 <download-mac-button label="Apple Silicon / Intel"></download-mac-button>
 <download-windows-button label="Win 10+"></download-windows-button>
-<download-google-play-button label="推荐"></download-google-play-button>
-<download-apk-button label="APK · 直装"></download-apk-button>
+<download-google-play-button label="自动更新"></download-google-play-button>
+<download-apk-button label="最新版 · 直装"></download-apk-button>
 </div>
 <div class="bothub-version-line"><version-badge label=""></version-badge> · 最新发布</div>
 </div>
