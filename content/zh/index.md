@@ -22,7 +22,7 @@ seo:
 <a href="#features" class="bothub-btn bothub-btn-ghost">查看功能 →</a>
 </div>
 <div class="bothub-hero-meta">
-<span>本地优先 · 端到端同步</span>
+<span>本地优先</span>
 <span class="bothub-hero-sep">·</span>
 <span>macOS · Windows · Android · iOS（筹备中）</span>
 </div>
@@ -178,7 +178,7 @@ seo:
 <li>电脑控制 Agent（屏幕 + 手势）</li>
 <li>系统分享处理：Ask / 翻译 / 总结 / 改写</li>
 <li>系统 TTS 朗读回复 · 悬浮 Agent UI</li>
-<li>云同步、群聊、子代理</li>
+<li>群聊、子代理</li>
 <li>Google Play · APK 直装</li>
 </ul>
 </div>
@@ -188,7 +188,7 @@ seo:
 <span class="bothub-plat-badge soon">筹备中</span>
 </div>
 <ul>
-<li>核心对话 · 云同步</li>
+<li>核心对话</li>
 <li>通过 Mac 桌面共享工具能力</li>
 <li>上架时间：等 TestFlight 通知</li>
 </ul>

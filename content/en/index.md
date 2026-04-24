@@ -22,7 +22,7 @@ seo:
 <a href="#features" class="bothub-btn bothub-btn-ghost">See features →</a>
 </div>
 <div class="bothub-hero-meta">
-<span>Local-first · End-to-end sync</span>
+<span>Local-first</span>
 <span class="bothub-hero-sep">·</span>
 <span>macOS · Windows · Android · iOS (soon)</span>
 </div>
@@ -178,7 +178,7 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 <li>Computer-control agent (screen + gestures)</li>
 <li>Share-sheet handler: Ask / Translate / Summarize / Rewrite</li>
 <li>System TTS · floating agent overlay</li>
-<li>Cloud sync, group chat, sub-agents</li>
+<li>Group chat, sub-agents</li>
 <li>Google Play · APK sideload</li>
 </ul>
 </div>
@@ -188,7 +188,7 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 <span class="bothub-plat-badge soon">Coming</span>
 </div>
 <ul>
-<li>Core chat · cloud sync</li>
+<li>Core chat</li>
 <li>Tool capabilities via paired Mac desktop</li>
 <li>TestFlight invite coming</li>
 </ul>
