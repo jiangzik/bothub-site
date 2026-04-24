@@ -218,6 +218,7 @@ seo:
 <download-google-play-button label="自动更新"></download-google-play-button>
 <download-apk-button label="最新版 · 直装"></download-apk-button>
 </div>
+<div class="bothub-download-note">🍎 macOS 首次打开若提示"已损坏"？应用未签名所致，非真损坏 — 查看 <a href="/zh/quick-start/macos-install">macOS 安装指南</a> 一键放行。</div>
 <div class="bothub-version-line"><version-badge label=""></version-badge> · 最新发布</div>
 </div>
 </div>

@@ -979,6 +979,26 @@ header [data-slot='center'] {
   gap: 6px;
   text-align: center;
 }
+.bothub-download-note {
+  margin-top: 18px;
+  max-width: 620px;
+  padding: 10px 16px;
+  border: 1px solid var(--bothub-border);
+  border-radius: 10px;
+  background: rgba(251, 146, 60, 0.06);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--bothub-text-dim);
+  text-align: center;
+}
+.bothub-download-note a {
+  color: var(--bothub-accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.bothub-download-note a:hover {
+  text-decoration: underline;
+}
 
 /* Bigger download cards — these are the primary CTA of the section */
 .bothub-download-right .bothub-dl-card {

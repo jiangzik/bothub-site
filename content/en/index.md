@@ -218,6 +218,7 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 <download-google-play-button label="Auto-update"></download-google-play-button>
 <download-apk-button label="Latest build · sideload"></download-apk-button>
 </div>
+<div class="bothub-download-note">🍎 macOS shows "is damaged" on first launch? The app is unsigned, not actually damaged — see the <a href="/en/quick-start/macos-install">macOS Install Guide</a> to unblock.</div>
 <div class="bothub-version-line"><version-badge label=""></version-badge> · latest release</div>
 </div>
 </div>
