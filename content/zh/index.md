@@ -16,7 +16,7 @@ seo:
 <span>Google Play 已上架</span>
 </span>
 <h1 class="bothub-hero-title">用手机跑<br/><em>Claude Code / Codex</em></h1>
-<p class="bothub-hero-lead">一个本地聊天客户端 — 手机连回家里或公司的 Mac / Win，开终端跑命令、审批操作、看输出。也能接自己的 Key 切换模型，跑 bash、定时任务、多 Bot 群聊。桌面 · Android · iOS。</p>
+<p class="bothub-hero-lead">一个本地聊天客户端 — 手机连回家里或公司的 Mac / Win，开终端跑命令、审批操作、看输出。也能接自己的 Key 切换模型，跑 bash、定时任务、IM 机器人桥接。桌面 · Android · iOS。</p>
 <div class="bothub-hero-cta">
 <a href="#download" class="bothub-btn bothub-btn-primary">立即下载</a>
 <a href="#features" class="bothub-btn bothub-btn-ghost">查看功能 →</a>
@@ -47,9 +47,9 @@ seo:
 <li class="dim">· 每日晨报</li>
 <li class="dim">· 研究速览</li>
 </ul>
-<h4>群聊</h4>
+<h4>定时任务</h4>
 <ul>
-<li class="dim">· 产品评审室</li>
+<li class="dim">· 每天 09:00 AI 日报</li>
 </ul>
 </aside>
 <div class="bothub-mock-main">
@@ -135,8 +135,9 @@ seo:
 </div>
 <div class="bothub-feature">
 <div class="bothub-feature-icon">💬</div>
-<h3>群聊多 Bot</h3>
-<p>建群，拉几个 Bot 进来，每个成员可以有不同模型和提示词，互相 @ 引用、接力回复。</p>
+<h3>IM 机器人桥接</h3>
+<p>把对话能力推到飞书 / Telegram / QQ / 微信，每条消息都走 BotHub。桌面端原生支持，Android 端同样可用。</p>
+<div class="bothub-feature-meta">desktop · android</div>
 </div>
 <div class="bothub-feature">
 <div class="bothub-feature-icon">◈</div>
@@ -178,7 +179,7 @@ seo:
 <li>电脑控制 Agent（屏幕 + 手势）</li>
 <li>系统分享处理：Ask / 翻译 / 总结 / 改写</li>
 <li>系统 TTS 朗读回复 · 悬浮 Agent UI</li>
-<li>群聊、子代理</li>
+<li>飞书 / Telegram / QQ 机器人 · 子代理</li>
 <li>Google Play · APK 直装</li>
 </ul>
 </div>

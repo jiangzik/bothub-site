@@ -16,7 +16,7 @@ seo:
 <span>Now on Google Play</span>
 </span>
 <h1 class="bothub-hero-title">Run <em>Claude Code / Codex</em><br/>from your phone.</h1>
-<p class="bothub-hero-lead">A local chat client. Pair your phone with the Mac or Windows at home or at work — open a terminal, run commands, approve actions, watch output from your pocket. Plus your own API keys, model switching, bash, scheduled tasks, and group chats with multiple bots. Desktop · Android · iOS.</p>
+<p class="bothub-hero-lead">A local chat client. Pair your phone with the Mac or Windows at home or at work — open a terminal, run commands, approve actions, watch output from your pocket. Plus your own API keys, model switching, bash, scheduled tasks, and IM bot bridges. Desktop · Android · iOS.</p>
 <div class="bothub-hero-cta">
 <a href="#download" class="bothub-btn bothub-btn-primary">Download</a>
 <a href="#features" class="bothub-btn bothub-btn-ghost">See features →</a>
@@ -47,9 +47,9 @@ seo:
 <li class="dim">· Daily digest</li>
 <li class="dim">· Research brief</li>
 </ul>
-<h4>Groups</h4>
+<h4>Scheduled</h4>
 <ul>
-<li class="dim">· Product review</li>
+<li class="dim">· AI brief · 9:00 daily</li>
 </ul>
 </aside>
 <div class="bothub-mock-main">
@@ -135,8 +135,9 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 </div>
 <div class="bothub-feature">
 <div class="bothub-feature-icon">💬</div>
-<h3>Group chats with bots</h3>
-<p>Create a group, add a few bots. Each member has its own model and prompt. They can @-mention and quote each other.</p>
+<h3>IM bot bridges</h3>
+<p>Push your chats to Feishu, Telegram, QQ, or WeChat — every message routes through BotHub. Native on desktop, also available on Android.</p>
+<div class="bothub-feature-meta">desktop · android</div>
 </div>
 <div class="bothub-feature">
 <div class="bothub-feature-icon">◈</div>
@@ -178,7 +179,7 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 <li>Computer-control agent (screen + gestures)</li>
 <li>Share-sheet handler: Ask / Translate / Summarize / Rewrite</li>
 <li>System TTS · floating agent overlay</li>
-<li>Group chat, sub-agents</li>
+<li>Feishu / Telegram / QQ bots · sub-agents</li>
 <li>Google Play · APK sideload</li>
 </ul>
 </div>
