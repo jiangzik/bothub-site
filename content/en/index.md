@@ -1,7 +1,7 @@
 ---
 seo:
   title: BotHub — A local chat client with your own API keys
-  description: BotHub — a local chat client that uses your own API keys. macOS, Windows, Android. iOS in progress.
+  description: BotHub — a local chat client that uses your own API keys. macOS, Windows, Android, Linux (untested). iOS in progress.
 ---
 
 <div class="bothub-landing">
@@ -24,7 +24,7 @@ seo:
 <div class="bothub-hero-meta">
 <span>Local-first</span>
 <span class="bothub-hero-sep">·</span>
-<span>macOS · Windows · Android · iOS (soon)</span>
+<span>macOS · Windows · Android · Linux (untested) · iOS (soon)</span>
 </div>
 <div class="bothub-mock-wrap">
 <div class="bothub-mock-glow"></div>
@@ -57,9 +57,9 @@ seo:
 <div class="bothub-msg user">Pull the top AI news from the past week into a daily brief.</div>
 <div class="bothub-msg bot">
 Sure — fanning out to a few sources and writing to <code>~/reports</code>.
-<div><span class="bothub-tool">🔧 web_search · "AI news past 7 days"</span></div>
-<div><span class="bothub-tool">🔧 web_fetch · techcrunch.com/ai</span></div>
-<div><span class="bothub-tool">🔧 write_file · ~/reports/ai-daily-0417.md</span></div>
+<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> web_search · "AI news past 7 days"</span></div>
+<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> web_fetch · techcrunch.com/ai</span></div>
+<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> write_file · ~/reports/ai-daily-0417.md</span></div>
 </div>
 <div class="bothub-msg user">Nice. Schedule this to run 9am every day.</div>
 <div class="bothub-msg bot">Done — <code>cron 0 9 * * *</code>. Brief lands in your inbox daily at 9:00.</div>
@@ -97,50 +97,50 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 </div>
 <div class="bothub-features">
 <div class="bothub-feature">
-<div class="bothub-feature-icon">📲</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-smartphone-charging" /></div>
 <h3>Run Claude Code / Codex from your phone</h3>
 <p>Sign in on your phone and you're already connected to your Mac or Windows at home or at work. Open a terminal, run Claude Code or Codex, approve actions, watch output — all from your pocket. Works across networks.</p>
 <div class="bothub-feature-meta">mobile → desktop</div>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">⚡</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-key-round" /></div>
 <h3>Bring your own key</h3>
 <p>OpenAI, Anthropic, Google, DeepSeek, Ollama — or any OpenAI-compatible endpoint. Multi-key rotation. Pay by usage, no middleman.</p>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">⇄</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-shuffle" /></div>
 <h3>Switch models anytime</h3>
 <p>Swap models mid-conversation without starting over. Each bot can bind to a different model — match the model to the task.</p>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">🛠</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-wrench" /></div>
 <h3>Tool use, built in</h3>
 <p>Bash, file I/O, browser automation, screenshot, clipboard, system info. Need more? Plug in any MCP server.</p>
 <div class="bothub-feature-meta">desktop-only · macOS · Windows</div>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">📚</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-library" /></div>
 <h3>Knowledge base RAG</h3>
 <p>Upload PDFs, DOCX, XLSX, images, or web pages. Vector search + semantic rerank + entity graph, injected into context automatically.</p>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">⚙</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-puzzle" /></div>
 <h3>Skills & MCP</h3>
 <p>Save workflows as skills or import from GitHub. Connect any MCP server, with per-tool approval policies.</p>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">⏱</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-clock" /></div>
 <h3>Scheduled tasks</h3>
 <p>Cron or countdown. The bot runs on its own. Results flow back to the chat, or out to Webhook / Feishu / Telegram.</p>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">💬</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-message-square-share" /></div>
 <h3>IM bot bridges</h3>
 <p>Push your chats to Feishu, Telegram, QQ, or WeChat — every message routes through BotHub. Native on desktop, also available on Android.</p>
 <div class="bothub-feature-meta">desktop · android</div>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">◈</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-network" /></div>
 <h3>Parallel sub-agents</h3>
 <p>Bots can split a task into sub-agents and run them in parallel. Complex work doesn't block on a single thread.</p>
 </div>
@@ -157,7 +157,7 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 <div class="bothub-platform-matrix">
 <div class="bothub-plat-card featured">
 <div class="bothub-plat-head">
-<div class="bothub-plat-name">🖥 Desktop</div>
+<div class="bothub-plat-name"><bothub-icon name="i-lucide-monitor" /> Desktop</div>
 <span class="bothub-plat-badge">FULL</span>
 </div>
 <ul>
@@ -171,7 +171,7 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 </div>
 <div class="bothub-plat-card">
 <div class="bothub-plat-head">
-<div class="bothub-plat-name">📱 Android</div>
+<div class="bothub-plat-name"><bothub-icon name="i-lucide-smartphone" /> Android</div>
 <span class="bothub-plat-badge">GOOGLE PLAY</span>
 </div>
 <ul>
@@ -185,7 +185,7 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 </div>
 <div class="bothub-plat-card">
 <div class="bothub-plat-head">
-<div class="bothub-plat-name">🍎 iOS</div>
+<div class="bothub-plat-name"><bothub-icon name="i-lucide-apple" /> iOS</div>
 <span class="bothub-plat-badge soon">Coming</span>
 </div>
 <ul>
@@ -218,8 +218,9 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 <download-windows-button label="Win 10+"></download-windows-button>
 <download-google-play-button label="Auto-update"></download-google-play-button>
 <download-apk-button label="Latest build · sideload"></download-apk-button>
+<download-linux-button label="AppImage · untested"></download-linux-button>
 </div>
-<div class="bothub-download-note">🍎 macOS shows "is damaged" on first launch? The app is unsigned, not actually damaged — see the <a href="/en/quick-start/macos-install">macOS Install Guide</a> to unblock.</div>
+<div class="bothub-download-note"><bothub-icon name="i-lucide-apple" /> macOS shows "is damaged" on first launch? The app is unsigned, not actually damaged — see the <a href="/en/quick-start/macos-install">macOS Install Guide</a> to unblock. The Linux build hasn't been thoroughly tested yet — feedback welcome.</div>
 <div class="bothub-version-line"><version-badge label=""></version-badge> · latest release</div>
 </div>
 </div>

@@ -1,7 +1,7 @@
 ---
 seo:
   title: BotHub — 本地聊天客户端，接你自己的 Key
-  description: BotHub 官网 — 一个本地聊天客户端，接自己的 API Key，支持 macOS、Windows、Android，iOS 筹备中。
+  description: BotHub 官网 — 一个本地聊天客户端，接自己的 API Key，支持 macOS、Windows、Android、Linux（未经测试），iOS 筹备中。
 ---
 
 <div class="bothub-landing">
@@ -24,7 +24,7 @@ seo:
 <div class="bothub-hero-meta">
 <span>本地优先</span>
 <span class="bothub-hero-sep">·</span>
-<span>macOS · Windows · Android · iOS（筹备中）</span>
+<span>macOS · Windows · Android · Linux（未经测试） · iOS（筹备中）</span>
 </div>
 <div class="bothub-mock-wrap">
 <div class="bothub-mock-glow"></div>
@@ -57,9 +57,9 @@ seo:
 <div class="bothub-msg user">帮我查下最近一周 AI 圈的大新闻，整理成日报。</div>
 <div class="bothub-msg bot">
 好，从几个来源汇总，写到 <code>~/reports</code>。
-<div><span class="bothub-tool">🔧 web_search · "AI news past 7 days"</span></div>
-<div><span class="bothub-tool">🔧 web_fetch · techcrunch.com/ai</span></div>
-<div><span class="bothub-tool">🔧 write_file · ~/reports/ai-daily-0417.md</span></div>
+<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> web_search · "AI news past 7 days"</span></div>
+<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> web_fetch · techcrunch.com/ai</span></div>
+<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> write_file · ~/reports/ai-daily-0417.md</span></div>
 </div>
 <div class="bothub-msg user">不错，配个定时任务每天早上 9 点自动跑一次。</div>
 <div class="bothub-msg bot">已创建 <code>cron 0 9 * * *</code>，每天 9:00 自动汇总并发到你邮箱。</div>
@@ -97,50 +97,50 @@ seo:
 </div>
 <div class="bothub-features">
 <div class="bothub-feature">
-<div class="bothub-feature-icon">📲</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-smartphone-charging" /></div>
 <h3>手机远程跑 Claude Code / Codex</h3>
 <p>手机登录同一个账号，就能连回家里或公司的 Mac / Win。开终端、跑 Claude Code 或 Codex、审批操作、看输出，都在口袋里搞定。不在同一个网络也能连。</p>
 <div class="bothub-feature-meta">mobile → desktop</div>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">⚡</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-key-round" /></div>
 <h3>自带 API Key</h3>
 <p>OpenAI、Anthropic、Google、DeepSeek、Ollama，或任意 OpenAI 兼容端点。多 Key 轮询，按量计费，无中间商。</p>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">⇄</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-shuffle" /></div>
 <h3>随时切换模型</h3>
 <p>聊到一半换模型不用新建对话。每个 Bot 可以绑不同模型，不同任务用不同模型。</p>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">🛠</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-wrench" /></div>
 <h3>工具调用</h3>
 <p>bash、文件读写、浏览器自动化、截屏、剪贴板、系统信息。模型不够用？接 MCP Server 扩展。</p>
 <div class="bothub-feature-meta">desktop-only · macOS · Windows</div>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">📚</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-library" /></div>
 <h3>知识库 RAG</h3>
 <p>上传 PDF / DOCX / XLSX / 图片 / 网页，向量检索 + 语义重排 + 实体图谱，自动注入上下文。</p>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">⚙</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-puzzle" /></div>
 <h3>技能 & MCP</h3>
 <p>把常用操作存成技能，从 GitHub 一键导入。接任意 MCP Server，工具按需授权，每次可审批。</p>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">⏱</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-clock" /></div>
 <h3>定时任务</h3>
 <p>Cron 或倒计时，Bot 到点自己跑。结果写回对话，或推送到 Webhook / 飞书 / Telegram。</p>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">💬</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-message-square-share" /></div>
 <h3>IM 机器人桥接</h3>
 <p>把对话能力推到飞书 / Telegram / QQ / 微信，每条消息都走 BotHub。桌面端原生支持，Android 端同样可用。</p>
 <div class="bothub-feature-meta">desktop · android</div>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon">◈</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-network" /></div>
 <h3>子代理并发</h3>
 <p>Bot 干活时自己拆任务，派子代理并行跑，结果汇总。复杂任务不用干等。</p>
 </div>
@@ -157,7 +157,7 @@ seo:
 <div class="bothub-platform-matrix">
 <div class="bothub-plat-card featured">
 <div class="bothub-plat-head">
-<div class="bothub-plat-name">🖥 Desktop</div>
+<div class="bothub-plat-name"><bothub-icon name="i-lucide-monitor" /> Desktop</div>
 <span class="bothub-plat-badge">FULL</span>
 </div>
 <ul>
@@ -171,7 +171,7 @@ seo:
 </div>
 <div class="bothub-plat-card">
 <div class="bothub-plat-head">
-<div class="bothub-plat-name">📱 Android</div>
+<div class="bothub-plat-name"><bothub-icon name="i-lucide-smartphone" /> Android</div>
 <span class="bothub-plat-badge">GOOGLE PLAY</span>
 </div>
 <ul>
@@ -185,7 +185,7 @@ seo:
 </div>
 <div class="bothub-plat-card">
 <div class="bothub-plat-head">
-<div class="bothub-plat-name">🍎 iOS</div>
+<div class="bothub-plat-name"><bothub-icon name="i-lucide-apple" /> iOS</div>
 <span class="bothub-plat-badge soon">筹备中</span>
 </div>
 <ul>
@@ -218,8 +218,9 @@ seo:
 <download-windows-button label="Win 10+"></download-windows-button>
 <download-google-play-button label="自动更新"></download-google-play-button>
 <download-apk-button label="最新版 · 直装"></download-apk-button>
+<download-linux-button label="AppImage · 未经测试"></download-linux-button>
 </div>
-<div class="bothub-download-note">🍎 macOS 首次打开若提示"已损坏"？应用未签名所致，非真损坏 — 查看 <a href="/zh/quick-start/macos-install">macOS 安装指南</a> 一键放行。</div>
+<div class="bothub-download-note"><bothub-icon name="i-lucide-apple" /> macOS 首次打开若提示"已损坏"？应用未签名所致，非真损坏 — 查看 <a href="/zh/quick-start/macos-install">macOS 安装指南</a> 一键放行。Linux 版本暂未充分测试，遇到问题欢迎反馈。</div>
 <div class="bothub-version-line"><version-badge label=""></version-badge> · 最新发布</div>
 </div>
 </div>

@@ -32,7 +32,7 @@ const downloadHref = computed(() => {
     rel="noopener"
   >
     <span class="bothub-dl-icon">
-      <UIcon name="i-lucide-play" />
+      <UIcon name="i-logos-google-play-icon" />
     </span>
     <span class="bothub-dl-body">
       <span class="bothub-dl-main">Google Play</span>

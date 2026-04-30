@@ -1,22 +1,9 @@
-import { existsSync, readFileSync, readdirSync } from 'node:fs'
+import { existsSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
-import type { VersionEntry, VersionJson } from './types/version'
 
-const readVersionJson = (relativePath: string): VersionJson => {
-  const fullPath = resolve(process.cwd(), relativePath)
-  if (!existsSync(fullPath)) {
-    return {}
-  }
-  try {
-    const raw = readFileSync(fullPath, 'utf8')
-    return JSON.parse(raw) as VersionJson
-  } catch {
-    return {}
-  }
-}
-
-const versionJson = readVersionJson('public/version.json')
-const defaultGooglePlayUrl = 'https://play.google.com/store/apps/details?id=com.jiangzikang.bothub'
+// 版本号 / 下载 URL 全部由 client 端从 https://bothub.bookab.info/version.json
+// fetch 得到，build 阶段不需要知道任何版本信息。
+// version.json 的权威源由 bothub 大仓的 release CI 在发版时写入。
 
 const CONTENT_ROOT = resolve(process.cwd(), 'content')
 const ORDER_PREFIX_RE = /^\d+\./
@@ -165,21 +152,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       cloudApiBaseUrl: (process.env.NUXT_PUBLIC_CLOUD_API_BASE_URL || 'https://bothub-api.bookab.info').trim(),
-      appVersion: versionJson.version || '',
-      downloads: {
-        apk: withAppBaseUrl(appBaseUrl, versionJson.android?.url || 'downloads/app-release.apk'),
-        googlePlay: withAppBaseUrl(
-          appBaseUrl,
-          (process.env.NUXT_PUBLIC_DOWNLOAD_GOOGLE_PLAY || versionJson.androidGooglePlay?.url || defaultGooglePlayUrl).trim(),
-        ),
-        mac: withAppBaseUrl(appBaseUrl, versionJson.mac?.url),
-        windows: withAppBaseUrl(appBaseUrl, versionJson.windows?.url),
-      },
-      versions: {
-        android: versionJson.version || '',
-        mac: versionJson.version || '',
-        windows: versionJson.version || '',
-      },
     },
   },
   modules: [

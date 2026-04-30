@@ -8,16 +8,14 @@ const props = defineProps<{
 
 const label = computed(() => props.label ?? '')
 const loading = computed(() => props.loading ?? '--')
-const runtimeConfig = useRuntimeConfig()
-const appBaseURL = runtimeConfig.app.baseURL || '/'
 
-const { data } = await useFetch<VersionManifest>('version.json', {
-  baseURL: appBaseURL,
-  default: () => ({}),
-  server: false,
-})
+// 直接从权威源拉版本号；fetch 完成前显示 loading 占位。
+const { data } = await useFetch<VersionManifest>(
+  'https://bothub.bookab.info/version.json',
+  { default: () => ({}), server: false },
+)
 
-const versionValue = computed(() => data.value?.version || runtimeConfig.public?.appVersion || loading.value)
+const versionValue = computed(() => data.value?.version || loading.value)
 const versionText = computed(() => `v${versionValue.value}`)
 </script>
 

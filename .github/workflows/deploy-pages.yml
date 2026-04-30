@@ -169,4 +169,5 @@ jobs:
           SSH_ARGS="-i ~/.ssh/id_ed25519 -p $PORT -o StrictHostKeyChecking=yes"
 
           ssh $SSH_ARGS "$TARGET" "mkdir -p '$TARGET_PATH'"
-          rsync -az --delete -e "ssh $SSH_ARGS" dist/ "$TARGET:$TARGET_PATH/"
+          # version.json 的权威源在 bothub 大仓的 release workflow，这里排除避免覆盖。
+          rsync -az --delete --exclude='version.json' -e "ssh $SSH_ARGS" dist/ "$TARGET:$TARGET_PATH/"

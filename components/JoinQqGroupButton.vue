@@ -16,7 +16,7 @@ const QQ_GROUP_ID = '292036480'
     rel="noopener"
     :title="`${props.idLabel}: ${QQ_GROUP_ID}`"
   >
-    <span class="bothub-qq-icon">QQ</span>
+    <span class="bothub-qq-icon"><UIcon name="i-simple-icons-tencentqq" /></span>
     <span class="bothub-qq-text">
       <slot>{{ props.label }}</slot>
       <span class="bothub-qq-id">#{{ QQ_GROUP_ID }}</span>

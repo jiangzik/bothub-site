@@ -9,12 +9,5 @@ export interface VersionManifest {
   androidGooglePlay?: VersionEntry | string
   mac?: VersionEntry | string
   windows?: VersionEntry | string
-}
-
-export interface VersionJson {
-  version?: string
-  android?: VersionEntry
-  androidGooglePlay?: VersionEntry
-  mac?: VersionEntry
-  windows?: VersionEntry
+  linux?: VersionEntry | string
 }

@@ -1059,8 +1059,9 @@ header [data-slot='center'] {
   flex: 0 0 36px;
 }
 .bothub-dl-card[data-platform='google-play'] .bothub-dl-icon {
-  background: linear-gradient(135deg, #22c55e, #10b981);
-  color: #fff;
+  background: var(--bothub-surface);
+  color: inherit;
+  border: 1px solid var(--bothub-border-strong);
 }
 .bothub-dl-card[data-platform='mac'] .bothub-dl-icon {
   background: #0a0a0a;
@@ -1186,12 +1187,18 @@ header [data-slot='center'] {
   width: 26px;
   height: 26px;
   border-radius: 7px;
-  background: linear-gradient(135deg, #60a5fa, #1e40af);
-  color: #fff;
+  background: var(--bothub-surface);
+  border: 1px solid var(--bothub-border-strong);
+  color: #12b7f5;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 16px;
   display: grid;
   place-items: center;
+}
+.bothub-qq-icon > .iconify,
+.bothub-qq-icon > svg {
+  width: 16px;
+  height: 16px;
 }
 .bothub-qq-text {
   display: flex;
@@ -1348,4 +1355,36 @@ footer,
   .bothub-link-card:hover h4 .arrow,
   .bothub-dl-card:hover,
   .bothub-plat-card:hover { transform: none; }
+}
+
+/* ------------------------------------------------------------
+   Inline UIcon sizing in landing context
+   UIcon renders as <span class="iconify"> with an inner <svg>;
+   default size follows current font-size (1em). The mock tool
+   chip is small (11px) so we bump it; the inline note icon
+   needs vertical alignment.
+   ------------------------------------------------------------ */
+.bothub-tool > .iconify,
+.bothub-tool > svg {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+}
+.bothub-feature-icon > .iconify,
+.bothub-feature-icon > svg {
+  width: 20px;
+  height: 20px;
+}
+.bothub-plat-name > .iconify,
+.bothub-plat-name > svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+.bothub-download-note .iconify,
+.bothub-download-note svg {
+  width: 14px;
+  height: 14px;
+  vertical-align: -2px;
+  margin-right: 4px;
 }
