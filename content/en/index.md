@@ -1,7 +1,7 @@
 ---
 seo:
-  title: BotHub — A local chat client with your own API keys
-  description: BotHub — a local chat client that uses your own API keys. macOS, Windows, Android, Linux (untested). iOS in progress.
+  title: BotHub — Sign in to top AI models, image gen included
+  description: BotHub — sign in to use the world's top AI models, with image generation built in. macOS, Windows, Android, Linux (untested). iOS in progress.
 ---
 
 <div class="bothub-landing">
@@ -15,8 +15,8 @@ seo:
 <span class="bothub-eyebrow-sep">·</span>
 <span>Now on Google Play</span>
 </span>
-<h1 class="bothub-hero-title">Run <em>Claude Code / Codex</em><br/>from your phone.</h1>
-<p class="bothub-hero-lead">A local chat client. Pair your phone with the Mac or Windows at home or at work — open a terminal, run commands, approve actions, watch output from your pocket. Plus your own API keys, model switching, bash, scheduled tasks, and IM bot bridges. Desktop · Android · iOS.</p>
+<h1 class="bothub-hero-title">Sign in, use the<br/><em>top AI models + image gen</em>.</h1>
+<p class="bothub-hero-lead">A local chat client. Sign in and start using the world's top AI models straight away — free credits on signup, no provider keys to apply for. Generate and edit images right inside the chat. Bring your own keys when you want to scale; run local tools, schedule tasks, bridge IM bots. Desktop · Android · iOS.</p>
 <div class="bothub-hero-cta">
 <a href="#download" class="bothub-btn bothub-btn-primary">Download</a>
 <a href="#features" class="bothub-btn bothub-btn-ghost">See features →</a>
@@ -37,9 +37,9 @@ seo:
 <aside class="bothub-mock-side">
 <h4>Bots</h4>
 <ul>
-<li class="active"><span class="bothub-avatar bothub-avatar-1">K</span>Kira · Claude Opus</li>
-<li><span class="bothub-avatar bothub-avatar-2">R</span>Rex · GPT-5</li>
-<li><span class="bothub-avatar bothub-avatar-3">N</span>Nova · Gemini 2.5</li>
+<li class="active"><span class="bothub-avatar bothub-avatar-1">K</span>Kira · writing</li>
+<li><span class="bothub-avatar bothub-avatar-2">R</span>Rex · code</li>
+<li><span class="bothub-avatar bothub-avatar-3">N</span>Nova · visuals</li>
 </ul>
 <h4>Projects</h4>
 <ul>
@@ -47,26 +47,26 @@ seo:
 <li class="dim">· Daily digest</li>
 <li class="dim">· Research brief</li>
 </ul>
-<h4>Scheduled</h4>
+<h4>Image gen</h4>
 <ul>
-<li class="dim">· AI brief · 9:00 daily</li>
+<li class="dim">· Project cover · v2</li>
 </ul>
 </aside>
 <div class="bothub-mock-main">
 <div class="bothub-mock-chat">
-<div class="bothub-msg user">Pull the top AI news from the past week into a daily brief.</div>
+<div class="bothub-msg user">Draw a cyberpunk neon skyline I can use as a project cover.</div>
 <div class="bothub-msg bot">
-Sure — fanning out to a few sources and writing to <code>~/reports</code>.
-<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> web_search · "AI news past 7 days"</span></div>
-<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> web_fetch · techcrunch.com/ai</span></div>
-<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> write_file · ~/reports/ai-daily-0417.md</span></div>
+Sure — three variants coming up —
+<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> image_generate · "cyberpunk neon skyline, rain"</span></div>
+<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> image_save · ~/covers/cover-1.png</span></div>
+<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> image_save · ~/covers/cover-2.png</span></div>
 </div>
-<div class="bothub-msg user">Nice. Schedule this to run 9am every day.</div>
-<div class="bothub-msg bot">Done — <code>cron 0 9 * * *</code>. Brief lands in your inbox daily at 9:00.</div>
+<div class="bothub-msg user">Cover #2's palette is great — redo it 16:9.</div>
+<div class="bothub-msg bot">Regenerated, saved to <code>~/covers/cover-2-wide.png</code>.</div>
 </div>
 <div class="bothub-mock-input">
 <span>Type a message, or press / for skills…</span>
-<span class="bothub-model-chip">claude-opus-4-7</span>
+<span class="bothub-model-chip">image-gen</span>
 </div>
 </div>
 </div>
@@ -76,16 +76,7 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 </section>
 <div class="bothub-logos">
 <div class="bothub-container">
-<div class="bothub-logos-label">Every major provider · Bring your own key, pay by usage</div>
-<div class="bothub-logos-row">
-<span>OpenAI</span>
-<span>Anthropic</span>
-<span>Google Gemini</span>
-<span>DeepSeek</span>
-<span>SiliconFlow</span>
-<span>Ollama</span>
-<span>OpenAI-compatible</span>
-</div>
+<div class="bothub-logos-label">Sign in and use the world's top AI models in one place · or bring your own key, including any OpenAI-compatible endpoint</div>
 </div>
 </div>
 <section id="features" class="bothub-section">
@@ -97,15 +88,15 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 </div>
 <div class="bothub-features">
 <div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-smartphone-charging" /></div>
-<h3>Run Claude Code / Codex from your phone</h3>
-<p>Sign in on your phone and you're already connected to your Mac or Windows at home or at work. Open a terminal, run Claude Code or Codex, approve actions, watch output — all from your pocket. Works across networks.</p>
-<div class="bothub-feature-meta">mobile → desktop</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-sparkles" /></div>
+<h3>Sign in to top AI models</h3>
+<p>Sign in once and you're talking to the world's top AI models on a single account. Free credits on signup — no provider keys to apply for.</p>
+<div class="bothub-feature-meta">free credits · top models</div>
 </div>
 <div class="bothub-feature">
 <div class="bothub-feature-icon"><bothub-icon name="i-lucide-key-round" /></div>
 <h3>Bring your own key</h3>
-<p>OpenAI, Anthropic, Google, DeepSeek, Ollama — or any OpenAI-compatible endpoint. Multi-key rotation. Pay by usage, no middleman.</p>
+<p>Drop in your own API keys — requests go straight to the model provider. Any OpenAI-compatible or local endpoint works too. Multi-key rotation, pay by usage, no middleman.</p>
 </div>
 <div class="bothub-feature">
 <div class="bothub-feature-icon"><bothub-icon name="i-lucide-shuffle" /></div>
@@ -140,9 +131,10 @@ Sure — fanning out to a few sources and writing to <code>~/reports</code>.
 <div class="bothub-feature-meta">desktop · android</div>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-network" /></div>
-<h3>Parallel sub-agents</h3>
-<p>Bots can split a task into sub-agents and run them in parallel. Complex work doesn't block on a single thread.</p>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-image" /></div>
+<h3>Image generation, included</h3>
+<p>Mainstream text-to-image models, all in the chat. Save to disk, attachments, or your knowledge base. Iterate with "different style / different ratio".</p>
+<div class="bothub-feature-meta">image_gen · built-in</div>
 </div>
 </div>
 </div>

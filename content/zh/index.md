@@ -1,7 +1,7 @@
 ---
 seo:
-  title: BotHub — 本地聊天客户端，接你自己的 Key
-  description: BotHub 官网 — 一个本地聊天客户端，接自己的 API Key，支持 macOS、Windows、Android、Linux（未经测试），iOS 筹备中。
+  title: BotHub — 登录即用，一线 AI 模型 + 生图
+  description: BotHub 官网 — 登录账号即可使用全球一线 AI 模型，内置图像生成。支持 macOS、Windows、Android、Linux（未经测试），iOS 筹备中。
 ---
 
 <div class="bothub-landing">
@@ -15,8 +15,8 @@ seo:
 <span class="bothub-eyebrow-sep">·</span>
 <span>Google Play 已上架</span>
 </span>
-<h1 class="bothub-hero-title">用手机跑<br/><em>Claude Code / Codex</em></h1>
-<p class="bothub-hero-lead">一个本地聊天客户端 — 手机连回家里或公司的 Mac / Win，开终端跑命令、审批操作、看输出。也能接自己的 Key 切换模型，跑 bash、定时任务、IM 机器人桥接。桌面 · Android · iOS。</p>
+<h1 class="bothub-hero-title">登录即用，<br/><em>一线 AI 模型 + 生图</em></h1>
+<p class="bothub-hero-lead">一个本地聊天客户端 — 登录账号就能直接调用全球一线 AI 模型，开箱免费额度，无需自己申请各家 Key。还能直接在对话里生图、改图。也支持自带 Key、本地工具调用、定时任务、IM 机器人桥接。桌面 · Android · iOS。</p>
 <div class="bothub-hero-cta">
 <a href="#download" class="bothub-btn bothub-btn-primary">立即下载</a>
 <a href="#features" class="bothub-btn bothub-btn-ghost">查看功能 →</a>
@@ -37,9 +37,9 @@ seo:
 <aside class="bothub-mock-side">
 <h4>Bots</h4>
 <ul>
-<li class="active"><span class="bothub-avatar bothub-avatar-1">K</span>Kira · Claude Opus</li>
-<li><span class="bothub-avatar bothub-avatar-2">R</span>Rex · GPT-5</li>
-<li><span class="bothub-avatar bothub-avatar-3">N</span>Nova · Gemini 2.5</li>
+<li class="active"><span class="bothub-avatar bothub-avatar-1">K</span>Kira · 写作</li>
+<li><span class="bothub-avatar bothub-avatar-2">R</span>Rex · 代码</li>
+<li><span class="bothub-avatar bothub-avatar-3">N</span>Nova · 视觉</li>
 </ul>
 <h4>项目</h4>
 <ul>
@@ -47,26 +47,26 @@ seo:
 <li class="dim">· 每日晨报</li>
 <li class="dim">· 研究速览</li>
 </ul>
-<h4>定时任务</h4>
+<h4>生图</h4>
 <ul>
-<li class="dim">· 每天 09:00 AI 日报</li>
+<li class="dim">· 项目封面 · 第二轮</li>
 </ul>
 </aside>
 <div class="bothub-mock-main">
 <div class="bothub-mock-chat">
-<div class="bothub-msg user">帮我查下最近一周 AI 圈的大新闻，整理成日报。</div>
+<div class="bothub-msg user">画一张赛博朋克霓虹风的城市夜景，做项目封面。</div>
 <div class="bothub-msg bot">
-好，从几个来源汇总，写到 <code>~/reports</code>。
-<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> web_search · "AI news past 7 days"</span></div>
-<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> web_fetch · techcrunch.com/ai</span></div>
-<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> write_file · ~/reports/ai-daily-0417.md</span></div>
+好，出三张备选 —
+<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> image_generate · "cyberpunk neon skyline, rain"</span></div>
+<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> image_save · ~/covers/cover-1.png</span></div>
+<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> image_save · ~/covers/cover-2.png</span></div>
 </div>
-<div class="bothub-msg user">不错，配个定时任务每天早上 9 点自动跑一次。</div>
-<div class="bothub-msg bot">已创建 <code>cron 0 9 * * *</code>，每天 9:00 自动汇总并发到你邮箱。</div>
+<div class="bothub-msg user">第二张配色不错，改成横版 16:9。</div>
+<div class="bothub-msg bot">已重画并保存到 <code>~/covers/cover-2-wide.png</code>。</div>
 </div>
 <div class="bothub-mock-input">
 <span>输入消息，或按 / 插入技能…</span>
-<span class="bothub-model-chip">claude-opus-4-7</span>
+<span class="bothub-model-chip">image-gen</span>
 </div>
 </div>
 </div>
@@ -76,16 +76,7 @@ seo:
 </section>
 <div class="bothub-logos">
 <div class="bothub-container">
-<div class="bothub-logos-label">支持所有主流模型厂商 · 自带 Key，按量计费</div>
-<div class="bothub-logos-row">
-<span>OpenAI</span>
-<span>Anthropic</span>
-<span>Google Gemini</span>
-<span>DeepSeek</span>
-<span>硅基流动</span>
-<span>Ollama</span>
-<span>OpenAI 兼容端点</span>
-</div>
+<div class="bothub-logos-label">登录即用，全球一线 AI 模型一站全覆盖；也支持自带 Key 与 OpenAI 兼容端点</div>
 </div>
 </div>
 <section id="features" class="bothub-section">
@@ -97,15 +88,15 @@ seo:
 </div>
 <div class="bothub-features">
 <div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-smartphone-charging" /></div>
-<h3>手机远程跑 Claude Code / Codex</h3>
-<p>手机登录同一个账号，就能连回家里或公司的 Mac / Win。开终端、跑 Claude Code 或 Codex、审批操作、看输出，都在口袋里搞定。不在同一个网络也能连。</p>
-<div class="bothub-feature-meta">mobile → desktop</div>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-sparkles" /></div>
+<h3>登录即用，一线模型全覆盖</h3>
+<p>登录账号就能直接跑全球一线 AI 模型。开箱免费额度，不用先去各家网站申请 Key 才开工。</p>
+<div class="bothub-feature-meta">free credits · top models</div>
 </div>
 <div class="bothub-feature">
 <div class="bothub-feature-icon"><bothub-icon name="i-lucide-key-round" /></div>
 <h3>自带 API Key</h3>
-<p>OpenAI、Anthropic、Google、DeepSeek、Ollama，或任意 OpenAI 兼容端点。多 Key 轮询，按量计费，无中间商。</p>
+<p>填自己的 API Key，请求直达模型厂商。也支持任意 OpenAI 兼容端点与本地推理端点。多 Key 轮询，按量计费，无中间商。</p>
 </div>
 <div class="bothub-feature">
 <div class="bothub-feature-icon"><bothub-icon name="i-lucide-shuffle" /></div>
@@ -140,9 +131,10 @@ seo:
 <div class="bothub-feature-meta">desktop · android</div>
 </div>
 <div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-network" /></div>
-<h3>子代理并发</h3>
-<p>Bot 干活时自己拆任务，派子代理并行跑，结果汇总。复杂任务不用干等。</p>
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-image" /></div>
+<h3>图像生成内置</h3>
+<p>主流文生图模型直接在对话里画图，结果可保存到本地、附件库或知识库。也可以连续追问"换风格 / 换比例"。</p>
+<div class="bothub-feature-meta">image_gen · built-in</div>
 </div>
 </div>
 </div>
