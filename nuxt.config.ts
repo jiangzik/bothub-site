@@ -158,6 +158,8 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     (_options, nuxt) => {
       nuxt.hook('modules:done', () => {
+        nuxt.options.appConfig.github = false as never
+
         const locales = nuxt.options.i18n?.locales || []
         const normalizedLocales = locales.map((locale) => {
           if (typeof locale === 'string') {
@@ -220,6 +222,6 @@ export default defineNuxtConfig({
         },
       },
     },
-    github: null,
+    github: false,
   },
 })

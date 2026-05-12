@@ -1189,11 +1189,16 @@ header [data-slot='center'] {
   border-radius: 7px;
   background: var(--bothub-surface);
   border: 1px solid var(--bothub-border-strong);
-  color: #12b7f5;
+  color: var(--bothub-text);
   font-weight: 700;
   font-size: 16px;
   display: grid;
   place-items: center;
+}
+.bothub-qq-button:hover .bothub-qq-icon {
+  background: var(--bothub-text);
+  border-color: var(--bothub-text);
+  color: var(--bothub-bg);
 }
 .bothub-qq-icon > .iconify,
 .bothub-qq-icon > svg {
