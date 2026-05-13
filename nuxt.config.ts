@@ -82,9 +82,16 @@ const withAppBaseUrl = (baseUrl: string, value?: string): string => {
 
 const appBaseUrl = normalizeBaseUrl(process.env.NUXT_APP_BASE_URL || '/')
 const enableRobotsTxt = appBaseUrl === '/'
+const siteUrl = (process.env.NUXT_PUBLIC_SITE_URL || (
+  appBaseUrl === '/'
+    ? 'https://bothub.bookab.info'
+    : `https://jiangzik.github.io${appBaseUrl.replace(/\/$/, '')}`
+)).replace(/\/+$/, '')
+const siteOrigin = new URL(siteUrl).origin
 
 export default defineNuxtConfig({
   extends: ['docus'],
+  sourcemap: false,
   hooks: {
     'pages:extend'(pages) {
       for (const page of pages) {
@@ -101,6 +108,72 @@ export default defineNuxtConfig({
   },
   image: {
     provider: "none",
+  },
+  icon: {
+    fallbackToApi: false,
+    clientBundle: {
+      icons: [
+        'logos:google-play-icon',
+        'simple-icons:android',
+        'simple-icons:apple',
+        'simple-icons:linux',
+        'simple-icons:windows11',
+        'lucide:arrow-down',
+        'lucide:arrow-left',
+        'lucide:arrow-right',
+        'lucide:arrow-up',
+        'lucide:arrow-up-right',
+        'lucide:apple',
+        'lucide:check',
+        'lucide:chevron-down',
+        'lucide:chevron-left',
+        'lucide:chevron-right',
+        'lucide:chevron-up',
+        'lucide:chevrons-left',
+        'lucide:chevrons-right',
+        'lucide:circle-alert',
+        'lucide:circle-check',
+        'lucide:circle-x',
+        'lucide:clock',
+        'lucide:copy',
+        'lucide:copy-check',
+        'lucide:ellipsis',
+        'lucide:eye',
+        'lucide:eye-off',
+        'lucide:file',
+        'lucide:folder',
+        'lucide:folder-open',
+        'lucide:grip-vertical',
+        'lucide:hash',
+        'lucide:image',
+        'lucide:info',
+        'lucide:key-round',
+        'lucide:library',
+        'lucide:lightbulb',
+        'lucide:loader-circle',
+        'lucide:menu',
+        'lucide:message-square-share',
+        'lucide:minus',
+        'lucide:monitor',
+        'lucide:moon',
+        'lucide:panel-left-close',
+        'lucide:panel-left-open',
+        'lucide:plus',
+        'lucide:puzzle',
+        'lucide:rotate-ccw',
+        'lucide:search',
+        'lucide:shuffle',
+        'lucide:smartphone',
+        'lucide:sparkles',
+        'lucide:square',
+        'lucide:sun',
+        'lucide:triangle-alert',
+        'lucide:upload',
+        'lucide:wrench',
+        'lucide:x',
+      ],
+      scan: true,
+    },
   },
   app: {
     baseURL: appBaseUrl,
@@ -182,6 +255,7 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/ui-overrides.css'],
   i18n: {
+    baseUrl: siteOrigin,
     defaultLocale: 'zh',
     strategy: 'prefix_except_default',
     langDir: 'locales',
@@ -192,6 +266,12 @@ export default defineNuxtConfig({
   },
   site: {
     name: 'BotHub',
+    url: siteUrl,
+  },
+  llms: {
+    domain: siteUrl,
+    title: 'BotHub',
+    description: 'BotHub documentation',
   },
   robots: {
     robotsTxt: enableRobotsTxt,

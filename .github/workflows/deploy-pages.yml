@@ -170,4 +170,10 @@ jobs:
 
           ssh $SSH_ARGS "$TARGET" "mkdir -p '$TARGET_PATH'"
           # version.json 的权威源在 bothub 大仓的 release workflow，这里排除避免覆盖。
-          rsync -az --delete --exclude='version.json' -e "ssh $SSH_ARGS" dist/ "$TARGET:$TARGET_PATH/"
+          # assets 里是构建产生的哈希资源；远端旧文件可能归属其他用户，保护它们避免 --delete 因权限失败中断部署。
+          rsync -az --delete \
+            --filter='P /assets/***' \
+            --filter='P /version.json' \
+            --exclude='/version.json' \
+            -e "ssh $SSH_ARGS" \
+            dist/ "$TARGET:$TARGET_PATH/"

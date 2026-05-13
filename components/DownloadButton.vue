@@ -24,25 +24,17 @@ const props = withDefaults(defineProps<{ platform: Platform; label?: string; cha
 })
 
 const config = PLATFORM_CONFIG[props.platform]
-const slots = useSlots()
 
-// version.json 的权威源在 bothub 大仓 release CI 写入的 https://bothub.bookab.info/version.json。
-// 不依赖站点本地 baseURL，直接绝对 URL fetch。
-const { data } = await useFetch<VersionManifest>(
-  'https://bothub.bookab.info/version.json',
-  { default: () => ({}), server: false },
-)
+const { data } = await useVersionManifest()
 
 const downloadHref = computed(() => {
   const value = data.value?.[config.downloadKey]
-  const url = typeof value === 'string' ? value : (value as { url?: string })?.url
-  return url || config.defaultUrl
+  return getVersionEntryUrl(value) || config.defaultUrl
 })
 
 const versionText = computed(() => data.value?.version || '')
 
 const shouldRender = computed(() => config.alwaysRender || !!downloadHref.value)
-const hasSlot = computed(() => !!props.label || !!slots.default)
 </script>
 
 <template>

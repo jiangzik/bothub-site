@@ -3,11 +3,13 @@
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
-    "generate": "nuxi generate"
+    "generate": "nuxi generate",
+    "postinstall": "node scripts/patch-docus-locale.mjs"
   },
   "dependencies": {
-    "docus": "5.4.2",
+    "@iconify-json/logos": "^1.2.11",
     "better-sqlite3": "^12.5.0",
+    "docus": "5.4.2",
     "nuxt": "^4.2.2"
   }
 }
