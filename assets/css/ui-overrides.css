@@ -245,12 +245,6 @@ header [data-slot='center'] {
   font-size: inherit;
   color: inherit;
 }
-.bothub-landing .bothub-msg :where(code) {
-  background: var(--bothub-surface-2);
-  padding: 1px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-}
 
 .bothub-container {
   max-width: 1180px;
@@ -469,201 +463,93 @@ header [data-slot='center'] {
 /* ------------------------------------------------------------
    7. Product mock
    ------------------------------------------------------------ */
-.bothub-mock-wrap {
+/* ------------------------------------------------------------
+   Hero showcase — real product screenshots (desktop · tablet · mobile)
+   ------------------------------------------------------------ */
+.bothub-showcase {
   position: relative;
-  margin: 64px auto 0;
-  max-width: 1080px;
+  margin: 80px auto 0;
+  max-width: 1180px;
+  padding: 0 16px;
 }
-.bothub-mock-glow {
+.bothub-showcase-glow {
   position: absolute;
-  inset: -40px -20px auto -20px;
-  height: 220px;
-  background: radial-gradient(closest-side, rgba(251, 146, 60, 0.22), transparent);
-  filter: blur(40px);
+  inset: -60px 10% auto 10%;
+  height: 320px;
+  background:
+    radial-gradient(closest-side, rgba(251, 146, 60, 0.28), transparent 70%),
+    radial-gradient(closest-side at 80% 50%, rgba(244, 114, 182, 0.18), transparent 70%);
+  filter: blur(60px);
   pointer-events: none;
+  z-index: 0;
 }
-.bothub-mock {
+.bothub-showcase-stage {
   position: relative;
-  background: var(--bothub-bg);
-  border: 1px solid var(--bothub-border);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow:
-    0 30px 80px -20px rgba(10, 10, 10, 0.18),
-    0 10px 30px -10px rgba(10, 10, 10, 0.08);
-  text-align: left;
-}
-.dark .bothub-mock {
-  box-shadow:
-    0 30px 80px -20px rgba(0, 0, 0, 0.6),
-    0 10px 30px -10px rgba(0, 0, 0, 0.4);
-}
-.bothub-mock-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--bothub-border);
-  background: linear-gradient(180deg, var(--bothub-bg-soft), var(--bothub-surface));
-}
-.bothub-mock-dot {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: #ddd;
-}
-.bothub-mock-dot.r { background: #ff5f57; }
-.bothub-mock-dot.y { background: #febc2e; }
-.bothub-mock-dot.g { background: #28c840; }
-.bothub-mock-title {
-  margin-left: 12px;
-  font-size: 12px;
-  color: var(--bothub-text-mute);
-  font-family: var(--bothub-mono);
-}
-.bothub-mock-body {
   display: grid;
-  grid-template-columns: 240px 1fr;
-  min-height: 440px;
+  grid-template-columns: minmax(160px, 0.95fr) minmax(620px, 2.2fr) minmax(120px, 0.7fr);
+  align-items: end;
+  gap: 0;
+  padding-bottom: 36px;
 }
-.bothub-mock-side {
-  border-right: 1px solid var(--bothub-border);
-  padding: 16px 12px;
-  background: var(--bothub-bg-soft);
-}
-.bothub-landing .bothub-mock-side h4 {
-  font-size: 10.5px;
-  color: var(--bothub-text-mute);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin: 0 0 10px;
-  padding: 0 8px;
-  font-weight: 600;
-}
-.bothub-landing .bothub-mock-side li {
-  padding: 7px 10px;
-  border-radius: 8px;
-}
-.bothub-landing .bothub-plat-card li {
-  padding: 6px 0;
-  display: flex;
-  gap: 8px;
-  border-bottom: 1px dashed var(--bothub-border);
-}
-.bothub-landing .bothub-plat-card li:last-child {
-  border-bottom: none;
-}
-.bothub-mock-side ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 20px;
-}
-.bothub-mock-side li {
-  padding: 7px 10px;
-  border-radius: 8px;
-  font-size: 13px;
-  color: var(--bothub-text-dim);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 2px;
-}
-.bothub-mock-side li.active {
-  background: var(--bothub-bg);
-  color: var(--bothub-text);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-  border: 1px solid var(--bothub-border);
-}
-.bothub-mock-side li.dim {
-  color: var(--bothub-text-mute);
-}
-.bothub-avatar {
-  width: 20px;
-  height: 20px;
-  border-radius: 6px;
-  flex: 0 0 20px;
-  font-size: 10px;
-  color: #fff;
-  font-weight: 700;
-  display: grid;
-  place-items: center;
-}
-.bothub-avatar-1 { background: linear-gradient(135deg, #fb923c, #db2777); }
-.bothub-avatar-2 { background: linear-gradient(135deg, #60a5fa, #8b5cf6); }
-.bothub-avatar-3 { background: linear-gradient(135deg, #34d399, #0891b2); }
 
-.bothub-mock-main {
-  display: flex;
-  flex-direction: column;
+/* Each screenshot is exported with its own device chrome (mac window / tablet
+   bezel / phone bezel) plus a soft transparent shadow. The frame is purely a
+   positioning container — no background, no border, no synthetic shadow,
+   otherwise it would leak through the PNG's transparent halo. */
+.bothub-device {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.bothub-mock-chat {
-  padding: 22px 26px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  background: var(--bothub-bg);
-  flex: 1;
+.bothub-device-frame {
+  position: relative;
 }
-.bothub-msg {
-  max-width: 82%;
-  padding: 10px 14px;
-  border-radius: 12px;
-  font-size: 13.5px;
-  line-height: 1.55;
+.bothub-device-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
-.bothub-msg.user {
-  align-self: flex-end;
-  background: var(--bothub-text);
-  color: var(--bothub-bg);
-}
-.dark .bothub-msg.user {
-  background: #fafafa;
-  color: #0a0a0a;
-}
-.bothub-msg.bot {
-  align-self: flex-start;
-  background: var(--bothub-surface);
-  border: 1px solid var(--bothub-border);
-  color: var(--bothub-text);
-}
-.bothub-msg.bot code {
-  background: var(--bothub-surface-2);
-  padding: 1px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-.bothub-tool {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 8px;
-  padding: 4px 9px;
-  border-radius: 6px;
-  background: var(--bothub-accent-soft);
-  color: var(--bothub-accent);
-  font-family: var(--bothub-mono);
+.bothub-device-label {
+  position: absolute;
+  left: 50%;
+  bottom: -22px;
+  transform: translateX(-50%);
   font-size: 11px;
-  font-weight: 500;
-}
-.bothub-mock-input {
-  margin: 10px 26px 20px;
-  padding: 12px 14px;
-  border: 1px solid var(--bothub-border);
-  border-radius: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--bothub-text-mute);
-  font-size: 13px;
-  background: var(--bothub-bg);
-}
-.bothub-model-chip {
-  padding: 3px 9px;
-  border-radius: 6px;
-  background: var(--bothub-surface);
-  color: var(--bothub-text-dim);
+  white-space: nowrap;
   font-family: var(--bothub-mono);
-  font-size: 11px;
+}
+
+/* Desktop — center, biggest */
+.bothub-device-desktop {
+  z-index: 3;
+  margin: 0 -8%;
+}
+
+/* Tablet — back-left, tilted slightly */
+.bothub-device-tablet {
+  z-index: 2;
+  transform: translateY(40px) rotate(-3deg);
+  margin-right: -10%;
+}
+
+/* Mobile — front-right, tilted, on top */
+.bothub-device-mobile {
+  z-index: 4;
+  transform: translateY(-30px) rotate(3deg);
+  margin-left: -22%;
+  max-width: 200px;
+  justify-self: end;
+}
+
+/* Gentle hover on the whole stage — pull the devices apart slightly */
+.bothub-showcase-stage:hover .bothub-device-tablet {
+  transform: translateY(36px) rotate(-4deg) translateX(-6px);
+}
+.bothub-showcase-stage:hover .bothub-device-mobile {
+  transform: translateY(-34px) rotate(4deg) translateX(6px);
 }
 
 /* ------------------------------------------------------------
@@ -1343,8 +1229,24 @@ footer,
   .bothub-shot.wide { grid-column: auto; }
   .bothub-download-box { grid-template-columns: 1fr; padding: 40px 28px; }
   .bothub-link-grid { grid-template-columns: repeat(2, 1fr); }
-  .bothub-mock-body { grid-template-columns: 1fr; }
-  .bothub-mock-side { display: none; }
+
+  .bothub-showcase { margin-top: 56px; }
+  .bothub-showcase-stage {
+    grid-template-columns: 1fr;
+    gap: 56px;
+    padding-bottom: 24px;
+  }
+  .bothub-device-desktop { margin: 0; z-index: 1; }
+  .bothub-device-tablet,
+  .bothub-device-mobile {
+    transform: none;
+    margin: 0;
+    max-width: 460px;
+    justify-self: center;
+  }
+  .bothub-device-mobile { max-width: 220px; }
+  .bothub-showcase-stage:hover .bothub-device-tablet,
+  .bothub-showcase-stage:hover .bothub-device-mobile { transform: none; }
 }
 @media (max-width: 640px) {
   .bothub-features { grid-template-columns: 1fr; }
@@ -1353,6 +1255,8 @@ footer,
   .bothub-section { padding: 72px 0; }
   .bothub-hero { padding: 80px 0 20px; }
   .bothub-logos-row { gap: 24px; font-size: 13.5px; }
+  .bothub-showcase { padding: 0 8px; }
+  .bothub-showcase-stage { gap: 44px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1365,16 +1269,8 @@ footer,
 /* ------------------------------------------------------------
    Inline UIcon sizing in landing context
    UIcon renders as <span class="iconify"> with an inner <svg>;
-   default size follows current font-size (1em). The mock tool
-   chip is small (11px) so we bump it; the inline note icon
-   needs vertical alignment.
+   default size follows current font-size (1em).
    ------------------------------------------------------------ */
-.bothub-tool > .iconify,
-.bothub-tool > svg {
-  width: 13px;
-  height: 13px;
-  flex: 0 0 auto;
-}
 .bothub-feature-icon > .iconify,
 .bothub-feature-icon > svg {
   width: 20px;

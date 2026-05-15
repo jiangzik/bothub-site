@@ -26,49 +26,26 @@ seo:
 <span class="bothub-hero-sep">·</span>
 <span>macOS · Windows · Android · Linux（未经测试） · iOS（筹备中）</span>
 </div>
-<div class="bothub-mock-wrap">
-<div class="bothub-mock-glow"></div>
-<div class="bothub-mock">
-<div class="bothub-mock-bar">
-<span class="bothub-mock-dot r"></span><span class="bothub-mock-dot y"></span><span class="bothub-mock-dot g"></span>
-<span class="bothub-mock-title">BotHub · ~/projects/site-redesign</span>
+<div class="bothub-showcase">
+<div class="bothub-showcase-glow"></div>
+<div class="bothub-showcase-stage">
+<div class="bothub-device bothub-device-tablet">
+<div class="bothub-device-frame">
+<img src="/showcase/tablet.png" alt="BotHub 平板端界面" loading="lazy" />
 </div>
-<div class="bothub-mock-body">
-<aside class="bothub-mock-side">
-<h4>Bots</h4>
-<ul>
-<li class="active"><span class="bothub-avatar bothub-avatar-1">K</span>Kira · 写作</li>
-<li><span class="bothub-avatar bothub-avatar-2">R</span>Rex · 代码</li>
-<li><span class="bothub-avatar bothub-avatar-3">N</span>Nova · 视觉</li>
-</ul>
-<h4>项目</h4>
-<ul>
-<li class="dim">· 网站改版</li>
-<li class="dim">· 每日晨报</li>
-<li class="dim">· 研究速览</li>
-</ul>
-<h4>生图</h4>
-<ul>
-<li class="dim">· 项目封面 · 第二轮</li>
-</ul>
-</aside>
-<div class="bothub-mock-main">
-<div class="bothub-mock-chat">
-<div class="bothub-msg user">画一张赛博朋克霓虹风的城市夜景，做项目封面。</div>
-<div class="bothub-msg bot">
-好，出三张备选 —
-<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> image_generate · "cyberpunk neon skyline, rain"</span></div>
-<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> image_save · ~/covers/cover-1.png</span></div>
-<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> image_save · ~/covers/cover-2.png</span></div>
+<span class="bothub-device-label">平板</span>
 </div>
-<div class="bothub-msg user">第二张配色不错，改成横版 16:9。</div>
-<div class="bothub-msg bot">已重画并保存到 <code>~/covers/cover-2-wide.png</code>。</div>
+<div class="bothub-device bothub-device-desktop">
+<div class="bothub-device-frame">
+<img src="/showcase/desktop.png" alt="BotHub 桌面端界面" loading="lazy" />
 </div>
-<div class="bothub-mock-input">
-<span>输入消息，或按 / 插入技能…</span>
-<span class="bothub-model-chip">image-gen</span>
+<span class="bothub-device-label">桌面</span>
 </div>
+<div class="bothub-device bothub-device-mobile">
+<div class="bothub-device-frame">
+<img src="/showcase/mobile.png" alt="BotHub 手机端界面" loading="lazy" />
 </div>
+<span class="bothub-device-label">手机</span>
 </div>
 </div>
 </div>

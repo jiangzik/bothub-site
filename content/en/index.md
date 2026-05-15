@@ -26,49 +26,26 @@ seo:
 <span class="bothub-hero-sep">·</span>
 <span>macOS · Windows · Android · Linux (untested) · iOS (soon)</span>
 </div>
-<div class="bothub-mock-wrap">
-<div class="bothub-mock-glow"></div>
-<div class="bothub-mock">
-<div class="bothub-mock-bar">
-<span class="bothub-mock-dot r"></span><span class="bothub-mock-dot y"></span><span class="bothub-mock-dot g"></span>
-<span class="bothub-mock-title">BotHub · ~/projects/site-redesign</span>
+<div class="bothub-showcase">
+<div class="bothub-showcase-glow"></div>
+<div class="bothub-showcase-stage">
+<div class="bothub-device bothub-device-tablet">
+<div class="bothub-device-frame">
+<img src="/showcase/tablet.png" alt="BotHub on tablet" loading="lazy" />
 </div>
-<div class="bothub-mock-body">
-<aside class="bothub-mock-side">
-<h4>Bots</h4>
-<ul>
-<li class="active"><span class="bothub-avatar bothub-avatar-1">K</span>Kira · writing</li>
-<li><span class="bothub-avatar bothub-avatar-2">R</span>Rex · code</li>
-<li><span class="bothub-avatar bothub-avatar-3">N</span>Nova · visuals</li>
-</ul>
-<h4>Projects</h4>
-<ul>
-<li class="dim">· Site redesign</li>
-<li class="dim">· Daily digest</li>
-<li class="dim">· Research brief</li>
-</ul>
-<h4>Image gen</h4>
-<ul>
-<li class="dim">· Project cover · v2</li>
-</ul>
-</aside>
-<div class="bothub-mock-main">
-<div class="bothub-mock-chat">
-<div class="bothub-msg user">Draw a cyberpunk neon skyline I can use as a project cover.</div>
-<div class="bothub-msg bot">
-Sure — three variants coming up —
-<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> image_generate · "cyberpunk neon skyline, rain"</span></div>
-<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> image_save · ~/covers/cover-1.png</span></div>
-<div><span class="bothub-tool"><bothub-icon name="i-lucide-wrench" /> image_save · ~/covers/cover-2.png</span></div>
+<span class="bothub-device-label">Tablet</span>
 </div>
-<div class="bothub-msg user">Cover #2's palette is great — redo it 16:9.</div>
-<div class="bothub-msg bot">Regenerated, saved to <code>~/covers/cover-2-wide.png</code>.</div>
+<div class="bothub-device bothub-device-desktop">
+<div class="bothub-device-frame">
+<img src="/showcase/desktop.png" alt="BotHub on desktop" loading="lazy" />
 </div>
-<div class="bothub-mock-input">
-<span>Type a message, or press / for skills…</span>
-<span class="bothub-model-chip">image-gen</span>
+<span class="bothub-device-label">Desktop</span>
 </div>
+<div class="bothub-device bothub-device-mobile">
+<div class="bothub-device-frame">
+<img src="/showcase/mobile.png" alt="BotHub on mobile" loading="lazy" />
 </div>
+<span class="bothub-device-label">Mobile</span>
 </div>
 </div>
 </div>
