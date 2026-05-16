@@ -553,38 +553,6 @@ header [data-slot='center'] {
 }
 
 /* ------------------------------------------------------------
-   8. Provider logos strip
-   ------------------------------------------------------------ */
-.bothub-logos {
-  padding: 60px 0 52px;
-  border-top: 1px solid var(--bothub-border);
-  border-bottom: 1px solid var(--bothub-border);
-  background: var(--bothub-bg-soft);
-}
-.bothub-logos-label {
-  text-align: center;
-  font-size: 12px;
-  color: var(--bothub-text-mute);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-weight: 500;
-  margin-bottom: 24px;
-}
-.bothub-logos-row {
-  display: flex;
-  justify-content: center;
-  gap: 48px;
-  flex-wrap: wrap;
-  color: var(--bothub-text-mute);
-  font-size: 15px;
-  font-weight: 600;
-  opacity: 0.82;
-}
-.bothub-logos-row span {
-  letter-spacing: -0.01em;
-}
-
-/* ------------------------------------------------------------
    9. Features grid
    ------------------------------------------------------------ */
 .bothub-features {
@@ -637,68 +605,6 @@ header [data-slot='center'] {
   font-family: var(--bothub-mono);
 }
 
-/* ------------------------------------------------------------
-   10. Showcase (screenshot placeholders)
-   ------------------------------------------------------------ */
-.bothub-showcase {
-  display: grid;
-  gap: 24px;
-}
-.bothub-showcase-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-.bothub-shot {
-  position: relative;
-  border: 1px solid var(--bothub-border);
-  border-radius: 16px;
-  overflow: hidden;
-  background: linear-gradient(180deg, var(--bothub-bg-soft), var(--bothub-surface));
-  aspect-ratio: 16 / 10;
-  display: grid;
-  place-items: center;
-}
-.bothub-shot.wide {
-  aspect-ratio: 16 / 7;
-  grid-column: span 2;
-}
-.bothub-shot-tag {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid var(--bothub-border);
-  font-size: 11px;
-  color: var(--bothub-text-dim);
-  font-weight: 500;
-  font-family: var(--bothub-mono);
-  backdrop-filter: blur(4px);
-}
-.dark .bothub-shot-tag {
-  background: rgba(20, 20, 20, 0.9);
-}
-.bothub-shot-ph {
-  text-align: center;
-  color: var(--bothub-text-mute);
-  font-size: 13px;
-  padding: 20px;
-}
-.bothub-shot-ph-icon {
-  font-size: 32px;
-  margin-bottom: 10px;
-  opacity: 0.5;
-}
-.bothub-shot-ph-label {
-  font-family: var(--bothub-mono);
-  font-size: 12px;
-  line-height: 1.6;
-}
-.bothub-shot-ph-label .dim {
-  opacity: 0.6;
-}
 
 /* ------------------------------------------------------------
    11. Platform matrix
@@ -764,18 +670,25 @@ header [data-slot='center'] {
 }
 .bothub-plat-card li {
   display: flex;
-  gap: 8px;
-  padding: 6px 0;
-  border-bottom: 1px dashed var(--bothub-border);
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 13.5px;
+  color: var(--bothub-text-dim);
+  line-height: 1.4;
 }
-.bothub-plat-card li:last-child {
-  border-bottom: none;
+.bothub-plat-card li > .iconify,
+.bothub-plat-card li > svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  color: var(--bothub-text-mute);
+  opacity: 0.7;
 }
-.bothub-plat-card li::before {
-  content: '→';
+.bothub-plat-card.featured li > .iconify,
+.bothub-plat-card.featured li > svg {
   color: var(--bothub-accent);
-  font-weight: 600;
-  flex: 0 0 12px;
+  opacity: 1;
 }
 
 /* ------------------------------------------------------------
@@ -848,12 +761,25 @@ header [data-slot='center'] {
 }
 .bothub-download-right {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 .bothub-download-right > p {
   display: contents;
+}
+.bothub-download-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.bothub-download-grid > p {
+  display: contents;
+}
+/* Linux is the secondary platform — auto-place in row 3 col 1, slightly
+   muted bg so the empty cell next to it reads as intentional. */
+.bothub-download-grid > .bothub-dl-card[data-platform='linux'] {
+  background: var(--bothub-bg-soft);
 }
 .bothub-version-line {
   margin-top: 20px;
@@ -907,11 +833,8 @@ header [data-slot='center'] {
   font-size: 15px;
 }
 
-@media (max-width: 960px) {
-  .bothub-download-right { grid-template-columns: repeat(2, 1fr); }
-}
 @media (max-width: 520px) {
-  .bothub-download-right { grid-template-columns: 1fr; }
+  .bothub-download-grid { grid-template-columns: 1fr; }
 }
 
 /* Download card (used by DownloadButton + DownloadGooglePlayButton) */
@@ -1017,6 +940,28 @@ header [data-slot='center'] {
 .bothub-link-card:hover {
   background: var(--bothub-bg-soft);
   border-color: var(--bothub-border-strong);
+}
+.bothub-link-card-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--bothub-bg-soft);
+  border: 1px solid var(--bothub-border);
+  display: grid;
+  place-items: center;
+  margin-bottom: 14px;
+  color: var(--bothub-accent);
+  font-size: 16px;
+  transition: all 0.15s;
+}
+.bothub-link-card:hover .bothub-link-card-icon {
+  background: var(--bothub-accent-soft);
+  border-color: var(--bothub-accent);
+}
+.bothub-link-card-icon > .iconify,
+.bothub-link-card-icon > svg {
+  width: 17px;
+  height: 17px;
 }
 .bothub-landing .bothub-link-card h4 {
   margin: 0 0 6px;
@@ -1225,8 +1170,6 @@ footer,
 @media (max-width: 960px) {
   .bothub-features { grid-template-columns: repeat(2, 1fr); }
   .bothub-platform-matrix { grid-template-columns: 1fr; }
-  .bothub-showcase-row { grid-template-columns: 1fr; }
-  .bothub-shot.wide { grid-column: auto; }
   .bothub-download-box { grid-template-columns: 1fr; padding: 40px 28px; }
   .bothub-link-grid { grid-template-columns: repeat(2, 1fr); }
 
@@ -1251,10 +1194,9 @@ footer,
 @media (max-width: 640px) {
   .bothub-features { grid-template-columns: 1fr; }
   .bothub-link-grid { grid-template-columns: 1fr; }
-  .bothub-download-right { grid-template-columns: 1fr; }
+  .bothub-download-grid { grid-template-columns: 1fr; }
   .bothub-section { padding: 72px 0; }
   .bothub-hero { padding: 80px 0 20px; }
-  .bothub-logos-row { gap: 24px; font-size: 13.5px; }
   .bothub-showcase { padding: 0 8px; }
   .bothub-showcase-stage { gap: 44px; }
 }
