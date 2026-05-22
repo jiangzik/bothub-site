@@ -284,8 +284,8 @@ export default defineNuxtConfig({
     header: {
       title: 'BotHub',
       logo: {
-        light: withAppBaseUrl(appBaseUrl, 'logo-mark-light.png'),
-        dark: withAppBaseUrl(appBaseUrl, 'logo-mark-dark.png'),
+        light: withAppBaseUrl(appBaseUrl, 'logo.png?v=20260522'),
+        dark: withAppBaseUrl(appBaseUrl, 'logo.png?v=20260522'),
         alt: 'BotHub',
         height: '40px',
       },

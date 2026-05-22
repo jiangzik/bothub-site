@@ -5,7 +5,7 @@ const appBaseURL = runtimeConfig.app.baseURL || '/'
 
 const logoSrc = computed(() => {
   const base = appBaseURL === '/' ? '/' : appBaseURL
-  return `${base}logo-mark-light.png`
+  return `${base}logo.png?v=20260522`
 })
 
 const logoStyle = {
