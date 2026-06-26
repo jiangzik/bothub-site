@@ -113,6 +113,17 @@ seo:
 <p>让 AI 用任意云端 TTS 模型朗读回复。克隆你自己的声音作为专属音色 — Pro 功能，桌面端和 Android 端均可用。</p>
 <div class="bothub-feature-meta">desktop · android · Pro</div>
 </div>
+<div class="bothub-feature">
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-globe"></bothub-icon></div>
+<h3>联网搜索</h3>
+<p>接入搜索后端，模型自动检索最新信息。支持 Bing、Exa、Tavily、Brave、SearXNG 及任意兼容接口。</p>
+</div>
+<div class="bothub-feature">
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-link-2"></bothub-icon></div>
+<h3>远程控制</h3>
+<p>手机与桌面配对，随时远程接管终端和屏幕。出门在外也能在电脑上跑 Claude Code 或 Codex。</p>
+<div class="bothub-feature-meta">desktop + android</div>
+</div>
 </div>
 </div>
 </section>

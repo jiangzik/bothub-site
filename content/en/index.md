@@ -113,6 +113,17 @@ seo:
 <p>Have the AI read replies aloud using any cloud TTS model. Clone your own voice for a personal preset — Pro feature, works on both desktop and Android.</p>
 <div class="bothub-feature-meta">desktop · android · Pro</div>
 </div>
+<div class="bothub-feature">
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-globe"></bothub-icon></div>
+<h3>Web search</h3>
+<p>Connect a search backend and the model finds current information on its own. Supports Bing, Exa, Tavily, Brave, SearXNG, and any compatible endpoint.</p>
+</div>
+<div class="bothub-feature">
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-link-2"></bothub-icon></div>
+<h3>Remote control</h3>
+<p>Pair your phone with your desktop and take over the terminal and screen from anywhere. Run Claude Code or Codex on your PC while you're on the go.</p>
+<div class="bothub-feature-meta">desktop + android</div>
+</div>
 </div>
 </div>
 </section>
