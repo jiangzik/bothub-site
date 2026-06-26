@@ -107,6 +107,12 @@ seo:
 <p>Mainstream text-to-image models, all in the chat. Save to disk, attachments, or your knowledge base. Iterate with "different style / different ratio".</p>
 <div class="bothub-feature-meta">image_gen · built-in</div>
 </div>
+<div class="bothub-feature">
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-mic"></bothub-icon></div>
+<h3>TTS & voice cloning</h3>
+<p>Have the AI read replies aloud using any cloud TTS model. Clone your own voice for a personal preset — Pro feature, works on both desktop and Android.</p>
+<div class="bothub-feature-meta">desktop · android · Pro</div>
+</div>
 </div>
 </div>
 </section>
@@ -127,6 +133,7 @@ seo:
 <li><bothub-icon name="i-lucide-terminal"></bothub-icon><span>Bash / filesystem / browser automation</span></li>
 <li><bothub-icon name="i-lucide-clipboard"></bothub-icon><span>Clipboard / screenshot / system control</span></li>
 <li><bothub-icon name="i-lucide-link"></bothub-icon><span>Embedded terminal, controllable from your phone</span></li>
+<li><bothub-icon name="i-lucide-mic"></bothub-icon><span>TTS + voice cloning · Pro</span></li>
 <li><bothub-icon name="i-lucide-message-square"></bothub-icon><span>Feishu / Telegram / QQ / WeChat bots</span></li>
 <li><bothub-icon name="i-lucide-monitor"></bothub-icon><span>macOS · Windows</span></li>
 </ul>
@@ -140,7 +147,9 @@ seo:
 <li><bothub-icon name="i-lucide-code-2"></bothub-icon><span>Run Claude Code / Codex on your PC from your phone</span></li>
 <li><bothub-icon name="i-lucide-mouse-pointer-2"></bothub-icon><span>Computer-control agent (screen + gestures)</span></li>
 <li><bothub-icon name="i-lucide-share-2"></bothub-icon><span>Share-sheet handler: Ask / Translate / Summarize / Rewrite</span></li>
-<li><bothub-icon name="i-lucide-volume-2"></bothub-icon><span>System TTS · floating agent overlay</span></li>
+<li><bothub-icon name="i-lucide-library"></bothub-icon><span>Knowledge base RAG · local vector search</span></li>
+<li><bothub-icon name="i-lucide-terminal"></bothub-icon><span>Built-in Ubuntu 24.04 · run code on-device</span></li>
+<li><bothub-icon name="i-lucide-mic"></bothub-icon><span>TTS + voice cloning · floating agent overlay · Pro</span></li>
 <li><bothub-icon name="i-lucide-message-square"></bothub-icon><span>Feishu / Telegram / QQ bots · sub-agents</span></li>
 <li><bothub-icon name="i-lucide-download"></bothub-icon><span>Google Play · APK sideload</span></li>
 </ul>
@@ -160,6 +169,7 @@ seo:
 <div class="bothub-integrations">
 <span class="bothub-int-chip"><span class="bothub-int-dot"></span>Feishu Bot</span>
 <span class="bothub-int-chip"><span class="bothub-int-dot"></span>Telegram</span>
+<span class="bothub-int-chip"><span class="bothub-int-dot"></span>QQ Bot</span>
 <span class="bothub-int-chip"><span class="bothub-int-dot"></span>WeChat iLink</span>
 </div>
 </div>

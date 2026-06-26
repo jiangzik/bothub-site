@@ -107,6 +107,12 @@ seo:
 <p>主流文生图模型直接在对话里画图，结果可保存到本地、附件库或知识库。也可以连续追问"换风格 / 换比例"。</p>
 <div class="bothub-feature-meta">image_gen · built-in</div>
 </div>
+<div class="bothub-feature">
+<div class="bothub-feature-icon"><bothub-icon name="i-lucide-mic"></bothub-icon></div>
+<h3>TTS 朗读 & 声音克隆</h3>
+<p>让 AI 用任意云端 TTS 模型朗读回复。克隆你自己的声音作为专属音色 — Pro 功能，桌面端和 Android 端均可用。</p>
+<div class="bothub-feature-meta">desktop · android · Pro</div>
+</div>
 </div>
 </div>
 </section>
@@ -127,6 +133,7 @@ seo:
 <li><bothub-icon name="i-lucide-terminal"></bothub-icon><span>Bash / 文件 / 浏览器自动化</span></li>
 <li><bothub-icon name="i-lucide-clipboard"></bothub-icon><span>剪贴板 / 截屏 / 系统控制</span></li>
 <li><bothub-icon name="i-lucide-link"></bothub-icon><span>嵌入式终端，可被手机远程接管</span></li>
+<li><bothub-icon name="i-lucide-mic"></bothub-icon><span>TTS 朗读 + 声音克隆 · Pro</span></li>
 <li><bothub-icon name="i-lucide-message-square"></bothub-icon><span>飞书 / Telegram / QQ / 微信机器人</span></li>
 <li><bothub-icon name="i-lucide-monitor"></bothub-icon><span>macOS · Windows</span></li>
 </ul>
@@ -140,7 +147,9 @@ seo:
 <li><bothub-icon name="i-lucide-code-2"></bothub-icon><span>用手机跑电脑上的 Claude Code / Codex</span></li>
 <li><bothub-icon name="i-lucide-mouse-pointer-2"></bothub-icon><span>电脑控制 Agent（屏幕 + 手势）</span></li>
 <li><bothub-icon name="i-lucide-share-2"></bothub-icon><span>系统分享处理：Ask / 翻译 / 总结 / 改写</span></li>
-<li><bothub-icon name="i-lucide-volume-2"></bothub-icon><span>系统 TTS 朗读回复 · 悬浮 Agent UI</span></li>
+<li><bothub-icon name="i-lucide-library"></bothub-icon><span>知识库 RAG · 本地向量检索</span></li>
+<li><bothub-icon name="i-lucide-terminal"></bothub-icon><span>内置 Ubuntu 24.04 · 手机上直接跑代码</span></li>
+<li><bothub-icon name="i-lucide-mic"></bothub-icon><span>TTS 朗读 + 声音克隆 · 悬浮 Agent UI · Pro</span></li>
 <li><bothub-icon name="i-lucide-message-square"></bothub-icon><span>飞书 / Telegram / QQ 机器人 · 子代理</span></li>
 <li><bothub-icon name="i-lucide-download"></bothub-icon><span>Google Play · APK 直装</span></li>
 </ul>
@@ -160,6 +169,7 @@ seo:
 <div class="bothub-integrations">
 <span class="bothub-int-chip"><span class="bothub-int-dot"></span>飞书 Bot</span>
 <span class="bothub-int-chip"><span class="bothub-int-dot"></span>Telegram</span>
+<span class="bothub-int-chip"><span class="bothub-int-dot"></span>QQ Bot</span>
 <span class="bothub-int-chip"><span class="bothub-int-dot"></span>微信 iLink</span>
 </div>
 </div>
