@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<{ platform: Platform; label?: string; cha
 
 const config = PLATFORM_CONFIG[props.platform]
 
-const { data } = await useVersionManifest()
+const { data } = useVersionManifest()
 
 const downloadHref = computed(() => {
   const value = data.value?.[config.downloadKey]

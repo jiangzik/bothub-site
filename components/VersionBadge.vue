@@ -8,7 +8,7 @@ const label = computed(() => props.label ?? '')
 const loading = computed(() => props.loading ?? '--')
 
 // 直接从权威源拉版本号；fetch 完成前显示 loading 占位。
-const { data } = await useVersionManifest()
+const { data } = useVersionManifest()
 
 const versionValue = computed(() => data.value?.version || loading.value)
 const versionText = computed(() => `v${versionValue.value}`)

@@ -217,22 +217,22 @@ seo:
 <div class="bothub-link-grid">
 <a class="bothub-link-card" href="/zh/quick-start/overview">
 <div class="bothub-link-card-icon"><bothub-icon name="i-lucide-rocket"></bothub-icon></div>
-<h4>快速开始<span class="arrow">→</span></h4>
+<div class="bothub-link-card-title">快速开始<span class="arrow">→</span></div>
 <p>5 分钟跑通：安装、填 Key、发第一条消息。</p>
 </a>
 <a class="bothub-link-card" href="/zh/manual/overview">
 <div class="bothub-link-card-icon"><bothub-icon name="i-lucide-book-open"></bothub-icon></div>
-<h4>功能手册<span class="arrow">→</span></h4>
+<div class="bothub-link-card-title">功能手册<span class="arrow">→</span></div>
 <p>API 提供商、对话与上下文、MCP、技能、定时任务。</p>
 </a>
 <a class="bothub-link-card" href="/zh/faq/overview">
 <div class="bothub-link-card-icon"><bothub-icon name="i-lucide-life-buoy"></bothub-icon></div>
-<h4>常见问题<span class="arrow">→</span></h4>
+<div class="bothub-link-card-title">常见问题<span class="arrow">→</span></div>
 <p>下载慢、安装报错、API 失败等常见处理。</p>
 </a>
 <a class="bothub-link-card" href="/zh/faq/privacy-policy">
 <div class="bothub-link-card-icon"><bothub-icon name="i-lucide-shield-check"></bothub-icon></div>
-<h4>隐私 & 账号删除<span class="arrow">→</span></h4>
+<div class="bothub-link-card-title">隐私 & 账号删除<span class="arrow">→</span></div>
 <p>我们收集什么、存在哪，以及如何删除云端账号。</p>
 </a>
 </div>

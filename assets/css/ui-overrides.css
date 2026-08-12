@@ -966,7 +966,7 @@ header [data-slot='center'] {
   width: 17px;
   height: 17px;
 }
-.bothub-landing .bothub-link-card h4 {
+.bothub-landing .bothub-link-card-title {
   margin: 0 0 6px;
   font-size: 14px;
   font-weight: 600;
@@ -976,11 +976,11 @@ header [data-slot='center'] {
   justify-content: space-between;
   color: var(--bothub-text);
 }
-.bothub-link-card h4 .arrow {
+.bothub-link-card-title .arrow {
   color: var(--bothub-text-mute);
   transition: transform 0.15s, color 0.15s;
 }
-.bothub-link-card:hover h4 .arrow {
+.bothub-link-card:hover .bothub-link-card-title .arrow {
   transform: translateX(3px);
   color: var(--bothub-accent);
 }
@@ -1206,7 +1206,7 @@ footer,
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
-  .bothub-link-card:hover h4 .arrow,
+  .bothub-link-card:hover .bothub-link-card-title .arrow,
   .bothub-dl-card:hover,
   .bothub-plat-card:hover { transform: none; }
 }

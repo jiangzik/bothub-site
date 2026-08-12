@@ -217,22 +217,22 @@ seo:
 <div class="bothub-link-grid">
 <a class="bothub-link-card" href="/en/quick-start/overview">
 <div class="bothub-link-card-icon"><bothub-icon name="i-lucide-rocket"></bothub-icon></div>
-<h4>Quick Start<span class="arrow">→</span></h4>
+<div class="bothub-link-card-title">Quick Start<span class="arrow">→</span></div>
 <p>5-minute walkthrough: install, add key, first message.</p>
 </a>
 <a class="bothub-link-card" href="/en/manual/overview">
 <div class="bothub-link-card-icon"><bothub-icon name="i-lucide-book-open"></bothub-icon></div>
-<h4>Manual<span class="arrow">→</span></h4>
+<div class="bothub-link-card-title">Manual<span class="arrow">→</span></div>
 <p>Providers, chat & context, MCP, skills, scheduled tasks.</p>
 </a>
 <a class="bothub-link-card" href="/en/faq/overview">
 <div class="bothub-link-card-icon"><bothub-icon name="i-lucide-life-buoy"></bothub-icon></div>
-<h4>FAQ<span class="arrow">→</span></h4>
+<div class="bothub-link-card-title">FAQ<span class="arrow">→</span></div>
 <p>Downloads, installation issues, API errors, and more.</p>
 </a>
 <a class="bothub-link-card" href="/en/faq/privacy-policy">
 <div class="bothub-link-card-icon"><bothub-icon name="i-lucide-shield-check"></bothub-icon></div>
-<h4>Privacy & account<span class="arrow">→</span></h4>
+<div class="bothub-link-card-title">Privacy & account<span class="arrow">→</span></div>
 <p>What we collect, where it's stored, and how to delete your cloud account.</p>
 </a>
 </div>
