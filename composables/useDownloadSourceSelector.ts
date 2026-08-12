@@ -70,10 +70,12 @@ const toAbsoluteUrl = (rawUrl: string): URL | null => {
 
 const renderMirrorTemplate = (template: string, originUrl: string): string => {
   const url = new URL(originUrl)
+  const fileName = url.pathname.split('/').pop() || ''
   return template
     .replaceAll('{{url}}', originUrl)
     .replaceAll('{{encodedUrl}}', encodeURIComponent(originUrl))
     .replaceAll('{{urlNoProtocol}}', `${url.hostname}${url.pathname}${url.search}`)
+    .replaceAll('{{fileName}}', fileName)
 }
 
 const normalizeConfigUrl = (rawUrl?: string): string => {
