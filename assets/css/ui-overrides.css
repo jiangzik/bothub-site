@@ -856,6 +856,9 @@ header [data-slot='center'] {
   box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.1);
   transform: translateY(-1px);
 }
+.bothub-dl-card[data-selecting='true'] {
+  cursor: progress;
+}
 .bothub-dl-icon {
   width: 36px;
   height: 36px;

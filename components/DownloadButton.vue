@@ -32,19 +32,82 @@ const downloadHref = computed(() => {
   return getVersionEntryUrl(value) || config.defaultUrl
 })
 
+const selectedHref = ref('')
+const selecting = ref(false)
+let selectionRequest: Promise<string> | null = null
+
 const versionText = computed(() => data.value?.version || '')
 
 const shouldRender = computed(() => config.alwaysRender || !!downloadHref.value)
+
+const effectiveDownloadHref = computed(() => selectedHref.value || downloadHref.value)
+
+watch(downloadHref, () => {
+  selectedHref.value = ''
+  selectionRequest = null
+})
+
+const warmBestDownloadUrl = (): Promise<string> => {
+  const originUrl = downloadHref.value
+  if (!originUrl || selectedHref.value) {
+    return Promise.resolve(selectedHref.value || originUrl)
+  }
+  if (selectionRequest) return selectionRequest
+
+  selectionRequest = selectBestDownloadUrl(
+    originUrl,
+    props.platform,
+    data.value?.downloadSourceConfigUrl,
+  ).then(url => {
+    selectedHref.value = url
+    return url
+  })
+
+  return selectionRequest
+}
+
+const openDownloadUrl = (url: string, pendingWindow: Window | null): void => {
+  if (pendingWindow) {
+    pendingWindow.opener = null
+    pendingWindow.location.href = url
+    return
+  }
+  window.location.href = url
+}
+
+const handleDownload = async (event: MouseEvent): Promise<void> => {
+  if (selectedHref.value) return
+
+  const originUrl = downloadHref.value
+  if (!originUrl) {
+    event.preventDefault()
+    return
+  }
+
+  event.preventDefault()
+  selecting.value = true
+  const pendingWindow = window.open('', '_blank')
+  try {
+    openDownloadUrl(await warmBestDownloadUrl(), pendingWindow)
+  } finally {
+    selecting.value = false
+  }
+}
 </script>
 
 <template>
   <a
     v-if="shouldRender"
-    :href="downloadHref"
+    :href="effectiveDownloadHref"
     class="bothub-dl-card"
     :data-platform="platform"
+    :data-selecting="selecting ? 'true' : undefined"
+    :aria-busy="selecting ? 'true' : undefined"
     target="_blank"
     rel="noopener"
+    @pointerenter="warmBestDownloadUrl"
+    @focus="warmBestDownloadUrl"
+    @click="handleDownload"
   >
     <span class="bothub-dl-icon">
       <UIcon :name="config.icon" />

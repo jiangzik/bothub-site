@@ -12,5 +12,6 @@ export const getVersionEntryUrl = (entry?: VersionEntry | string): string => {
 export const useVersionManifest = () => useFetch<VersionManifest>(VERSION_MANIFEST_URL, {
   key: 'bothub-version-manifest',
   default: () => ({}),
+  dedupe: 'defer',
   server: false,
 })
