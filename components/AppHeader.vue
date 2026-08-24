@@ -7,9 +7,12 @@ const { localePath, isEnabled, locales } = useDocusI18n()
 
 <template>
   <UHeader
+    :ui="{ center: 'hidden lg:flex flex-1' }"
     :to="localePath('/')"
     :title="appConfig.header?.title || site.name"
   >
+    <AppHeaderCenter />
+
     <template #title>
       <AppHeaderLogo class="w-auto shrink-0" />
     </template>
@@ -36,27 +39,35 @@ const { localePath, isEnabled, locales } = useDocusI18n()
         <UColorModeButton />
       </ClientOnly>
 
+      <ClientOnly>
+        <UContentSearchButton class="lg:hidden" />
+      </ClientOnly>
     </template>
 
     <template #body>
-      <div class="bothub-mobile-menu">
+      <div class="mobile-menu-body">
+        <div class="mobile-menu-cmd">$ bothub --navigate</div>
+        <UContentSearchButton class="w-full mobile-menu-btn" />
         <NuxtLink
           :to="localePath('/quick-start/overview')"
-          class="bothub-mobile-menu-link"
+          class="mobile-menu-link"
         >
-          快速开始 · Quick Start
+          <span class="mobile-menu-prompt">&gt;</span>
+          quick-start
         </NuxtLink>
         <NuxtLink
           :to="localePath('/manual/overview')"
-          class="bothub-mobile-menu-link"
+          class="mobile-menu-link"
         >
-          功能手册 · Manual
+          <span class="mobile-menu-prompt">&gt;</span>
+          manual
         </NuxtLink>
         <NuxtLink
           :to="localePath('/faq/overview')"
-          class="bothub-mobile-menu-link"
+          class="mobile-menu-link"
         >
-          常见问题 · FAQ
+          <span class="mobile-menu-prompt">&gt;</span>
+          faq
         </NuxtLink>
       </div>
     </template>

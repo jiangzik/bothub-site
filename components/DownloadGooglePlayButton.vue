@@ -21,25 +21,42 @@ const downloadHref = computed(() => {
   const downloads = runtimeConfig.public?.downloads as Record<string, string> | undefined
   return resolveSiteUrl(downloads?.googlePlay || DEFAULT_GOOGLE_PLAY_URL)
 })
+
+const { locale } = useDocusI18n()
+const opening = ref(false)
+const commandText = computed(() => {
+  return locale.value === 'zh' ? './安装 --平台=google-play' : './install --platform=google-play'
+})
+
+const sourceStatusText = computed(() => {
+  if (opening.value) {
+    return locale.value === 'zh' ? '正在打开官方 Google Play 下载源...' : 'opening official Google Play source...'
+  }
+  return ''
+})
+
+const handleClick = (): void => {
+  opening.value = true
+  window.setTimeout(() => {
+    opening.value = false
+  }, 900)
+}
 </script>
 
 <template>
   <a
     :href="downloadHref"
-    class="bothub-dl-card"
+    class="term-download-link"
     data-platform="google-play"
+    :data-source-state="opening ? 'downloading' : 'ready'"
     target="_blank"
     rel="noopener"
+    @click="handleClick"
   >
-    <span class="bothub-dl-icon">
-      <UIcon name="i-logos-google-play-icon" />
-    </span>
-    <span class="bothub-dl-body">
-      <span class="bothub-dl-main">Google Play</span>
-      <span class="bothub-dl-sub">
-        <slot>{{ props.label }}</slot>
-      </span>
-    </span>
-    <span class="bothub-dl-version">Android</span>
+    <span class="term-prompt">&gt;</span>
+    <span class="term-cmd-text">{{ commandText }}</span>
+    <span class="term-version">Android</span>
+    <span class="term-label"><slot>{{ props.label }}</slot></span>
+    <span v-if="sourceStatusText" class="term-download-status">{{ sourceStatusText }}</span>
   </a>
 </template>

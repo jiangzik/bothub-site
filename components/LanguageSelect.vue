@@ -14,21 +14,22 @@ const currentLocaleName = computed(() => {
     <UButton
       color="neutral"
       variant="ghost"
-      class="h-8 px-2 text-sm"
+      class="language-select-trigger"
     >
       {{ currentLocaleName }}
     </UButton>
 
     <template #content>
-      <ul class="flex flex-col min-w-[120px]">
+      <ul class="language-select-menu">
         <li
           v-for="localeItem in locales"
           :key="localeItem.code"
         >
           <NuxtLink
-            class="flex items-center py-1.5 px-2 text-sm hover:bg-muted"
+            class="language-select-item"
             :to="switchLocalePath(localeItem.code) as string"
             :aria-label="localeItem.name"
+            :aria-current="localeItem.code === locale ? 'page' : undefined"
           >
             {{ localeItem.name }}
           </NuxtLink>

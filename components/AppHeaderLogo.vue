@@ -1,37 +1,28 @@
 <script setup lang="ts">
 const appConfig = useAppConfig()
-const runtimeConfig = useRuntimeConfig()
-const appBaseURL = runtimeConfig.app.baseURL || '/'
-
-const logoSrc = computed(() => {
-  const base = appBaseURL === '/' ? '/' : appBaseURL
-  return `${base}logo.png?v=20260522`
-})
-
-const logoStyle = {
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '8px',
-  fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-  fontSize: '15px',
-  fontWeight: '700',
-  color: 'var(--bothub-text, #0a0a0a)',
-  lineHeight: '1',
-}
-
-const logoImageStyle = {
-  width: '28px',
-  height: '28px',
-  borderRadius: '7px',
-  display: 'block',
-  objectFit: 'cover',
-  boxShadow: '0 1px 2px rgba(0, 0, 0, 0.06)',
-}
 </script>
 
 <template>
-  <span :style="logoStyle">
-    <img :src="logoSrc" alt="BotHub" :style="logoImageStyle" />
-    <span>{{ appConfig.header?.title || 'BotHub' }}</span>
+  <span class="terminal-logo">
+    <span class="terminal-logo-prompt">&gt;</span>
+    <span class="terminal-logo-text">{{ appConfig.header?.title || 'BOTHUB' }}</span>
   </span>
 </template>
+
+<style scoped>
+.terminal-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.terminal-logo-prompt {
+  color: var(--terra, #c67a4b);
+}
+.terminal-logo-text {
+  color: var(--ink, #3d2b1f);
+}
+</style>

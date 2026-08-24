@@ -11,33 +11,14 @@ const loading = computed(() => props.loading ?? '--')
 const { data } = useVersionManifest()
 
 const versionValue = computed(() => data.value?.version || loading.value)
-const versionText = computed(() => `v${versionValue.value}`)
+const versionText = computed(() => {
+  const value = `v${versionValue.value}`
+  return label.value ? `${label.value}: ${value}` : value
+})
 </script>
 
 <template>
-  <span class="bothub-version-badge">
-    <span v-if="label" class="bothub-version-label">{{ label }}</span>
-    <span class="bothub-version-value">{{ versionText }}</span>
-  </span>
+  <p class="term-version-badge">
+    <span class="term-sys">[sys]</span> {{ versionText }}
+  </p>
 </template>
-
-<style scoped>
-.bothub-version-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 11.5px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: inherit;
-  line-height: 1;
-}
-.bothub-version-label {
-  color: var(--bothub-text-mute, #8a8a8a);
-}
-.bothub-version-value {
-  color: var(--bothub-accent, #ea580c);
-  font-weight: 600;
-}
-</style>

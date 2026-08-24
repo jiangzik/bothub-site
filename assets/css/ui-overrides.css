@@ -1,1236 +1,697 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap");
+
 /* ============================================================
-   BotHub site · Vercel-inspired light theme
+   BotHub Dune terminal theme
+   Base layer only. Landing-specific polish lives in terminal-polish.css.
    ============================================================ */
 
-/* ------------------------------------------------------------
-   1. Design tokens
-   ------------------------------------------------------------ */
 :root {
-  --bothub-bg: #ffffff;
-  --bothub-bg-soft: #fafafa;
-  --bothub-surface: #f5f5f5;
-  --bothub-surface-2: #eeeeee;
-  --bothub-border: #ebebeb;
-  --bothub-border-strong: #d4d4d4;
-  --bothub-text: #0a0a0a;
-  --bothub-text-dim: #525252;
-  --bothub-text-mute: #8a8a8a;
-  --bothub-accent: #ea580c;
-  --bothub-accent-hover: #c2410c;
-  --bothub-accent-soft: #fff4ed;
-  --bothub-accent-ring: rgba(234, 88, 12, 0.18);
-  --bothub-success: #16a34a;
-
-  --ui-primary: #ea580c;
-  --ui-color-primary-400: #fb923c;
-  --ui-color-primary-500: #f97316;
-  --ui-color-primary-600: #ea580c;
-
-  --ui-header-height: 60px;
+  --ui-header-height: 36px;
   --floating-header-top-offset: 0;
+  --ui-primary: #c67a4b;
+  --ui-color-primary-400: #c67a4b;
+  --ui-color-primary-500: #c67a4b;
+  --ui-color-primary-600: #a8603a;
 
-  --bothub-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Noto Sans SC', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
-  --bothub-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+  --bg-page: #f5f0e8;
+  --bg-alt: #f0ebe4;
+  --cream: #f5f0e8;
+  --cream-light: #faf7f2;
+  --sand: #e8dcc8;
+  --border: #e0d5c5;
+  --terra: #c67a4b;
+  --terra-dark: #a8603a;
+  --sage: #7a8c6e;
+  --ink: #3d2b1f;
+  --text-primary: #3d2b1f;
+  --text-secondary: #5c4535;
+  --text-muted: #9a8b7a;
+  --font: "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
+    "Noto Sans SC", monospace;
 }
 
 .dark {
-  --bothub-bg: #0a0a0a;
-  --bothub-bg-soft: #111111;
-  --bothub-surface: #171717;
-  --bothub-surface-2: #1f1f1f;
-  --bothub-border: #262626;
-  --bothub-border-strong: #333333;
-  --bothub-text: #fafafa;
-  --bothub-text-dim: #a3a3a3;
-  --bothub-text-mute: #737373;
-  --bothub-accent: #fb923c;
-  --bothub-accent-hover: #fdba74;
-  --bothub-accent-soft: rgba(251, 146, 60, 0.12);
-  --bothub-accent-ring: rgba(251, 146, 60, 0.25);
+  --ui-primary: #d4915e;
+  --ui-color-primary-400: #d4915e;
+  --ui-color-primary-500: #d4915e;
+  --ui-color-primary-600: #c67a4b;
+
+  --bg-page: #1a1512;
+  --bg-alt: #211c17;
+  --cream: #1a1512;
+  --cream-light: #211c17;
+  --sand: #2a231c;
+  --border: #3d3229;
+  --terra: #d4915e;
+  --terra-dark: #e0a574;
+  --sage: #8fa87e;
+  --ink: #e8dcc8;
+  --text-primary: #d5c9b8;
+  --text-secondary: #b0a290;
+  --text-muted: #7a6e60;
 }
 
-/* ------------------------------------------------------------
-   2. Global resets
-   ------------------------------------------------------------ */
 html {
   scroll-behavior: smooth;
 }
 
+* {
+  font-family: var(--font) !important;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--bg-alt);
+}
+
 body {
-  font-family: var(--bothub-font);
-  font-feature-settings: 'ss01', 'cv11';
-  background: var(--bothub-bg);
-  color: var(--bothub-text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.8;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.55;
 }
 
-code,
-kbd,
+body,
+body::before,
+body::after {
+  background-image: none;
+}
+
+body::after {
+  display: none;
+}
+
+a {
+  color: var(--terra);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--terra-dark);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+[data-slot="headline"],
+[data-slot="title"] {
+  color: var(--ink);
+  font-family: var(--font);
+  letter-spacing: 0.02em;
+  text-shadow: none;
+}
+
 pre,
-samp,
-.mono {
-  font-family: var(--bothub-mono);
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #d4d4d4;
-  border-radius: 10px;
-  border: 2px solid var(--bothub-bg);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #a3a3a3;
-}
-.dark ::-webkit-scrollbar-thumb {
-  background: #404040;
-  border-color: var(--bothub-bg);
-}
-
-/* ------------------------------------------------------------
-   3. Header (UHeader)
-   ------------------------------------------------------------ */
-header[data-slot='base'],
-.u-header {
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  background: rgba(255, 255, 255, 0.78);
-  border-bottom: 1px solid var(--bothub-border);
-}
-.dark header[data-slot='base'],
-.dark .u-header {
-  background: rgba(10, 10, 10, 0.72);
-  border-bottom-color: var(--bothub-border);
-}
-
-.bothub-search-trigger {
-  border-radius: 10px !important;
-  font-family: var(--bothub-font) !important;
-  font-weight: 400 !important;
-  font-size: 13px !important;
-  background: var(--bothub-bg-soft) !important;
-  --tw-ring-color: var(--bothub-border) !important;
-  --tw-ring-inset: inset !important;
-  --tw-ring-offset-shadow: 0 0 #0000 !important;
-  box-shadow: inset 0 0 0 1px var(--bothub-border) !important;
-  color: var(--bothub-text-mute) !important;
-  width: auto !important;
-  max-width: 260px !important;
-  min-width: 220px;
-  height: 34px !important;
-  padding: 0 12px !important;
-  justify-content: flex-start !important;
-  gap: 8px !important;
-  margin: 0 auto;
-}
-.bothub-search-trigger:hover {
-  background: var(--bothub-bg) !important;
-  box-shadow: inset 0 0 0 1px var(--bothub-border-strong) !important;
-  color: var(--bothub-text-dim) !important;
-}
-.bothub-search-trigger [data-slot='leadingIcon'] {
-  color: var(--bothub-text-mute);
-  margin-right: 2px !important;
-}
-.bothub-search-trigger [data-slot='label'] {
-  font-weight: 400;
-}
-.bothub-search-trigger kbd {
-  background: var(--bothub-surface) !important;
-  --tw-ring-color: var(--bothub-border) !important;
-  box-shadow: inset 0 0 0 1px var(--bothub-border) !important;
-  color: var(--bothub-text-mute) !important;
-  height: 18px !important;
-  min-width: 18px !important;
-  font-size: 10.5px !important;
+pre[class*="shiki"],
+pre[class*="language-"],
+[data-slot="base"][data-highlight] pre,
+.prose pre,
+div > pre {
+  overflow-x: auto;
+  padding: 16px 20px !important;
+  border: 1px solid var(--border) !important;
   border-radius: 4px !important;
-  padding: 0 4px !important;
-}
-/* center slot: keep search trigger compact rather than stretched */
-header [data-slot='center'] {
-  flex: 1 1 auto;
-  justify-content: center !important;
+  background: rgba(232, 220, 200, 0.2) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font) !important;
+  font-size: 13px !important;
+  line-height: 1.8 !important;
 }
 
-.bothub-mobile-menu {
-  padding: 16px;
+pre code,
+pre[class*="shiki"] code,
+.prose pre code {
+  padding: 0 !important;
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font) !important;
+}
+
+code:not(pre code) {
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  background: rgba(198, 122, 75, 0.08) !important;
+  color: var(--terra) !important;
+  font-family: var(--font) !important;
+  font-size: 12px !important;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 1px solid var(--bg-alt);
+  border-radius: 4px;
+  background: var(--border);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--terra);
+}
+
+/* Header */
+header[data-slot="root"],
+header[data-slot="base"],
+.u-header {
+  top: var(--floating-header-top-offset);
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  overflow: hidden;
+  border: 0;
+  border-bottom: 2px solid var(--border);
+  border-radius: 0;
+  background: var(--sand) !important;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+header [data-slot="container"] {
+  min-height: 36px;
+  background: var(--sand);
+}
+
+header [data-slot="title"] {
+  color: var(--ink);
+  text-shadow: none;
+}
+
+header [data-slot="base"] {
+  border: 1px solid var(--border) !important;
+  border-radius: 2px !important;
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  box-shadow: none !important;
+  font-size: 11px;
+}
+
+header [data-slot="base"]:hover {
+  border-color: var(--terra) !important;
+  background: transparent !important;
+  color: var(--terra) !important;
+}
+
+header a[data-slot="base"]:has(.terminal-logo),
+header [data-slot="title"] a[data-slot="base"] {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: inherit !important;
+}
+
+header a[data-slot="base"]:has(.terminal-logo):hover,
+header [data-slot="title"] a[data-slot="base"]:hover {
+  border: 0 !important;
+  background: transparent !important;
+  color: inherit !important;
+  transform: none !important;
+}
+
+.mobile-menu-body {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-.bothub-mobile-menu-search {
-  margin-bottom: 8px;
-}
-.bothub-mobile-menu-link {
-  display: block;
-  padding: 12px 14px;
-  border-radius: 10px;
-  background: var(--bothub-surface);
-  color: var(--bothub-text);
-  font-weight: 500;
-  font-size: 14px;
-  text-decoration: none;
-  transition: background 0.15s;
-}
-.bothub-mobile-menu-link:hover {
-  background: var(--bothub-surface-2);
+  gap: 4px;
+  padding: 12px 16px;
 }
 
-/* ------------------------------------------------------------
-   4. Landing page container
-   ------------------------------------------------------------ */
-.bothub-landing {
-  width: 100%;
+.mobile-menu-cmd {
+  margin-bottom: 4px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--terra);
+  font-size: 11px;
 }
 
-/* Neutralise the prose styling Nuxt Content auto-applies to every
-   h1/h2/h3/h4/p/ul/li/a in the markdown body. Using :where() so the
-   specificity is 0 — our bothub-* classes trivially override. */
-.bothub-landing :where(h1, h2, h3, h4, h5, h6) {
-  margin: 0;
-  padding: 0;
-  scroll-margin-top: 0;
-  font-family: var(--bothub-font);
-  color: var(--bothub-text);
-  line-height: 1.2;
-  font-weight: 600;
-}
-.bothub-landing :where(h1, h2, h3, h4) > :where(a) {
-  color: inherit;
-  text-decoration: none;
-  border: 0;
-  font-weight: inherit;
-  background: none;
-  padding: 0;
-}
-.bothub-landing :where(p) {
-  margin: 0;
-  line-height: inherit;
-  color: inherit;
-}
-.bothub-landing :where(ul, ol) {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.bothub-landing :where(li) {
-  margin: 0;
-  padding: 0;
-  line-height: 1.5;
-  list-style: none;
-}
-.bothub-landing :where(li)::marker {
-  content: '';
-}
-.bothub-landing :where(a) {
-  color: inherit;
-  text-decoration: none;
-  border: 0;
-}
-.bothub-landing :where(code) {
-  background: transparent;
-  padding: 0;
-  border: 0;
-  font-family: var(--bothub-mono);
-  font-size: inherit;
-  color: inherit;
-}
-
-.bothub-container {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.bothub-section {
-  padding: 110px 0;
-}
-.bothub-section-tight {
-  padding-top: 0;
-}
-
-.bothub-section-head {
-  max-width: 720px;
-  margin: 0 auto 56px;
-  text-align: center;
-}
-
-.bothub-section-eyebrow {
-  font-size: 12px;
-  color: var(--bothub-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 600;
-  margin-bottom: 14px;
-}
-
-.bothub-landing h2,
-.bothub-landing .bothub-section-head h2 {
-  font-size: clamp(28px, 3.4vw, 40px);
-  letter-spacing: -0.025em;
-  line-height: 1.15;
-  margin: 0 0 16px;
-  font-weight: 700;
-  color: var(--bothub-text);
-}
-
-.bothub-landing .bothub-section-head p {
-  color: var(--bothub-text-dim);
-  font-size: 16px;
-  margin: 0 auto;
-  line-height: 1.6;
-  max-width: 560px;
-}
-
-/* ------------------------------------------------------------
-   5. Buttons
-   ------------------------------------------------------------ */
-.bothub-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 500;
-  border: 1px solid transparent;
-  transition: all 0.15s ease;
-  cursor: pointer;
-  white-space: nowrap;
-  text-decoration: none;
-}
-.bothub-btn-lg {
-  padding: 13px 22px;
-  font-size: 15px;
-}
-.bothub-btn-primary {
-  background: var(--bothub-text);
-  color: var(--bothub-bg);
-}
-.bothub-btn-primary:hover {
-  background: #262626;
-}
-.dark .bothub-btn-primary {
-  background: #fafafa;
-  color: #0a0a0a;
-}
-.dark .bothub-btn-primary:hover {
-  background: #e5e5e5;
-}
-.bothub-btn-ghost {
-  background: var(--bothub-bg);
-  color: var(--bothub-text);
-  border-color: var(--bothub-border-strong);
-}
-.bothub-btn-ghost:hover {
-  background: var(--bothub-surface);
-  border-color: var(--bothub-text-mute);
-}
-.dark .bothub-btn-ghost {
-  background: var(--bothub-bg-soft);
-}
-
-/* ------------------------------------------------------------
-   6. Hero
-   ------------------------------------------------------------ */
-.bothub-hero {
-  position: relative;
-  overflow: hidden;
-  padding: 108px 0 40px;
-}
-.bothub-hero-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(900px 450px at 50% -10%, rgba(251, 146, 60, 0.16), transparent 60%),
-    radial-gradient(700px 300px at 90% 30%, rgba(244, 114, 182, 0.08), transparent 60%);
-  pointer-events: none;
-}
-.dark .bothub-hero-bg {
-  background:
-    radial-gradient(900px 450px at 50% -10%, rgba(251, 146, 60, 0.22), transparent 60%),
-    radial-gradient(700px 300px at 90% 30%, rgba(244, 114, 182, 0.1), transparent 60%);
-}
-.bothub-hero-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(10, 10, 10, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(10, 10, 10, 0.035) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
-  pointer-events: none;
-}
-.dark .bothub-hero-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-}
-.bothub-hero-inner {
-  position: relative;
-  text-align: center;
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.bothub-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: var(--bothub-bg);
-  border: 1px solid var(--bothub-border);
-  font-size: 12.5px;
-  color: var(--bothub-text-dim);
-  margin-bottom: 28px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-}
-.bothub-eyebrow-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--bothub-accent);
-  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.18);
-}
-.bothub-eyebrow-sep {
-  color: var(--bothub-text-mute);
-}
-
-.bothub-landing .bothub-hero-title {
-  font-size: clamp(30px, 4vw, 54px);
-  line-height: 1.1;
-  letter-spacing: -0.028em;
-  font-weight: 700;
-  margin: 0 auto 22px;
-  color: var(--bothub-text);
-  max-width: 22ch;
-}
-.bothub-landing .bothub-hero-title em {
-  font-style: normal;
-  background: linear-gradient(135deg, #f97316 0%, #e11d48 70%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  white-space: nowrap;
-}
-
-.bothub-hero-lead {
-  font-size: 17px;
-  color: var(--bothub-text-dim);
-  max-width: 580px;
-  margin: 0 auto 36px;
-  line-height: 1.6;
-}
-/* Beat Tailwind my-5 utility that Nuxt Content adds to every <p> */
-.bothub-landing .bothub-hero-lead {
-  margin-top: 0;
-  margin-bottom: 36px;
-}
-
-.bothub-hero-cta {
-  display: inline-flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.bothub-hero-meta {
-  margin-top: 22px;
-  font-size: 13px;
-  color: var(--bothub-text-mute);
+.mobile-menu-link {
   display: flex;
-  gap: 14px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.bothub-hero-sep {
-  color: var(--bothub-text-mute);
-  opacity: 0.5;
-}
-
-/* ------------------------------------------------------------
-   7. Product mock
-   ------------------------------------------------------------ */
-/* ------------------------------------------------------------
-   Hero showcase — real product screenshots (desktop · tablet · mobile)
-   ------------------------------------------------------------ */
-.bothub-showcase {
-  position: relative;
-  margin: 80px auto 0;
-  max-width: 1180px;
-  padding: 0 16px;
-}
-.bothub-showcase-glow {
-  position: absolute;
-  inset: -60px 10% auto 10%;
-  height: 320px;
-  background:
-    radial-gradient(closest-side, rgba(251, 146, 60, 0.28), transparent 70%),
-    radial-gradient(closest-side at 80% 50%, rgba(244, 114, 182, 0.18), transparent 70%);
-  filter: blur(60px);
-  pointer-events: none;
-  z-index: 0;
-}
-.bothub-showcase-stage {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(160px, 0.95fr) minmax(620px, 2.2fr) minmax(120px, 0.7fr);
-  align-items: end;
-  gap: 0;
-  padding-bottom: 36px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 2px;
+  color: var(--text-primary);
+  font-size: 13px;
+  text-decoration: none;
+  transition: all 0.15s;
 }
 
-/* Each screenshot is exported with its own device chrome (mac window / tablet
-   bezel / phone bezel) plus a soft transparent shadow. The frame is purely a
-   positioning container — no background, no border, no synthetic shadow,
-   otherwise it would leak through the PNG's transparent halo. */
-.bothub-device {
+.mobile-menu-link:hover {
+  background: rgba(198, 122, 75, 0.06);
+  color: var(--terra);
+}
+
+.mobile-menu-prompt {
+  flex-shrink: 0;
+  color: var(--sage);
+  font-weight: 700;
+}
+
+.bothub-search-trigger[data-slot="base"],
+.bothub-search-trigger {
+  min-height: 2.62rem;
+  padding-inline: 0.95rem;
+  border: 1px solid var(--border) !important;
+  border-radius: 2px !important;
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  box-shadow: none !important;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.bothub-search-trigger[data-slot="base"]:hover,
+.bothub-search-trigger:hover {
+  border-color: var(--terra) !important;
+  background: transparent !important;
+  color: var(--terra) !important;
+  transform: translateY(-1px);
+}
+
+.bothub-search-trigger [data-slot="trailing"] kbd {
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: var(--cream-light);
+  color: var(--text-muted);
+  box-shadow: none;
+}
+
+/* Docus landing shell */
+.terminal-landing-hero[data-slot="root"],
+.landing-hero[data-slot="root"] {
+  overflow: hidden;
+  background: var(--bg-page) !important;
+}
+
+.terminal-landing-hero [data-slot="container"],
+.landing-hero [data-slot="container"] {
+  gap: 0 !important;
+  padding: 0 !important;
+  background: transparent;
+}
+
+.terminal-landing-hero [data-slot="wrapper"],
+.landing-hero [data-slot="wrapper"] {
   position: relative;
-  z-index: 1;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: none;
+  margin-inline: auto;
+  overflow: hidden;
+  padding: 0 !important;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
-.bothub-device-frame {
+
+.terminal-landing-hero [data-slot="title"] {
+  font-size: inherit !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+}
+
+.terminal-landing-hero [data-slot="header"] {
+  gap: 0 !important;
+}
+
+.terminal-landing-hero [data-slot="footer"],
+.landing-hero [data-slot="footer"] {
+  margin-top: 0;
+}
+
+/* Terminal primitives */
+.terminal-window {
+  max-width: 960px;
+  margin: 16px auto;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--cream-light);
+  box-shadow: 0 8px 40px rgba(61, 43, 31, 0.1);
+}
+
+.terminal-titlebar {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--sand);
 }
-.bothub-device-frame img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.bothub-device-label {
+
+.terminal-titlebar-title {
   position: absolute;
   left: 50%;
-  bottom: -22px;
   transform: translateX(-50%);
+  color: var(--text-muted);
   font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--bothub-text-mute);
-  white-space: nowrap;
-  font-family: var(--bothub-mono);
-}
-
-/* Desktop — center, biggest */
-.bothub-device-desktop {
-  z-index: 3;
-  margin: 0 -8%;
-}
-
-/* Tablet — back-left, tilted slightly */
-.bothub-device-tablet {
-  z-index: 2;
-  transform: translateY(40px) rotate(-3deg);
-  margin-right: -10%;
-}
-
-/* Mobile — front-right, tilted, on top */
-.bothub-device-mobile {
-  z-index: 4;
-  transform: translateY(-30px) rotate(3deg);
-  margin-left: -22%;
-  max-width: 200px;
-  justify-self: end;
-}
-
-/* Gentle hover on the whole stage — pull the devices apart slightly */
-.bothub-showcase-stage:hover .bothub-device-tablet {
-  transform: translateY(36px) rotate(-4deg) translateX(-6px);
-}
-.bothub-showcase-stage:hover .bothub-device-mobile {
-  transform: translateY(-34px) rotate(4deg) translateX(6px);
-}
-
-/* ------------------------------------------------------------
-   9. Features grid
-   ------------------------------------------------------------ */
-.bothub-features {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--bothub-border);
-  border: 1px solid var(--bothub-border);
-  border-radius: 20px;
-  overflow: hidden;
-}
-.bothub-feature {
-  background: var(--bothub-bg);
-  padding: 36px 30px;
-  transition: background 0.2s ease;
-}
-.bothub-feature:hover {
-  background: var(--bothub-bg-soft);
-}
-.bothub-feature-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: var(--bothub-bg);
-  border: 1px solid var(--bothub-border-strong);
-  display: grid;
-  place-items: center;
-  margin-bottom: 18px;
-  color: var(--bothub-accent);
-  font-size: 17px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-}
-.bothub-landing .bothub-feature h3 {
-  font-size: 16px;
-  margin: 0 0 6px;
-  letter-spacing: -0.01em;
   font-weight: 600;
-  color: var(--bothub-text);
-}
-.bothub-landing .bothub-feature p {
-  font-size: 14px;
-  color: var(--bothub-text-dim);
-  margin: 0;
-  line-height: 1.6;
-}
-.bothub-feature-meta {
-  margin-top: 12px;
-  font-size: 11.5px;
-  color: var(--bothub-text-mute);
-  font-family: var(--bothub-mono);
+  letter-spacing: 1px;
 }
 
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
 
-/* ------------------------------------------------------------
-   11. Platform matrix
-   ------------------------------------------------------------ */
-.bothub-platform-matrix {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+.terminal-dot.red {
+  background: var(--terra);
 }
-.bothub-plat-card {
-  border: 1px solid var(--bothub-border);
-  border-radius: 16px;
-  padding: 28px 26px;
-  background: var(--bothub-bg);
-  transition: all 0.2s;
+
+.terminal-dot.yellow {
+  border: 1px solid var(--terra);
+  background: var(--sand);
 }
-.bothub-plat-card:hover {
-  border-color: var(--bothub-border-strong);
-  transform: translateY(-2px);
+
+.terminal-dot.green {
+  background: var(--sage);
 }
-.bothub-plat-card.featured {
-  background: linear-gradient(180deg, #fff7ed, var(--bothub-bg));
-  border-color: #fdba74;
+
+.terminal-body {
+  min-height: 200px;
+  overflow-x: hidden;
+  padding: 20px 24px;
+  font-size: 13px;
+  line-height: 1.8;
 }
-.dark .bothub-plat-card.featured {
-  background: linear-gradient(180deg, rgba(251, 146, 60, 0.08), var(--bothub-bg));
-  border-color: rgba(251, 146, 60, 0.35);
-}
-.bothub-plat-head {
+
+.term-cmd {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-.bothub-plat-name {
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.bothub-plat-badge {
-  font-size: 10.5px;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: var(--bothub-success);
-  color: #fff;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-.bothub-plat-badge.soon {
-  background: var(--bothub-surface);
-  color: var(--bothub-text-mute);
-  border: 1px solid var(--bothub-border);
-}
-.bothub-plat-card ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: 13.5px;
-  color: var(--bothub-text-dim);
-}
-.bothub-plat-card li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 16px;
   padding: 8px 0;
-  font-size: 13.5px;
-  color: var(--bothub-text-dim);
-  line-height: 1.4;
+  border-bottom: 1px solid var(--border);
+  color: var(--terra);
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.8;
 }
-.bothub-plat-card li > .iconify,
-.bothub-plat-card li > svg {
-  width: 15px;
-  height: 15px;
-  flex: 0 0 15px;
-  color: var(--bothub-text-mute);
-  opacity: 0.7;
+
+.term-cmd .prompt,
+.prompt {
+  flex-shrink: 0;
+  color: var(--sage);
+  font-weight: 700;
+  text-shadow: none;
 }
-.bothub-plat-card.featured li > .iconify,
-.bothub-plat-card.featured li > svg {
-  color: var(--bothub-accent);
+
+.term-cmd .cmd-text,
+.cmd-text {
+  color: var(--terra);
+  text-shadow: none;
+}
+
+.term-output {
   opacity: 1;
 }
 
-/* ------------------------------------------------------------
-   12. Integrations chip strip
-   ------------------------------------------------------------ */
-.bothub-integrations {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 32px;
-}
-.bothub-int-chip {
-  padding: 10px 16px;
-  border-radius: 10px;
-  background: var(--bothub-bg);
-  border: 1px solid var(--bothub-border);
-  font-size: 13px;
-  color: var(--bothub-text-dim);
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.bothub-int-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--bothub-success);
+.ascii-logo {
+  margin: 0 0 0.5rem;
+  overflow: hidden;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--terra);
+  font-size: clamp(0.55rem, 1.6vw, 0.85rem);
+  line-height: 1.15;
+  white-space: pre;
 }
 
-/* ------------------------------------------------------------
-   13. Download box
-   ------------------------------------------------------------ */
-.bothub-download-box {
-  position: relative;
-  border: 1px solid var(--bothub-border);
-  border-radius: 24px;
-  padding: 56px 48px;
-  background:
-    radial-gradient(700px 300px at 100% 0%, rgba(251, 146, 60, 0.12), transparent 60%),
-    radial-gradient(500px 300px at 0% 100%, rgba(244, 114, 182, 0.05), transparent 60%),
-    var(--bothub-bg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0;
+.term-cursor-line {
+  margin-top: 16px;
+  color: var(--sage);
 }
-.bothub-landing .bothub-download-box .bothub-section-eyebrow {
-  margin-bottom: 14px;
+
+.cursor-blink {
+  animation: blink 1s steps(2, start) infinite;
 }
-.bothub-landing .bothub-download-left {
-  max-width: 620px;
-  margin-bottom: 40px;
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
-.bothub-landing .bothub-download-left h2 {
-  font-size: clamp(32px, 3.6vw, 44px);
-  letter-spacing: -0.03em;
-  margin: 0 0 14px;
-  line-height: 1.1;
-  font-weight: 700;
-}
-.bothub-landing .bothub-download-lead {
-  color: var(--bothub-text-dim);
-  margin: 0 auto;
-  font-size: 16px;
-  line-height: 1.6;
-  max-width: 520px;
-}
-.bothub-download-right {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-.bothub-download-right > p {
-  display: contents;
-}
-.bothub-download-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-}
-.bothub-download-grid > p {
-  display: contents;
-}
-/* Linux is the secondary platform — auto-place in row 3 col 1, slightly
-   muted bg so the empty cell next to it reads as intentional. */
-.bothub-download-grid > .bothub-dl-card[data-platform='linux'] {
-  background: var(--bothub-bg-soft);
-}
-.bothub-version-line {
-  margin-top: 20px;
-  font-size: 12.5px;
-  color: var(--bothub-text-mute);
-  font-family: var(--bothub-mono);
+
+/* Interactive terminal links */
+.term-download-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  text-align: center;
-}
-.bothub-download-note {
-  margin-top: 18px;
-  max-width: 620px;
-  padding: 10px 16px;
-  border: 1px solid var(--bothub-border);
-  border-radius: 10px;
-  background: rgba(251, 146, 60, 0.06);
+  gap: 0.4rem;
+  padding: 0.4rem 0;
+  color: var(--terra);
   font-size: 13px;
-  line-height: 1.55;
-  color: var(--bothub-text-dim);
-  text-align: center;
-}
-.bothub-download-note a {
-  color: var(--bothub-accent);
+  font-weight: 600;
   text-decoration: none;
-  font-weight: 500;
+  text-shadow: none;
+  transition: all 0.2s;
 }
-.bothub-download-note a:hover {
+
+.term-download-link:hover {
+  color: var(--terra-dark);
+}
+
+.term-prompt {
+  color: var(--sage);
+  font-weight: 700;
+}
+
+.term-cmd-text {
+  color: var(--terra);
+}
+
+.term-version,
+.term-label {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.term-label {
+  margin-left: 0.3rem;
+}
+
+.term-version-badge {
+  margin: 0;
+  color: var(--terra);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.term-sys {
+  color: var(--sage);
+  font-weight: 700;
+}
+
+.term-link {
+  color: var(--terra);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.term-link:hover {
+  color: var(--terra-dark);
   text-decoration: underline;
 }
 
-/* Bigger download cards — these are the primary CTA of the section */
-.bothub-download-right .bothub-dl-card {
-  padding: 18px 18px;
-  border-width: 1.5px;
-  text-align: left;
-}
-.bothub-download-right .bothub-dl-card:hover {
-  border-color: var(--bothub-accent);
-  box-shadow: 0 10px 28px -8px rgba(234, 88, 12, 0.22);
-  transform: translateY(-3px);
-}
-.bothub-download-right .bothub-dl-card .bothub-dl-icon {
-  width: 40px;
-  height: 40px;
-  font-size: 19px;
-  flex: 0 0 40px;
-}
-.bothub-download-right .bothub-dl-card .bothub-dl-main {
-  font-size: 15px;
-}
-
-@media (max-width: 520px) {
-  .bothub-download-grid { grid-template-columns: 1fr; }
-}
-
-/* Download card (used by DownloadButton + DownloadGooglePlayButton) */
-.bothub-dl-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  border: 1px solid var(--bothub-border);
-  border-radius: 12px;
-  background: var(--bothub-bg);
-  transition: all 0.15s ease;
-  text-decoration: none;
-  color: var(--bothub-text);
-  min-width: 0;
-}
-.bothub-dl-card:hover {
-  border-color: var(--bothub-border-strong);
-  box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.1);
-  transform: translateY(-1px);
-}
-.bothub-dl-card[data-selecting='true'] {
-  cursor: progress;
-}
-.bothub-dl-icon {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  font-size: 18px;
-  border-radius: 10px;
-  background: var(--bothub-surface);
-  color: var(--bothub-text);
-  flex: 0 0 36px;
-}
-.bothub-dl-card[data-platform='google-play'] .bothub-dl-icon {
-  background: var(--bothub-surface);
-  color: inherit;
-  border: 1px solid var(--bothub-border-strong);
-}
-.bothub-dl-card[data-platform='mac'] .bothub-dl-icon {
-  background: #0a0a0a;
-  color: #fff;
-}
-.bothub-dl-card[data-platform='windows'] .bothub-dl-icon {
-  background: #0078d4;
-  color: #fff;
-}
-.bothub-dl-card[data-platform='android'] .bothub-dl-icon {
-  background: #3ddc84;
-  color: #0a0a0a;
-}
-.bothub-dl-body {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-  flex: 1;
-}
-.bothub-dl-main {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--bothub-text);
-  letter-spacing: -0.005em;
-  line-height: 1.2;
-}
-.bothub-dl-sub {
-  font-size: 11.5px;
-  color: var(--bothub-text-mute);
-  font-family: var(--bothub-mono);
-  letter-spacing: 0.01em;
-  line-height: 1.3;
-}
-.bothub-dl-sub p {
-  margin: 0;
-  font-size: inherit;
-}
-.bothub-dl-version {
-  font-size: 11px;
-  color: var(--bothub-text-mute);
-  font-family: var(--bothub-mono);
-  padding: 3px 8px;
-  border-radius: 6px;
-  background: var(--bothub-surface);
-  flex-shrink: 0;
-}
-
-/* ------------------------------------------------------------
-   14. Resources / link cards
-   ------------------------------------------------------------ */
-.bothub-link-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-}
-.bothub-link-card {
-  border: 1px solid var(--bothub-border);
-  border-radius: 14px;
-  padding: 22px 20px;
-  background: var(--bothub-bg);
-  transition: all 0.15s;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-.bothub-link-card:hover {
-  background: var(--bothub-bg-soft);
-  border-color: var(--bothub-border-strong);
-}
-.bothub-link-card-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 9px;
-  background: var(--bothub-bg-soft);
-  border: 1px solid var(--bothub-border);
-  display: grid;
-  place-items: center;
-  margin-bottom: 14px;
-  color: var(--bothub-accent);
-  font-size: 16px;
-  transition: all 0.15s;
-}
-.bothub-link-card:hover .bothub-link-card-icon {
-  background: var(--bothub-accent-soft);
-  border-color: var(--bothub-accent);
-}
-.bothub-link-card-icon > .iconify,
-.bothub-link-card-icon > svg {
-  width: 17px;
-  height: 17px;
-}
-.bothub-landing .bothub-link-card-title {
-  margin: 0 0 6px;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: -0.005em;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: var(--bothub-text);
-}
-.bothub-link-card-title .arrow {
-  color: var(--bothub-text-mute);
-  transition: transform 0.15s, color 0.15s;
-}
-.bothub-link-card:hover .bothub-link-card-title .arrow {
-  transform: translateX(3px);
-  color: var(--bothub-accent);
-}
-.bothub-landing .bothub-link-card p {
-  margin: 0;
-  font-size: 12.5px;
-  color: var(--bothub-text-dim);
-  line-height: 1.5;
-}
-
-.bothub-community {
-  margin-top: 48px;
-  display: flex;
-  justify-content: center;
-}
-
-/* QQ button */
-.bothub-qq-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  border-radius: 999px;
-  background: var(--bothub-bg);
-  border: 1px solid var(--bothub-border);
-  color: var(--bothub-text);
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.15s;
-}
-.bothub-qq-button:hover {
-  border-color: var(--bothub-border-strong);
-  box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.1);
-  transform: translateY(-1px);
-}
-.bothub-qq-icon {
-  width: 26px;
-  height: 26px;
-  border-radius: 7px;
-  background: var(--bothub-surface);
-  border: 1px solid var(--bothub-border-strong);
-  color: var(--bothub-text);
-  font-weight: 700;
-  font-size: 16px;
-  display: grid;
-  place-items: center;
-}
-.bothub-qq-button:hover .bothub-qq-icon {
-  background: var(--bothub-text);
-  border-color: var(--bothub-text);
-  color: var(--bothub-bg);
-}
-.bothub-qq-icon > .iconify,
-.bothub-qq-icon > svg {
-  width: 16px;
-  height: 16px;
-}
-.bothub-qq-text {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.bothub-qq-id {
-  font-family: var(--bothub-mono);
-  color: var(--bothub-text-mute);
-  font-size: 12px;
-}
-
-/* ------------------------------------------------------------
-   15. Content / Docs pages (UPage, prose)
-   ------------------------------------------------------------ */
-.bothub-landing + *,
+/* Docs and prose */
 article.prose,
 .prose {
-  font-family: var(--bothub-font);
+  color: var(--text-secondary);
 }
 
-/* Prose headings */
 .prose h1,
 .prose h2,
 .prose h3,
 .prose h4 {
-  letter-spacing: -0.02em;
-  color: var(--bothub-text);
-}
-.prose h1 { font-size: 36px; line-height: 1.1; font-weight: 700; }
-.prose h2 { font-size: 26px; line-height: 1.2; font-weight: 700; margin-top: 2em; }
-.prose h3 { font-size: 19px; line-height: 1.3; font-weight: 600; }
-.prose p,
-.prose li {
-  color: var(--bothub-text-dim);
-  font-size: 15.5px;
-  line-height: 1.75;
-}
-.prose a {
-  color: var(--bothub-accent);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(234, 88, 12, 0.3);
-  transition: border-color 0.15s;
-}
-.prose a:hover {
-  border-bottom-color: var(--bothub-accent);
-}
-.prose code:not(pre code) {
-  background: var(--bothub-surface);
-  padding: 1px 7px;
-  border-radius: 5px;
-  font-size: 0.9em;
-  color: var(--bothub-text);
-  border: 1px solid var(--bothub-border);
-}
-.prose pre {
-  background: var(--bothub-bg-soft);
-  border: 1px solid var(--bothub-border);
-  border-radius: 12px;
-  padding: 18px 20px;
-  font-size: 13.5px;
-  line-height: 1.65;
-  overflow-x: auto;
-}
-.prose pre code {
-  background: transparent !important;
-  padding: 0;
-  font-size: inherit;
-  color: var(--bothub-text);
-  border: none;
-}
-.prose blockquote {
-  border-left: 3px solid var(--bothub-accent);
-  background: var(--bothub-accent-soft);
-  padding: 12px 20px;
-  border-radius: 0 10px 10px 0;
-  color: var(--bothub-text-dim);
-  font-style: normal;
-}
-.prose table {
-  font-size: 14px;
-  border: 1px solid var(--bothub-border);
-  border-radius: 10px;
-  overflow: hidden;
-}
-.prose th,
-.prose td {
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--bothub-border);
-}
-.prose th {
-  background: var(--bothub-bg-soft);
-  font-weight: 600;
-  color: var(--bothub-text);
-  text-align: left;
+  color: var(--ink);
+  letter-spacing: 0.01em;
 }
 
-/* ------------------------------------------------------------
-   16. Search modal (content-search / UContentSearch)
-   ------------------------------------------------------------ */
+.prose p,
+.prose li {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.prose a {
+  color: var(--terra);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.prose blockquote {
+  border-left: 2px solid var(--terra);
+  background: rgba(198, 122, 75, 0.06);
+  color: var(--text-secondary);
+}
+
+.prose table {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.prose th,
+.prose td {
+  border-bottom: 1px solid var(--border);
+  padding: 9px 12px;
+}
+
+.prose th {
+  background: rgba(232, 220, 200, 0.35);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* Search modal and footer */
 .bothub-modal-surface {
-  border-radius: 16px !important;
-  border: 1px solid var(--bothub-border) !important;
-  background: var(--bothub-bg) !important;
-  box-shadow:
-    0 20px 60px -10px rgba(10, 10, 10, 0.25),
-    0 10px 30px -10px rgba(10, 10, 10, 0.12) !important;
   overflow: hidden !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  background: var(--cream-light) !important;
+  box-shadow: 0 20px 60px rgba(61, 43, 31, 0.18) !important;
 }
-.dark .bothub-modal-surface {
-  box-shadow:
-    0 20px 60px -10px rgba(0, 0, 0, 0.7),
-    0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
-}
+
 .bothub-modal--search {
   max-width: min(1180px, calc(100vw - 2rem));
 }
 
-/* ------------------------------------------------------------
-   17. Footer (UFooter) — tone down
-   ------------------------------------------------------------ */
+.bothub-modal--search input {
+  color: var(--text-primary) !important;
+}
+
+.bothub-modal--search [data-slot="item"][data-highlighted] {
+  border-color: var(--terra);
+  background: rgba(198, 122, 75, 0.06);
+}
+
+.language-select-trigger[data-slot="base"],
+.language-select-trigger {
+  min-height: 2rem;
+  padding-inline: 0.55rem !important;
+  border: 1px solid transparent !important;
+  border-radius: 3px !important;
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  box-shadow: none !important;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.language-select-trigger[data-slot="base"]:hover,
+.language-select-trigger[data-slot="base"][aria-expanded="true"],
+.language-select-trigger:hover {
+  border-color: color-mix(in srgb, var(--terra) 55%, var(--border)) !important;
+  background: color-mix(in srgb, var(--terra) 7%, transparent) !important;
+  color: var(--terra) !important;
+}
+
+.language-select-menu {
+  display: grid;
+  min-width: 120px;
+  gap: 2px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--cream-light);
+}
+
+.language-select-item {
+  display: flex;
+  align-items: center;
+  padding: 7px 8px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.language-select-item:hover,
+.language-select-item[aria-current="page"] {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--terra) 7%, transparent);
+  color: var(--terra);
+}
+
 footer,
 .u-footer {
-  border-top: 1px solid var(--bothub-border);
-  background: var(--bothub-bg-soft);
-  color: var(--bothub-text-mute);
-  font-size: 13px;
+  border-top: 1px solid var(--border) !important;
+  background: var(--bg-alt) !important;
+  color: var(--text-muted) !important;
+  font-size: 12px;
 }
 
-/* ------------------------------------------------------------
-   18. Responsive
-   ------------------------------------------------------------ */
-@media (max-width: 960px) {
-  .bothub-features { grid-template-columns: repeat(2, 1fr); }
-  .bothub-platform-matrix { grid-template-columns: 1fr; }
-  .bothub-download-box { grid-template-columns: 1fr; padding: 40px 28px; }
-  .bothub-link-grid { grid-template-columns: repeat(2, 1fr); }
-
-  .bothub-showcase { margin-top: 56px; }
-  .bothub-showcase-stage {
-    grid-template-columns: 1fr;
-    gap: 56px;
-    padding-bottom: 24px;
+@media (max-width: 900px) {
+  .terminal-window {
+    width: calc(100% - 20px);
+    margin: 10px auto;
   }
-  .bothub-device-desktop { margin: 0; z-index: 1; }
-  .bothub-device-tablet,
-  .bothub-device-mobile {
-    transform: none;
-    margin: 0;
-    max-width: 460px;
-    justify-self: center;
-  }
-  .bothub-device-mobile { max-width: 220px; }
-  .bothub-showcase-stage:hover .bothub-device-tablet,
-  .bothub-showcase-stage:hover .bothub-device-mobile { transform: none; }
 }
-@media (max-width: 640px) {
-  .bothub-features { grid-template-columns: 1fr; }
-  .bothub-link-grid { grid-template-columns: 1fr; }
-  .bothub-download-grid { grid-template-columns: 1fr; }
-  .bothub-section { padding: 72px 0; }
-  .bothub-hero { padding: 80px 0 20px; }
-  .bothub-showcase { padding: 0 8px; }
-  .bothub-showcase-stage { gap: 44px; }
+
+@media (max-width: 768px) {
+  .terminal-body {
+    padding: 16px;
+    font-size: 12px;
+  }
+
+  .term-cmd {
+    align-items: flex-start;
+    font-size: 12px;
+  }
+
+  .term-cmd .cmd-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .bothub-search-trigger [data-slot="label"],
+  .bothub-search-trigger [data-slot="trailing"] {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .terminal-window {
+    width: calc(100% - 10px);
+    margin: 6px auto;
+    border-radius: 8px;
+  }
+
+  .terminal-titlebar {
+    height: 32px;
+    padding: 0 10px;
+  }
+
+  .terminal-dot {
+    width: 8px;
+    height: 8px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
-  .bothub-link-card:hover .bothub-link-card-title .arrow,
-  .bothub-dl-card:hover,
-  .bothub-plat-card:hover { transform: none; }
-}
-
-/* ------------------------------------------------------------
-   Inline UIcon sizing in landing context
-   UIcon renders as <span class="iconify"> with an inner <svg>;
-   default size follows current font-size (1em).
-   ------------------------------------------------------------ */
-.bothub-feature-icon > .iconify,
-.bothub-feature-icon > svg {
-  width: 20px;
-  height: 20px;
-}
-.bothub-plat-name > .iconify,
-.bothub-plat-name > svg {
-  width: 18px;
-  height: 18px;
-  flex: 0 0 auto;
-}
-.bothub-download-note .iconify,
-.bothub-download-note svg {
-  width: 14px;
-  height: 14px;
-  vertical-align: -2px;
-  margin-right: 4px;
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

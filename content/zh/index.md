@@ -1,244 +1,131 @@
 ---
 seo:
-  title: BotHub — 登录即用，一线 AI 模型 + 生图
-  description: BotHub 官网 — 登录账号即可使用全球一线 AI 模型，内置图像生成。支持 macOS、Windows、Android、Linux（未经测试），iOS 筹备中。
+  title: BotHub - 终端里的 AI 工作台
+  description: BotHub 官网 - 登录即可使用一线 AI 模型与生图能力，也支持自带 Key、本地工具调用、远程控制、知识库、定时任务和 IM 机器人。
 ---
 
-<div class="bothub-landing">
-<section class="bothub-hero">
-<div class="bothub-hero-bg"></div>
-<div class="bothub-hero-grid"></div>
-<div class="bothub-container bothub-hero-inner">
-<span class="bothub-eyebrow">
-<span class="bothub-eyebrow-dot"></span>
+::u-page-hero{class="terminal-landing-hero"}
+#title
+<div class="terminal-window terminal-window-home">
+  <div class="terminal-titlebar">
+    <span class="terminal-dot red"></span>
+    <span class="terminal-dot yellow"></span>
+    <span class="terminal-dot green"></span>
+    <span class="terminal-titlebar-title">BOTHUB TERMINAL</span>
+  </div>
+  <div class="terminal-body terminal-home-body">
+
+<div class="term-cmd term-cmd-primary"><span class="prompt">$ </span><span class="cmd-text">cat /etc/bothub/motd</span></div>
+<div class="term-output term-output-primary">
+<div class="terminal-hero-layout">
+<div class="terminal-hero-copy">
+<div class="ascii-logo" role="img" aria-label="BotHub">
+ ██████╗  ██████╗ ████████╗██╗  ██╗██╗   ██╗██████╗
+ ██╔══██╗██╔═══██╗╚══██╔══╝██║  ██║██║   ██║██╔══██╗
+ ██████╔╝██║   ██║   ██║   ███████║██║   ██║██████╔╝
+ ██╔══██╗██║   ██║   ██║   ██╔══██║██║   ██║██╔══██╗
+ ██████╔╝╚██████╔╝   ██║   ██║  ██║╚██████╔╝██████╔╝
+ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝
+</div>
+<p class="terminal-title-line">登录即用的一线 AI 模型 + 生图客户端</p>
+<p class="terminal-meta-line">Desktop / Android / iOS · 本地优先 · 自带 Key · MCP · IM Bot · 远程控制</p>
 <version-badge label="版本"></version-badge>
-<span class="bothub-eyebrow-sep">·</span>
-<span>Google Play 已上架</span>
-</span>
-<h1 class="bothub-hero-title">登录即用，<br/><em>一线 AI 模型 + 生图</em></h1>
-<p class="bothub-hero-lead">一个本地聊天客户端 — 登录账号就能直接调用全球一线 AI 模型，开箱免费额度，无需自己申请各家 Key。还能直接在对话里生图、改图。也支持自带 Key、本地工具调用、定时任务、IM 机器人桥接。桌面 · Android · iOS。</p>
-<div class="bothub-hero-cta">
-<a href="#download" class="bothub-btn bothub-btn-primary">立即下载</a>
-<a href="#features" class="bothub-btn bothub-btn-ghost">查看功能 →</a>
 </div>
-<div class="bothub-hero-meta">
-<span>本地优先</span>
-<span class="bothub-hero-sep">·</span>
-<span>macOS · Windows · Android · Linux（未经测试） · iOS（筹备中）</span>
+<div class="terminal-preview-panel">
+<div class="terminal-preview-title">预览 --目标=桌面端 / Android</div>
+<div class="terminal-preview-stage">
+<img class="terminal-preview-image terminal-preview-image-light" src="/showcase/bothub-desktop-preview.png" alt="BotHub 桌面端界面" loading="eager" />
+<img class="terminal-preview-image terminal-preview-image-dark" src="/showcase/bothub-desktop-preview-dark.png" alt="BotHub 桌面端深色界面" loading="eager" />
+<div class="terminal-preview-subtitle">android --随身继续</div>
+<div class="terminal-android-preview">
+<div class="terminal-phone-card"><img class="terminal-phone-shot terminal-phone-shot-light" src="/showcase/android-preview-welcome-light.png" alt="BotHub Android 浅色欢迎界面" loading="lazy" /><img class="terminal-phone-shot terminal-phone-shot-dark" src="/showcase/android-preview-welcome-dark.png" alt="BotHub Android 深色欢迎界面" loading="lazy" /><span>welcome.flow</span></div>
+<div class="terminal-phone-card"><img class="terminal-phone-shot terminal-phone-shot-light" src="/showcase/android-preview-settings-light.png" alt="BotHub Android 浅色设置界面" loading="lazy" /><img class="terminal-phone-shot terminal-phone-shot-dark" src="/showcase/android-preview-settings-dark.png" alt="BotHub Android 深色设置界面" loading="lazy" /><span>settings.panel</span></div>
+<div class="terminal-phone-card"><img class="terminal-phone-shot terminal-phone-shot-light" src="/showcase/android-preview-code-light.png" alt="BotHub Android 浅色代码修复界面" loading="lazy" /><img class="terminal-phone-shot terminal-phone-shot-dark" src="/showcase/android-preview-code-dark.png" alt="BotHub Android 深色代码修复界面" loading="lazy" /><span>code.review</span></div>
 </div>
-<div class="bothub-showcase">
-<div class="bothub-showcase-glow"></div>
-<div class="bothub-showcase-stage">
-<div class="bothub-device bothub-device-tablet">
-<div class="bothub-device-frame">
-<img src="/showcase/tablet.png" alt="BotHub 平板端界面" loading="lazy" />
 </div>
-<span class="bothub-device-label">平板</span>
-</div>
-<div class="bothub-device bothub-device-desktop">
-<div class="bothub-device-frame">
-<img src="/showcase/desktop.png" alt="BotHub 桌面端界面" loading="lazy" />
-</div>
-<span class="bothub-device-label">桌面</span>
-</div>
-<div class="bothub-device bothub-device-mobile">
-<div class="bothub-device-frame">
-<img src="/showcase/mobile.png" alt="BotHub 手机端界面" loading="lazy" />
-</div>
-<span class="bothub-device-label">手机</span>
+<div class="terminal-preview-log">
+<span>model.route: ready</span>
+<span>image.gen: enabled</span>
+<span>android.client: ready</span>
+<span>local.tools: approval required</span>
 </div>
 </div>
 </div>
 </div>
-</section>
-<section id="features" class="bothub-section">
-<div class="bothub-container">
-<div class="bothub-section-head">
-<div class="bothub-section-eyebrow">Built for power users</div>
-<h2>一个客户端，把 AI 工具链装进来</h2>
+
+<div class="term-cmd term-cmd-primary"><span class="prompt">$ </span><span class="cmd-text">bothub --platforms</span></div>
+<div class="term-output term-output-primary">
+<div class="terminal-platform-table">
+<div class="terminal-platform-row terminal-platform-head"><span>模块</span><span>描述</span><span>状态</span></div>
+<div class="terminal-platform-row"><span>DESKTOP</span><span>macOS / Windows / Linux</span><span>主力工作台</span></div>
+<div class="terminal-platform-row"><span>ANDROID</span><span>Google Play / APK</span><span>已可使用</span></div>
+<div class="terminal-platform-row"><span>CLOUD LINK</span><span>手机远程接管电脑</span><span>登录后启用</span></div>
+<div class="terminal-platform-row"><span>iOS</span><span>核心对话与 Mac 工具共享</span><span>筹备中</span></div>
 </div>
-<div class="bothub-features">
-<div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-sparkles"></bothub-icon></div>
-<h3>登录即用，一线模型全覆盖</h3>
-<p>登录账号就能直接跑全球一线 AI 模型 — 不用先去各家厂商网站申请 Key 才开工。开箱自带免费额度，立刻就能动手。</p>
-<div class="bothub-feature-meta">free credits · top models</div>
+<p class="terminal-caption">桌面端负责重工具流，Android 负责随身继续工作；登录后还能从手机远程连接电脑。</p>
 </div>
-<div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-key-round"></bothub-icon></div>
-<h3>自带 API Key</h3>
-<p>填自己的 API Key，请求直达模型厂商。也支持任意 OpenAI 兼容端点与本地推理端点。多 Key 轮询，按量计费，无中间商。</p>
-</div>
-<div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-shuffle"></bothub-icon></div>
-<h3>随时切换模型</h3>
-<p>聊到一半换模型不用新建对话。每个 Bot 可以绑不同模型，不同任务用不同模型。</p>
-</div>
-<div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-wrench"></bothub-icon></div>
-<h3>工具调用</h3>
-<p>bash、文件读写、浏览器自动化、截屏、剪贴板、系统信息。模型不够用？接 MCP Server 扩展。</p>
-<div class="bothub-feature-meta">desktop-only · macOS · Windows</div>
-</div>
-<div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-library"></bothub-icon></div>
-<h3>知识库 RAG</h3>
-<p>上传 PDF / DOCX / XLSX / 图片 / 网页，向量检索 + 语义重排 + 实体图谱，自动注入上下文。</p>
-</div>
-<div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-puzzle"></bothub-icon></div>
-<h3>技能 & MCP</h3>
-<p>把常用操作存成技能，从 GitHub 一键导入。接任意 MCP Server，工具按需授权，每次可审批。</p>
-</div>
-<div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-clock"></bothub-icon></div>
-<h3>定时任务</h3>
-<p>Cron 或倒计时，Bot 到点自己跑。结果写回对话，或推送到飞书 / Telegram。</p>
-</div>
-<div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-message-square-share"></bothub-icon></div>
-<h3>IM 机器人桥接</h3>
-<p>把对话能力推到飞书 / Telegram / QQ / 微信，每条消息都走 BotHub。桌面端原生支持，Android 端同样可用。</p>
-<div class="bothub-feature-meta">desktop · android</div>
-</div>
-<div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-image"></bothub-icon></div>
-<h3>图像生成内置</h3>
-<p>主流文生图模型直接在对话里画图，结果可保存到本地、附件库或知识库。也可以连续追问"换风格 / 换比例"。</p>
-<div class="bothub-feature-meta">image_gen · built-in</div>
-</div>
-<div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-mic"></bothub-icon></div>
-<h3>TTS 朗读 & 声音克隆</h3>
-<p>让 AI 用任意云端 TTS 模型朗读回复。克隆你自己的声音作为专属音色 — Pro 功能，桌面端和 Android 端均可用。</p>
-<div class="bothub-feature-meta">desktop · android · Pro</div>
-</div>
-<div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-globe"></bothub-icon></div>
-<h3>联网搜索</h3>
-<p>接入搜索后端，模型自动检索最新信息。支持 Bing、Exa、Tavily、Brave、SearXNG 及任意兼容接口。</p>
-</div>
-<div class="bothub-feature">
-<div class="bothub-feature-icon"><bothub-icon name="i-lucide-link-2"></bothub-icon></div>
-<h3>远程控制</h3>
-<p>手机与桌面配对，随时远程接管终端和屏幕。出门在外也能在电脑上跑 Claude Code 或 Codex。</p>
-<div class="bothub-feature-meta">desktop + android</div>
-</div>
-</div>
-</div>
-</section>
-<section id="platforms" class="bothub-section bothub-section-tight">
-<div class="bothub-container">
-<div class="bothub-section-head">
-<div class="bothub-section-eyebrow">Platforms</div>
-<h2>桌面端功能最全，Android 不缩水</h2>
-<p>核心体验三端一致。每端都有各自的独家能力。</p>
-</div>
-<div class="bothub-platform-matrix">
-<div class="bothub-plat-card featured">
-<div class="bothub-plat-head">
-<div class="bothub-plat-name"><bothub-icon name="i-lucide-monitor"></bothub-icon> Desktop</div>
-<span class="bothub-plat-badge">FULL</span>
-</div>
-<ul>
-<li><bothub-icon name="i-lucide-terminal"></bothub-icon><span>Bash / 文件 / 浏览器自动化</span></li>
-<li><bothub-icon name="i-lucide-clipboard"></bothub-icon><span>剪贴板 / 截屏 / 系统控制</span></li>
-<li><bothub-icon name="i-lucide-link"></bothub-icon><span>嵌入式终端，可被手机远程接管</span></li>
-<li><bothub-icon name="i-lucide-mic"></bothub-icon><span>TTS 朗读 + 声音克隆 · Pro</span></li>
-<li><bothub-icon name="i-lucide-message-square"></bothub-icon><span>飞书 / Telegram / QQ / 微信机器人</span></li>
-<li><bothub-icon name="i-lucide-monitor"></bothub-icon><span>macOS · Windows</span></li>
-</ul>
-</div>
-<div class="bothub-plat-card">
-<div class="bothub-plat-head">
-<div class="bothub-plat-name"><bothub-icon name="i-lucide-smartphone"></bothub-icon> Android</div>
-<span class="bothub-plat-badge">GOOGLE PLAY</span>
-</div>
-<ul>
-<li><bothub-icon name="i-lucide-code-2"></bothub-icon><span>用手机跑电脑上的 Claude Code / Codex</span></li>
-<li><bothub-icon name="i-lucide-mouse-pointer-2"></bothub-icon><span>电脑控制 Agent（屏幕 + 手势）</span></li>
-<li><bothub-icon name="i-lucide-share-2"></bothub-icon><span>系统分享处理：Ask / 翻译 / 总结 / 改写</span></li>
-<li><bothub-icon name="i-lucide-library"></bothub-icon><span>知识库 RAG · 本地向量检索</span></li>
-<li><bothub-icon name="i-lucide-terminal"></bothub-icon><span>内置 Ubuntu 24.04 · 手机上直接跑代码</span></li>
-<li><bothub-icon name="i-lucide-mic"></bothub-icon><span>TTS 朗读 + 声音克隆 · 悬浮 Agent UI · Pro</span></li>
-<li><bothub-icon name="i-lucide-message-square"></bothub-icon><span>飞书 / Telegram / QQ 机器人 · 子代理</span></li>
-<li><bothub-icon name="i-lucide-download"></bothub-icon><span>Google Play · APK 直装</span></li>
-</ul>
-</div>
-<div class="bothub-plat-card">
-<div class="bothub-plat-head">
-<div class="bothub-plat-name"><bothub-icon name="i-lucide-apple"></bothub-icon> iOS</div>
-<span class="bothub-plat-badge soon">筹备中</span>
-</div>
-<ul>
-<li><bothub-icon name="i-lucide-message-circle"></bothub-icon><span>核心对话</span></li>
-<li><bothub-icon name="i-lucide-share"></bothub-icon><span>通过 Mac 桌面共享工具能力</span></li>
-<li><bothub-icon name="i-lucide-clock"></bothub-icon><span>上架时间：等 TestFlight 通知</span></li>
-</ul>
-</div>
-</div>
-<div class="bothub-integrations">
-<span class="bothub-int-chip"><span class="bothub-int-dot"></span>飞书 Bot</span>
-<span class="bothub-int-chip"><span class="bothub-int-dot"></span>Telegram</span>
-<span class="bothub-int-chip"><span class="bothub-int-dot"></span>QQ Bot</span>
-<span class="bothub-int-chip"><span class="bothub-int-dot"></span>微信 iLink</span>
-</div>
-</div>
-</section>
-<section id="download" class="bothub-section bothub-section-tight">
-<div class="bothub-container">
-<div class="bothub-download-box">
-<div class="bothub-download-left">
-<div class="bothub-section-eyebrow">下载 · 无需注册</div>
-<h2>选一个平台，现在就用</h2>
-<p class="bothub-download-lead">开箱自带免费额度。想用更多模型，再填自己的 API Key。</p>
-</div>
-<div class="bothub-download-right">
-<div class="bothub-download-grid">
+
+<div id="download" class="term-cmd term-cmd-primary"><span class="prompt">$ </span><span class="cmd-text">bothub --download --auto-source</span></div>
+<div class="term-output term-output-primary">
+<div class="terminal-download-grid">
 <download-mac-button label="Apple Silicon / Intel"></download-mac-button>
 <download-windows-button label="Win 10+"></download-windows-button>
-<download-google-play-button label="自动更新"></download-google-play-button>
-<download-apk-button label="最新版 · 直装"></download-apk-button>
-<download-linux-button label="AppImage · 未经测试"></download-linux-button>
+<download-google-play-button label="Google Play"></download-google-play-button>
+<download-apk-button label="APK 直装"></download-apk-button>
+<download-linux-button label="AppImage · 未充分测试"></download-linux-button>
 </div>
 </div>
-<div class="bothub-download-note"><bothub-icon name="i-lucide-apple"></bothub-icon> macOS 首次打开若提示"已损坏"？应用未签名所致，非真损坏 — 查看 <a href="/zh/quick-start/macos-install">macOS 安装指南</a> 一键放行。Linux 版本暂未充分测试，遇到问题欢迎反馈。</div>
-<div class="bothub-version-line"><version-badge label=""></version-badge> · 最新发布</div>
+
+<div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --capabilities --summary</span></div>
+<div class="term-output term-output-secondary">
+<div class="terminal-cap-grid">
+<div class="terminal-cap-item"><strong>models.route</strong><span>登录即可用一线模型；需要更高控制时可自带 Key。</span></div>
+<div class="terminal-cap-item"><strong>image.gen</strong><span>文生图、改图、连续追问，直接沉在聊天流程里。</span></div>
+<div class="terminal-cap-item"><strong>tools.local</strong><span>Bash、文件、浏览器、截屏、剪贴板和 MCP 按需审批。</span></div>
+<div class="terminal-cap-item"><strong>rag.index</strong><span>PDF / DOCX / XLSX / 图片 / 网页进入知识库上下文。</span></div>
+<div class="terminal-cap-item"><strong>schedule.jobs</strong><span>Cron 或倒计时让 Bot 到点自己跑，结果回写对话。</span></div>
+<div class="terminal-cap-item"><strong>im.bridge</strong><span>飞书、Telegram、QQ、微信都能作为 BotHub 入口。</span></div>
 </div>
 </div>
-</section>
-<section id="resources" class="bothub-section bothub-section-tight">
-<div class="bothub-container">
-<div class="bothub-section-head">
-<div class="bothub-section-eyebrow">Resources</div>
-<h2>需要帮助？</h2>
-<p>快速开始、功能手册、FAQ、隐私与账号。</p>
-</div>
-<div class="bothub-link-grid">
-<a class="bothub-link-card" href="/zh/quick-start/overview">
-<div class="bothub-link-card-icon"><bothub-icon name="i-lucide-rocket"></bothub-icon></div>
-<div class="bothub-link-card-title">快速开始<span class="arrow">→</span></div>
-<p>5 分钟跑通：安装、填 Key、发第一条消息。</p>
-</a>
-<a class="bothub-link-card" href="/zh/manual/overview">
-<div class="bothub-link-card-icon"><bothub-icon name="i-lucide-book-open"></bothub-icon></div>
-<div class="bothub-link-card-title">功能手册<span class="arrow">→</span></div>
-<p>API 提供商、对话与上下文、MCP、技能、定时任务。</p>
-</a>
-<a class="bothub-link-card" href="/zh/faq/overview">
-<div class="bothub-link-card-icon"><bothub-icon name="i-lucide-life-buoy"></bothub-icon></div>
-<div class="bothub-link-card-title">常见问题<span class="arrow">→</span></div>
-<p>下载慢、安装报错、API 失败等常见处理。</p>
-</a>
-<a class="bothub-link-card" href="/zh/faq/privacy-policy">
-<div class="bothub-link-card-icon"><bothub-icon name="i-lucide-shield-check"></bothub-icon></div>
-<div class="bothub-link-card-title">隐私 & 账号删除<span class="arrow">→</span></div>
-<p>我们收集什么、存在哪，以及如何删除云端账号。</p>
-</a>
-</div>
-<div class="bothub-community">
-<join-qq-group-button id-label="QQ群">加入 QQ 社区</join-qq-group-button>
+
+<div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --cloud-link</span></div>
+<div class="term-output term-output-secondary">
+<div class="terminal-cloud-link">
+<div class="terminal-cloud-status">Cloud link module loaded ... done</div>
+<div class="terminal-cloud-block"><strong>PHONE -> PC</strong><span>Android 连接桌面端，不在同一网络也能查看状态、执行命令、管理 Agent。</span></div>
+<div class="terminal-cloud-block"><strong>REMOTE CONTROL</strong><span>出门在外也能用手机接管桌面终端和屏幕，继续跑 Claude Code / Codex。</span></div>
 </div>
 </div>
-</section>
+
+<div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">ls ./docs ./community</span></div>
+<div class="term-output term-output-secondary">
+<div class="terminal-doc-grid">
+<a href="/zh/quick-start/overview"><strong>[01] 快速开始</strong><span>安装、配置、发出第一条消息</span></a>
+<a href="/zh/manual/overview"><strong>[02] 使用手册</strong><span>提供商、上下文、MCP、技能、定时任务</span></a>
+<a href="/zh/faq/overview"><strong>[03] 常见问题</strong><span>下载、安装、网络和模型调用排查</span></a>
+<a href="/zh/faq/privacy-policy"><strong>[04] 隐私政策</strong><span>数据收集范围、存储方式与账号删除</span></a>
 </div>
+</div>
+
+<div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">tail -f workflows.log</span></div>
+<div class="term-output term-output-secondary">
+<div class="terminal-workflow-list">
+<div><strong>个人研究</strong><span>问题拆解 -> 交叉验证 -> 结论沉淀</span></div>
+<div><strong>产品团队</strong><span>需求整理 -> 方案对比 -> 评审迭代</span></div>
+<div><strong>远程 Agent</strong><span>手机触发 -> 桌面执行 -> IM 回传结果</span></div>
+</div>
+</div>
+
+<div class="term-cmd"><span class="prompt">$ </span><span class="cmd-text">bothub --community</span></div>
+<div class="term-output term-output-secondary">
+<p class="terminal-caption">连接到 BotHub 社区网络 ... 完成</p>
+<join-qq-group-button id-label="QQ群">加入 QQ 群</join-qq-group-button>
+</div>
+
+<div class="term-cursor-line"><span class="prompt">$ </span><span class="cursor-blink">_</span></div>
+
+  </div>
+</div>
+
+#links
+::
