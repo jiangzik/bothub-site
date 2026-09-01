@@ -1,28 +1,37 @@
 <script setup lang="ts">
 const appConfig = useAppConfig()
+const runtimeConfig = useRuntimeConfig()
+
+const logoSrc = computed(() => {
+  const baseURL = runtimeConfig.app.baseURL || '/'
+  return `${baseURL.endsWith('/') ? baseURL : `${baseURL}/`}logo.png`
+})
 </script>
 
 <template>
-  <span class="terminal-logo">
-    <span class="terminal-logo-prompt">&gt;</span>
-    <span class="terminal-logo-text">{{ appConfig.header?.title || 'BOTHUB' }}</span>
+  <span class="bothub-brand">
+    <img :src="logoSrc" alt="" class="bothub-brand-mark">
+    <span class="bothub-brand-text">{{ appConfig.header?.title || 'BotHub' }}</span>
   </span>
 </template>
 
 <style scoped>
-.terminal-logo {
+.bothub-brand {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 2px;
+  gap: 9px;
 }
-.terminal-logo-prompt {
-  color: var(--terra, #c67a4b);
+
+.bothub-brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
 }
-.terminal-logo-text {
-  color: var(--ink, #3d2b1f);
+
+.bothub-brand-text {
+  color: var(--ink, #000);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
 }
 </style>

@@ -2,11 +2,15 @@
 const appConfig = useAppConfig()
 const site = useSiteConfig()
 
-const { localePath, isEnabled, locales } = useDocusI18n()
+const { locale, localePath, isEnabled, locales } = useDocusI18n()
+
+const downloadLabel = computed(() => locale.value === 'en' ? 'Download' : '下载')
+const headerOpen = ref(false)
 </script>
 
 <template>
   <UHeader
+    v-model:open="headerOpen"
     :ui="{ center: 'hidden lg:flex flex-1' }"
     :to="localePath('/')"
     :title="appConfig.header?.title || site.name"
@@ -19,6 +23,14 @@ const { localePath, isEnabled, locales } = useDocusI18n()
 
     <template #right>
       <AppHeaderCTA />
+
+      <NuxtLink
+        :to="`${localePath('/')}#download`"
+        class="bothub-header-download"
+      >
+        <span>{{ downloadLabel }}</span>
+        <i aria-hidden="true">↓</i>
+      </NuxtLink>
 
       <template v-if="isEnabled && locales.length > 1">
         <ClientOnly>
@@ -39,35 +51,45 @@ const { localePath, isEnabled, locales } = useDocusI18n()
         <UColorModeButton />
       </ClientOnly>
 
-      <ClientOnly>
-        <UContentSearchButton class="lg:hidden" />
-      </ClientOnly>
     </template>
 
     <template #body>
       <div class="mobile-menu-body">
-        <div class="mobile-menu-cmd">$ bothub --navigate</div>
-        <UContentSearchButton class="w-full mobile-menu-btn" />
+        <div class="mobile-menu-cmd">BotHub</div>
+        <NuxtLink
+          :to="`${localePath('/')}#models`"
+          class="mobile-menu-link"
+          @click="headerOpen = false"
+        >
+          {{ locale === 'en' ? 'Model Plaza' : '模型广场' }}
+        </NuxtLink>
+        <NuxtLink
+          :to="`${localePath('/')}#capabilities`"
+          class="mobile-menu-link"
+          @click="headerOpen = false"
+        >
+          {{ locale === 'en' ? 'Capabilities' : '能力' }}
+        </NuxtLink>
+        <NuxtLink
+          :to="`${localePath('/')}#continuity`"
+          class="mobile-menu-link"
+          @click="headerOpen = false"
+        >
+          {{ locale === 'en' ? 'Continuity' : '跨端' }}
+        </NuxtLink>
         <NuxtLink
           :to="localePath('/quick-start/overview')"
           class="mobile-menu-link"
+          @click="headerOpen = false"
         >
-          <span class="mobile-menu-prompt">&gt;</span>
-          quick-start
+          {{ locale === 'en' ? 'Quick Start' : '快速开始' }}
         </NuxtLink>
         <NuxtLink
           :to="localePath('/manual/overview')"
           class="mobile-menu-link"
+          @click="headerOpen = false"
         >
-          <span class="mobile-menu-prompt">&gt;</span>
-          manual
-        </NuxtLink>
-        <NuxtLink
-          :to="localePath('/faq/overview')"
-          class="mobile-menu-link"
-        >
-          <span class="mobile-menu-prompt">&gt;</span>
-          faq
+          {{ locale === 'en' ? 'Manual' : '使用手册' }}
         </NuxtLink>
       </div>
     </template>

@@ -253,7 +253,7 @@ export default defineNuxtConfig({
       include: [/node_modules[\\/]docus[\\/]app[\\/]/],
     },
   },
-  css: ['~/assets/css/ui-overrides.css', '~/assets/css/terminal-polish.css'],
+  css: ['~/assets/css/ui-overrides.css', '~/assets/css/refined-system.css'],
   i18n: {
     baseUrl: siteOrigin,
     defaultLocale: 'zh',
@@ -292,7 +292,7 @@ export default defineNuxtConfig({
     },
     ui: {
       colors: {
-        primary: 'orange',
+        primary: 'neutral',
         neutral: 'stone',
       },
       contentSearch: {
