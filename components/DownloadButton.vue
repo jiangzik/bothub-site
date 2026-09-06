@@ -107,30 +107,20 @@ const warmBestDownloadUrl = (): Promise<string> => {
   return selectionRequest
 }
 
-const openDownloadUrl = (url: string, pendingWindow: Window | null): void => {
-  if (pendingWindow) {
-    pendingWindow.opener = null
-    pendingWindow.location.href = url
-    return
-  }
-  window.location.href = url
-}
-
 const handleDownload = async (event: MouseEvent): Promise<void> => {
-  const originUrl = downloadHref.value
-  if (!originUrl) {
-    event.preventDefault()
-    return
-  }
+  if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
 
   event.preventDefault()
+  const originUrl = downloadHref.value
+  if (!originUrl || selecting.value) return
+
   selecting.value = true
   sourceState.value = selectedHref.value ? 'ready' : 'probing'
-  const pendingWindow = window.open('', '_blank')
   try {
     const url = await warmBestDownloadUrl()
     sourceState.value = 'downloading'
-    window.setTimeout(() => openDownloadUrl(url, pendingWindow), 180)
+    // Navigating to an installer starts a browser download without opening a blank tab.
+    window.location.assign(url)
   } finally {
     window.setTimeout(() => {
       selecting.value = false
@@ -149,8 +139,7 @@ const handleDownload = async (event: MouseEvent): Promise<void> => {
     :data-source-state="sourceState"
     :data-selecting="selecting ? 'true' : undefined"
     :aria-busy="selecting ? 'true' : undefined"
-    target="_blank"
-    rel="noopener"
+    download
     @pointerenter="warmBestDownloadUrl"
     @focus="warmBestDownloadUrl"
     @click="handleDownload"
@@ -159,6 +148,6 @@ const handleDownload = async (event: MouseEvent): Promise<void> => {
     <span class="term-cmd-text">{{ commandText }}</span>
     <span v-if="versionText" class="term-version">v{{ versionText }}</span>
     <span class="term-label"><slot>{{ props.label || config.defaultSubLabel }}</slot></span>
-    <span v-if="sourceStatusText" class="term-download-status">{{ sourceStatusText }}</span>
+    <span v-if="sourceStatusText" class="term-download-status" role="status">{{ sourceStatusText }}</span>
   </a>
 </template>

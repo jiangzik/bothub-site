@@ -3,6 +3,7 @@ type DownloadPlatform = 'android' | 'mac' | 'windows' | 'linux'
 interface ReleaseDownloadMirror {
   id: string
   name: string
+  enabled?: boolean
   priority: number
   urlTemplate: string
   platforms: string[]
@@ -25,6 +26,7 @@ interface DownloadCandidate {
 
 const DEFAULT_DOWNLOAD_SOURCE_CONFIG_URL = 'https://bothub-api.bookab.info/v1/release/download-mirrors'
 const DEFAULT_PROBE_TIMEOUT_MS = 3000
+const CONFIG_TIMEOUT_MS = 3000
 const DEFAULT_PROBE_MAX_CONCURRENCY = 6
 const LOOPBACK_OR_PRIVATE_HOST_PATTERNS = [
   /^localhost$/i,
@@ -93,7 +95,9 @@ const fetchMirrorConfig = (rawConfigUrl?: string): Promise<ReleaseDownloadMirror
   const cached = configCache.get(configUrl)
   if (cached) return cached
 
-  const request = fetch(configUrl, { cache: 'no-store' })
+  const controller = new AbortController()
+  const timeout = window.setTimeout(() => controller.abort(), CONFIG_TIMEOUT_MS)
+  const request = fetch(configUrl, { cache: 'no-store', signal: controller.signal })
     .then(async response => {
       if (!response.ok) return null
       const data = await response.json()
@@ -101,6 +105,7 @@ const fetchMirrorConfig = (rawConfigUrl?: string): Promise<ReleaseDownloadMirror
       return data as ReleaseDownloadMirrorConfig
     })
     .catch(() => null)
+    .finally(() => window.clearTimeout(timeout))
 
   configCache.set(configUrl, request)
   return request
@@ -113,7 +118,9 @@ const buildCandidates = (
 ): DownloadCandidate[] => {
   const candidates = new Map<string, DownloadCandidate>()
   const addCandidate = (candidate: DownloadCandidate): void => {
-    candidates.set(candidate.url.toString(), candidate)
+    if (!candidates.has(candidate.url.toString())) {
+      candidates.set(candidate.url.toString(), candidate)
+    }
   }
 
   addCandidate({
@@ -128,7 +135,7 @@ const buildCandidates = (
   }
 
   for (const mirror of config?.mirrors ?? []) {
-    if (!mirror.urlTemplate || (mirror.platforms?.length && !mirror.platforms.includes(platform))) continue
+    if (mirror.enabled === false || !mirror.urlTemplate || (mirror.platforms?.length && !mirror.platforms.includes(platform))) continue
     try {
       const mirrorUrl = new URL(renderMirrorTemplate(mirror.urlTemplate, origin.toString()))
       if (!isSafePublicHttpsUrl(mirrorUrl)) continue
@@ -156,12 +163,16 @@ const probeCandidate = async (
   try {
     const response = await fetch(candidate.url.toString(), {
       method: 'HEAD',
-      mode: 'no-cors',
+      mode: 'cors',
       cache: 'no-store',
       redirect: 'follow',
       signal: controller.signal,
     })
-    if (response.type !== 'opaque' && response.status >= 400) {
+    // Opaque responses hide HTTP errors; a fast error page is not a download source.
+    const contentType = response.headers.get('content-type')?.split(';')[0]?.trim().toLowerCase() || ''
+    const isErrorDocument = contentType.startsWith('text/')
+      || /(?:html|json|xml)/.test(contentType)
+    if (!response.ok || response.type === 'opaque' || !contentType || isErrorDocument) {
       return { candidate, ok: false, latencyMs: Number.POSITIVE_INFINITY }
     }
     return { candidate, ok: true, latencyMs: performance.now() - startedAt }
@@ -179,12 +190,15 @@ const selectBestCandidate = async (
 ): Promise<DownloadCandidate> => {
   const queue = [...candidates]
   const results: Array<{ candidate: DownloadCandidate, ok: boolean, latencyMs: number }> = []
+  const deadline = performance.now() + timeoutMs
 
   async function worker(): Promise<void> {
     while (queue.length > 0) {
+      const remainingMs = deadline - performance.now()
+      if (remainingMs <= 0) return
       const candidate = queue.shift()
       if (!candidate) return
-      results.push(await probeCandidate(candidate, timeoutMs))
+      results.push(await probeCandidate(candidate, remainingMs))
     }
   }
 
@@ -193,7 +207,7 @@ const selectBestCandidate = async (
   return results
     .filter(result => result.ok)
     .sort((a, b) => a.latencyMs - b.latencyMs || a.candidate.priority - b.candidate.priority)[0]
-    ?.candidate ?? candidates[0]
+    ?.candidate ?? candidates.find(candidate => candidate.id === 'origin') ?? candidates[0]
 }
 
 export const selectBestDownloadUrl = (
