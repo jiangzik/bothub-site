@@ -171,8 +171,10 @@ jobs:
           ssh $SSH_ARGS "$TARGET" "mkdir -p '$TARGET_PATH'"
           # version.json 的权威源在 bothub 大仓的 release workflow，这里排除避免覆盖。
           # assets 里是构建产生的哈希资源；远端旧文件可能归属其他用户，保护它们避免 --delete 因权限失败中断部署。
+          # .well-known 放的是服务器上直接维护的域名 / 支付验证文件（如 waffo-verify.txt），不在仓库里，删了验证会失效。
           rsync -az --delete \
             --filter='P /assets/***' \
+            --filter='P /.well-known/***' \
             --filter='P /version.json' \
             --exclude='/version.json' \
             -e "ssh $SSH_ARGS" \
