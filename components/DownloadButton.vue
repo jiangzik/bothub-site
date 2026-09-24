@@ -1,153 +1,53 @@
 <script setup lang="ts">
-import type { VersionManifest } from '~/types/version'
+import type { DownloadPlatform } from '~/composables/usePlatformDownload'
 
-type Platform = 'android' | 'mac' | 'windows' | 'linux'
-
-const PLATFORM_CONFIG: Record<Platform, {
-  icon: string
-  symbol: string
-  defaultMainLabel: string
-  defaultSubLabel: string
-  downloadKey: keyof VersionManifest
-  defaultUrl: string
-  alwaysRender: boolean
-}> = {
-  android: { icon: 'i-simple-icons-android', symbol: '⬇', defaultMainLabel: 'Android APK', defaultSubLabel: 'APK · sideload', downloadKey: 'android', defaultUrl: '/downloads/app-release.apk', alwaysRender: true },
-  mac: { icon: 'i-simple-icons-apple', symbol: '', defaultMainLabel: 'macOS', defaultSubLabel: 'DMG', downloadKey: 'mac', defaultUrl: '', alwaysRender: false },
-  windows: { icon: 'i-simple-icons-windows11', symbol: '', defaultMainLabel: 'Windows', defaultSubLabel: 'EXE · Win 10+', downloadKey: 'windows', defaultUrl: '', alwaysRender: false },
-  linux: { icon: 'i-simple-icons-linux', symbol: '', defaultMainLabel: 'Linux', defaultSubLabel: 'AppImage · 未经测试', downloadKey: 'linux', defaultUrl: '', alwaysRender: false },
+const PLATFORM_CONFIG: Record<DownloadPlatform, { icon: string, title: string, subLabel: string, alwaysRender: boolean }> = {
+  android: { icon: 'i-simple-icons-android', title: 'Android APK', subLabel: 'APK', alwaysRender: true },
+  mac: { icon: 'i-simple-icons-apple', title: 'macOS', subLabel: 'DMG', alwaysRender: false },
+  windows: { icon: 'i-simple-icons-windows11', title: 'Windows', subLabel: 'EXE · Win 10+', alwaysRender: false },
+  linux: { icon: 'i-simple-icons-linux', title: 'Linux', subLabel: 'AppImage', alwaysRender: false },
 }
 
-const props = withDefaults(defineProps<{ platform: Platform; label?: string; channel?: string }>(), {
+const props = withDefaults(defineProps<{ platform: DownloadPlatform, label?: string, title?: string, channel?: string }>(), {
   label: '',
+  title: '',
   channel: '',
 })
 
 const config = PLATFORM_CONFIG[props.platform]
-
-const { data } = useVersionManifest()
+const { downloadHref, effectiveHref, version, selecting, sourceState, statusText, warm, start } = usePlatformDownload(() => props.platform)
+const detected = useDetectedPlatform()
 const { locale } = useDocusI18n()
 
-const downloadHref = computed(() => {
-  const value = data.value?.[config.downloadKey]
-  return getVersionEntryUrl(value) || config.defaultUrl
-})
-
-const selectedHref = ref('')
-const selecting = ref(false)
-const sourceState = ref<'idle' | 'probing' | 'ready' | 'downloading'>('idle')
-let selectionRequest: Promise<string> | null = null
-
-const versionText = computed(() => data.value?.version || '')
-const platformArg = computed(() => props.channel || props.platform)
-const isZh = computed(() => locale.value === 'zh')
-const commandText = computed(() => {
-  return isZh.value ? `./安装 --平台=${platformArg.value}` : `./install --platform=${platformArg.value}`
-})
-
+// The APK is a fallback channel; Android visitors are pointed at Google Play instead.
+const recommended = computed(() => !props.channel && detected.value === props.platform)
 const shouldRender = computed(() => config.alwaysRender || !!downloadHref.value)
-
-const effectiveDownloadHref = computed(() => selectedHref.value || downloadHref.value)
-
-const selectedHost = computed(() => {
-  const href = effectiveDownloadHref.value
-  if (!href) return ''
-  try {
-    return new URL(href, typeof window === 'undefined' ? 'https://bothub.bookab.info' : window.location.origin).hostname
-  } catch {
-    return ''
-  }
-})
-
-const sourceStatusText = computed(() => {
-  if (!downloadHref.value) return isZh.value ? '未找到可用下载地址' : 'no download URL available'
-  if (sourceState.value === 'probing') {
-    return isZh.value ? '正在寻找最合适的下载源...' : 'probing mirrors for the best download source...'
-  }
-  if (sourceState.value === 'downloading') {
-    const host = selectedHost.value ? ` ${selectedHost.value}` : ''
-    return isZh.value ? `已选择下载源${host}，正在开始下载...` : `selected source${host}; starting download...`
-  }
-  if (sourceState.value === 'ready') {
-    const host = selectedHost.value ? ` ${selectedHost.value}` : ''
-    return isZh.value ? `已找到最合适的下载源${host}` : `best download source ready${host}`
-  }
-  return ''
-})
-
-watch(downloadHref, () => {
-  selectedHref.value = ''
-  selectionRequest = null
-  sourceState.value = 'idle'
-})
-
-const warmBestDownloadUrl = (): Promise<string> => {
-  const originUrl = downloadHref.value
-  if (!originUrl || selectedHref.value) {
-    if (selectedHref.value) sourceState.value = 'ready'
-    return Promise.resolve(selectedHref.value || originUrl)
-  }
-  if (selectionRequest) return selectionRequest
-
-  sourceState.value = 'probing'
-  selectionRequest = selectBestDownloadUrl(
-    originUrl,
-    props.platform,
-    data.value?.downloadSourceConfigUrl,
-  ).then(url => {
-    selectedHref.value = url
-    sourceState.value = 'ready'
-    return url
-  }).catch(() => {
-    sourceState.value = 'ready'
-    selectedHref.value = originUrl
-    return originUrl
-  })
-
-  return selectionRequest
-}
-
-const handleDownload = async (event: MouseEvent): Promise<void> => {
-  if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
-
-  event.preventDefault()
-  const originUrl = downloadHref.value
-  if (!originUrl || selecting.value) return
-
-  selecting.value = true
-  sourceState.value = selectedHref.value ? 'ready' : 'probing'
-  try {
-    const url = await warmBestDownloadUrl()
-    sourceState.value = 'downloading'
-    // Navigating to an installer starts a browser download without opening a blank tab.
-    window.location.assign(url)
-  } finally {
-    window.setTimeout(() => {
-      selecting.value = false
-      sourceState.value = selectedHref.value ? 'ready' : 'idle'
-    }, 800)
-  }
-}
 </script>
 
 <template>
   <a
     v-if="shouldRender"
-    :href="effectiveDownloadHref"
-    class="term-download-link"
+    :href="effectiveHref"
+    class="term-download-link bothub-download-card"
     :data-platform="platform"
     :data-source-state="sourceState"
-    :data-selecting="selecting ? 'true' : undefined"
+    :data-recommended="recommended ? 'true' : undefined"
     :aria-busy="selecting ? 'true' : undefined"
     download
-    @pointerenter="warmBestDownloadUrl"
-    @focus="warmBestDownloadUrl"
-    @click="handleDownload"
+    @pointerenter="warm"
+    @focus="warm"
+    @click="start"
   >
-    <span class="term-prompt">&gt;</span>
-    <span class="term-cmd-text">{{ commandText }}</span>
-    <span v-if="versionText" class="term-version">v{{ versionText }}</span>
-    <span class="term-label"><slot>{{ props.label || config.defaultSubLabel }}</slot></span>
-    <span v-if="sourceStatusText" class="term-download-status" role="status">{{ sourceStatusText }}</span>
+    <UIcon :name="config.icon" class="bothub-download-icon" />
+    <span class="bothub-download-text">
+      <strong>{{ props.title || config.title }}</strong>
+      <small><slot>{{ props.label || config.subLabel }}</slot></small>
+    </span>
+    <span class="bothub-download-meta">
+      <em v-if="recommended">{{ locale === 'en' ? 'For this device' : '适合当前设备' }}</em>
+      <span v-if="version">v{{ version }}</span>
+    </span>
+    <i class="bothub-download-arrow" aria-hidden="true">↓</i>
+    <span v-if="statusText" class="bothub-download-status" role="status">{{ statusText }}</span>
   </a>
 </template>

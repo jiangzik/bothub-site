@@ -19,7 +19,7 @@
   --ink: #000000;
   --text-primary: #000000;
   --text-secondary: #666666;
-  --text-muted: #959595;
+  --text-muted: #6e6e6e;
   --font: Inter, "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-sans: Inter, "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
@@ -46,7 +46,7 @@
   --ink: #f2f3ed;
   --text-primary: #f2f3ed;
   --text-secondary: #b5bab0;
-  --text-muted: #7f857b;
+  --text-muted: #9aa096;
   --signal-accent: #f2f3ed;
   --signal-soft: #292b27;
   --signal-black: #f2f3ed;
@@ -70,8 +70,7 @@ header[data-slot="base"],
 .u-header {
   overflow: visible;
   border-bottom: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
-  background: color-mix(in srgb, var(--bg-page) 88%, transparent) !important;
-  backdrop-filter: blur(18px) saturate(130%);
+  background: var(--bg-page) !important;
 }
 
 header [data-slot="container"] {
@@ -156,7 +155,7 @@ header [data-slot="base"] {
 .bothub-header-models > span {
   color: var(--text-muted);
   font-family: var(--font-mono) !important;
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -210,7 +209,7 @@ header [data-slot="base"] {
   margin-bottom: 12px;
   padding: 8px 0 14px;
   color: var(--text-muted);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -240,10 +239,9 @@ header [data-slot="base"] {
 .signal-hero {
   position: relative;
   display: grid;
-  min-height: calc(100svh - var(--ui-header-height));
   align-items: center;
   overflow: hidden;
-  padding: clamp(64px, 9vw, 128px) max(24px, calc((100vw - 1280px) / 2));
+  padding: clamp(56px, 7vw, 104px) max(24px, calc((100vw - 1280px) / 2)) clamp(72px, 8vw, 120px);
   background: var(--bg-page);
 }
 
@@ -261,8 +259,8 @@ header [data-slot="base"] {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(520px, 1.08fr);
-  gap: clamp(56px, 7vw, 112px);
+  grid-template-columns: minmax(0, 1fr) minmax(560px, 1.12fr);
+  gap: clamp(40px, 5vw, 80px);
   align-items: center;
   width: 100%;
   max-width: 1280px;
@@ -295,10 +293,10 @@ header [data-slot="base"] {
   margin: 0;
   color: var(--ink);
   font-family: var(--font-sans) !important;
-  font-size: clamp(52px, 5.7vw, 82px) !important;
+  font-size: clamp(44px, 4.3vw, 62px) !important;
   font-weight: 600;
-  letter-spacing: -0.065em !important;
-  line-height: 0.98 !important;
+  letter-spacing: -0.05em !important;
+  line-height: 1.08 !important;
 }
 
 .signal-hero h1 em {
@@ -308,8 +306,8 @@ header [data-slot="base"] {
 }
 
 .signal-hero-lede {
-  max-width: 590px;
-  margin: 30px 0 0;
+  max-width: 520px;
+  margin: 32px 0 0 !important;
   color: var(--text-secondary);
   font-size: clamp(16px, 1.45vw, 19px);
   line-height: 1.75;
@@ -358,212 +356,57 @@ header [data-slot="base"] {
 .signal-platforms {
   display: flex;
   flex-wrap: wrap;
-  gap: 0;
-  margin: 38px 0 0;
+  align-items: center;
+  gap: 4px 0;
+  margin: 26px 0 0 !important;
   color: var(--text-muted);
-  font-family: var(--font-mono) !important;
-  font-size: 10px;
-  line-height: 1.4;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-.signal-platforms span + span::before {
-  margin: 0 10px;
+.signal-platforms > span:first-child {
+  margin-right: 10px;
+}
+
+.signal-platform + .signal-platform::before {
+  margin: 0 8px;
   color: var(--border);
   content: "/";
 }
 
-.signal-board {
-  position: relative;
-  overflow: hidden;
-  min-height: 480px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.dark .signal-board { box-shadow: none; }
-
-.signal-board::before {
-  position: absolute;
-  inset: 50px 0 50px;
-  background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--border) 45%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--border) 45%, transparent) 1px, transparent 1px);
-  background-size: 52px 52px;
-  content: "";
-  mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
-}
-
-.signal-board-top,
-.signal-board-bottom {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 50px;
-  padding: 0 20px;
-  color: var(--text-muted);
-  font-family: var(--font-mono) !important;
-  font-size: 9px;
-  letter-spacing: 0.12em;
-}
-
-.signal-board-top {
-  border-bottom: 1px solid var(--border);
-}
-
-.signal-board-bottom {
-  border-top: 1px solid var(--border);
-}
-
-.signal-live {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--text-secondary);
-}
-
-.signal-live i {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--signal-accent);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--signal-accent) 12%, transparent);
-}
-
-.signal-board-canvas {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  gap: 20px;
-  align-content: center;
-  min-height: 378px;
-  padding: 28px 24px;
-}
-
-.signal-flow-row {
-  display: grid;
-  grid-template-columns: minmax(160px, 1fr) minmax(92px, 0.72fr) minmax(132px, 0.82fr);
-  align-items: center;
-}
-
-.signal-source {
-  position: relative;
-  display: grid;
-  grid-template-columns: 42px minmax(0, 1fr);
-  gap: 4px 18px;
-  align-items: center;
-  min-height: 64px;
-  padding: 10px 4px 10px 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: transparent;
-}
-
-.signal-source::before {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  width: 42px;
-  height: 1px;
-  background: var(--ink);
-  content: "";
-}
-
-.signal-source > span {
-  grid-row: 1 / span 2;
-  color: var(--text-muted);
-  font-family: var(--font-mono) !important;
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: -0.04em;
-}
-
-.signal-source strong,
-.signal-source small,
-.signal-target span,
-.signal-route span {
-  font-family: var(--font-mono) !important;
-}
-
-.signal-source strong {
+.signal-platforms a {
+  margin-left: 16px;
   color: var(--ink);
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  line-height: 1.2;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 4px;
 }
 
-.signal-source small {
+.signal-platforms a:hover {
+  text-decoration-color: var(--ink);
+}
+
+.signal-hero-demo {
+  min-width: 0;
+  margin-bottom: 26px;
+}
+
+.hero-download {
+  display: grid;
+  gap: 8px;
+}
+
+.hero-download-hint {
+  min-height: 1.4em;
+  margin: 0 0 0 2px !important;
   color: var(--text-muted);
-  font-size: 9.5px;
+  font-size: 12px;
   line-height: 1.4;
 }
 
-.signal-route {
-  position: relative;
-  display: block;
-  height: 1px;
-  background: var(--border);
-}
-
-.signal-route::before,
-.signal-route::after {
-  position: absolute;
-  top: -2px;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--signal-accent);
-  content: "";
-}
-
-.signal-route::before {
-  left: -1px;
-}
-
-.signal-route::after {
-  right: -1px;
-}
-
-.signal-route span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  padding: 0 7px;
-  background: var(--bg-page);
-  color: var(--text-muted);
-  font-size: 7px;
-  letter-spacing: 0.1em;
-  line-height: 18px;
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
-}
-
-.signal-target {
-  display: flex;
-  min-height: 64px;
-  align-items: center;
-  gap: 9px;
-  padding: 0 14px;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  color: var(--text-secondary);
-}
-
-.signal-target i {
-  width: 6px;
-  height: 6px;
-  border: 1px solid var(--signal-accent);
-  border-radius: 50%;
-}
-
-.signal-target span {
-  font-size: 8.5px;
-  letter-spacing: 0.05em;
+.signal-hero-actions {
+  align-items: flex-start;
 }
 
 @media (max-width: 1050px) {
@@ -571,15 +414,14 @@ header [data-slot="base"] {
     grid-template-columns: 1fr;
   }
 
-  .signal-board {
-    width: min(100%, 720px);
+  .signal-hero-demo {
+    width: min(100%, 760px);
   }
 }
 
 @media (max-width: 700px) {
   .signal-hero {
-    min-height: auto;
-    padding-block: 64px 48px;
+    padding-block: 48px 72px;
   }
 
   .signal-hero-grid {
@@ -587,60 +429,20 @@ header [data-slot="base"] {
   }
 
   .signal-hero h1 {
-    font-size: clamp(44px, 13vw, 66px) !important;
+    font-size: clamp(34px, 9.6vw, 56px) !important;
   }
 
-  .signal-board {
-    min-height: auto;
-    border-radius: 20px;
+  .signal-hero-actions .signal-button {
+    width: 100%;
   }
 
-  .signal-board-canvas {
-    min-height: 320px;
-    padding: 20px 12px;
+  .signal-hero-actions > * {
+    flex: 1 1 100%;
   }
 
-  .signal-flow-row {
-    grid-template-columns: minmax(0, 1fr) minmax(42px, 0.42fr) minmax(0, 0.9fr);
-  }
-
-  .signal-source {
-    grid-template-columns: 24px minmax(0, 1fr);
-    gap: 0 10px;
-    min-height: 52px;
-    padding: 8px 2px 8px 0;
-  }
-
-  .signal-source small {
-    display: none;
-  }
-
-  .signal-source::before {
-    width: 24px;
-  }
-
-  .signal-source > span {
-    grid-row: auto;
-    font-size: 8px;
-    letter-spacing: 0;
-  }
-
-  .signal-source strong {
-    font-size: 8px;
-  }
-
-  .signal-route span,
-  .signal-board-bottom span:nth-child(2) {
-    display: none;
-  }
-
-  .signal-target {
-    min-height: 52px;
-    padding: 0 8px;
-  }
-
-  .signal-target span {
-    font-size: 7px;
+  .signal-platforms a {
+    flex-basis: 100%;
+    margin: 6px 0 0;
   }
 }
 
@@ -670,35 +472,29 @@ header [data-slot="base"] {
   margin-block-start: 0;
 }
 
-.signal-ticker {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  width: min(1280px, calc(100% - 48px));
-  margin: 0 auto;
-  border-bottom: 1px solid var(--border);
+.refined-landing h1,
+.refined-landing h2,
+.refined-landing h3,
+.refined-landing strong {
+  text-wrap: balance;
 }
 
-.signal-ticker > span {
-  display: flex;
-  min-height: 76px;
-  align-items: center;
-  gap: 14px;
-  color: var(--text-secondary);
-  font-size: 13px;
+/* CJK headlines break at punctuation, never mid-word; overflow-wrap is the escape hatch on narrow screens. */
+.refined-landing h1,
+.refined-landing h2,
+.refined-landing h3 {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
-.signal-ticker > span + span {
-  padding-left: 24px;
-  border-left: 1px solid var(--border);
+.refined-landing p {
+  text-wrap: pretty;
 }
 
-.signal-ticker i,
-.signal-section-index,
-.signal-principles > article > span,
-.signal-resource-grid > a > span {
+.signal-section-index {
   color: var(--text-muted);
   font-family: var(--font-mono) !important;
-  font-size: 10px;
+  font-size: 11px;
   font-style: normal;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -723,7 +519,6 @@ header [data-slot="base"] {
 }
 
 .signal-section h2,
-.signal-manifesto h2,
 .signal-download h2 {
   max-width: 840px;
   margin-bottom: 0;
@@ -811,7 +606,7 @@ header [data-slot="base"] {
 .signal-model-filters button span {
   color: var(--text-muted);
   font-family: var(--font-mono) !important;
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.06em;
 }
@@ -823,7 +618,7 @@ header [data-slot="base"] {
   margin: 0;
   color: var(--text-muted);
   font-family: var(--font-mono) !important;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -854,7 +649,7 @@ header [data-slot="base"] {
   border-bottom: 1px solid var(--border);
   color: var(--text-muted);
   font-family: var(--font-mono) !important;
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -883,32 +678,12 @@ header [data-slot="base"] {
 }
 
 .signal-model-identity {
-  display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  gap: 12px;
-  align-items: start;
   min-width: 0;
 }
 
-.signal-model-identity > span,
 .signal-model-kind,
 .signal-model-capabilities span,
 .signal-model-price small,
-.signal-model-footer > span {
-  font-family: var(--font-mono) !important;
-}
-
-.signal-model-identity > span {
-  padding-top: 3px;
-  color: var(--text-muted);
-  font-size: 8px;
-  letter-spacing: 0.06em;
-}
-
-.signal-model-identity > div {
-  min-width: 0;
-}
-
 .signal-model-identity strong {
   display: block;
   overflow: hidden;
@@ -925,7 +700,7 @@ header [data-slot="base"] {
   overflow: hidden;
   margin-top: 5px;
   color: var(--text-muted);
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.45;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
@@ -933,7 +708,7 @@ header [data-slot="base"] {
 
 .signal-model-kind {
   color: var(--text-secondary);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -947,7 +722,7 @@ header [data-slot="base"] {
 
 .signal-model-capabilities span {
   color: var(--text-secondary);
-  font-size: 9px;
+  font-size: 11px;
   white-space: nowrap;
 }
 
@@ -972,7 +747,7 @@ header [data-slot="base"] {
   display: block;
   margin-top: 4px;
   color: var(--text-muted);
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.04em;
   line-height: 1.4;
   text-transform: uppercase;
@@ -984,7 +759,7 @@ header [data-slot="base"] {
   place-items: center;
   color: var(--text-muted);
   font-family: var(--font-mono) !important;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -999,19 +774,19 @@ header [data-slot="base"] {
   border-top: 1px solid var(--border);
 }
 
-.signal-model-footer > span {
-  color: var(--ink);
-  font-size: 8px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
-}
-
 .signal-model-footer p {
   margin: 0;
   color: var(--text-muted);
-  font-size: 10px;
-  text-align: right;
+  font-size: 12px;
+}
+
+/* 能力区后面直接接跨端区，两段各自的上下留白叠在一起会空出一大块。 */
+.signal-capabilities {
+  padding-bottom: clamp(40px, 4vw, 64px);
+}
+
+.signal-continuity {
+  padding-top: clamp(48px, 5vw, 80px);
 }
 
 .signal-capability-stack {
@@ -1032,22 +807,11 @@ header [data-slot="base"] {
   border-top: 1px solid var(--border);
 }
 
-.signal-capability-copy > span,
-.signal-tool-index span,
 .signal-tool-index em,
 .signal-knowledge-outcome span,
 .signal-run-sequence span,
 .signal-run-sequence small {
   font-family: var(--font-mono) !important;
-}
-
-.signal-capability-copy > span {
-  display: block;
-  margin-bottom: 52px;
-  color: var(--text-muted);
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
 }
 
 .signal-capability-copy h3 {
@@ -1074,17 +838,11 @@ header [data-slot="base"] {
 
 .signal-tool-index > div {
   display: grid;
-  grid-template-columns: 42px minmax(170px, 0.9fr) minmax(180px, 1.1fr) 20px;
+  grid-template-columns: minmax(140px, 0.8fr) minmax(0, 1.2fr);
   gap: 20px;
   align-items: center;
   min-height: 82px;
   border-bottom: 1px solid var(--border);
-}
-
-.signal-tool-index span {
-  color: var(--text-muted);
-  font-size: 8px;
-  letter-spacing: 0.08em;
 }
 
 .signal-tool-index strong {
@@ -1095,16 +853,9 @@ header [data-slot="base"] {
 
 .signal-tool-index em {
   color: var(--text-muted);
-  font-size: 8px;
+  font-size: 11px;
   font-style: normal;
   letter-spacing: 0.06em;
-}
-
-.signal-tool-index i {
-  color: var(--text-muted);
-  font-size: 13px;
-  font-style: normal;
-  text-align: right;
 }
 
 .signal-knowledge-field {
@@ -1122,9 +873,9 @@ header [data-slot="base"] {
 .signal-knowledge-types span {
   color: var(--ink);
   font-family: var(--font-sans) !important;
-  font-size: clamp(38px, 5vw, 70px);
+  font-size: clamp(30px, 3.5vw, 50px);
   font-weight: 500;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.04em;
   line-height: 1.03;
 }
 
@@ -1146,7 +897,7 @@ header [data-slot="base"] {
 
 .signal-knowledge-outcome span {
   color: var(--text-muted);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -1179,7 +930,7 @@ header [data-slot="base"] {
 
 .signal-run-sequence span {
   color: var(--text-muted);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.07em;
 }
 
@@ -1194,70 +945,20 @@ header [data-slot="base"] {
 .signal-run-sequence small {
   margin-top: 10px;
   color: var(--text-muted);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.03em;
   line-height: 1.6;
 }
 
-.signal-manifesto {
-  display: grid;
-  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
-  gap: clamp(72px, 10vw, 150px);
-  align-items: end;
-  padding: clamp(112px, 12vw, 180px) max(24px, calc((100vw - 1280px) / 2));
-  background: #000000;
-  color: #ffffff;
-}
-
-.signal-manifesto .signal-section-index,
-.signal-manifesto .signal-principles > article > span {
-  color: #777777;
-}
-
-.signal-manifesto h2 {
-  color: #ffffff;
-}
-
-.signal-principles {
-  display: grid;
-}
-
-.signal-principles > article {
-  display: grid;
-  grid-template-columns: 44px minmax(150px, 0.75fr) minmax(220px, 1.25fr);
-  gap: 28px;
-  align-items: start;
-  padding: 30px 0;
-  border-top: 1px solid #2c2c2c;
-}
-
-.signal-principles > article:last-child {
-  border-bottom: 1px solid #2c2c2c;
-}
-
-.signal-principles h3 {
-  margin: 0;
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.signal-principles p {
-  margin: 0;
-  color: #969696;
-  font-size: 14px;
-  line-height: 1.75;
-}
-
 .signal-continuity {
   display: grid;
-  grid-template-columns: minmax(320px, 0.76fr) minmax(520px, 1.24fr);
-  gap: clamp(64px, 9vw, 136px);
+  grid-template-columns: minmax(320px, 1fr) minmax(420px, 1fr);
+  gap: clamp(56px, 8vw, 120px);
   align-items: center;
 }
 
 .signal-continuity-copy h2 {
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 }
 
 .signal-text-link {
@@ -1273,75 +974,44 @@ header [data-slot="base"] {
 }
 
 .signal-continuity-ledger {
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
-}
-
-.signal-continuity-ledger header,
-.signal-continuity-ledger footer,
-.signal-continuity-ledger article > span,
-.signal-continuity-ledger article > em,
-.signal-continuity-ledger article > small {
-  font-family: var(--font-mono) !important;
-}
-
-.signal-continuity-ledger header {
-  display: flex;
-  min-height: 54px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  color: var(--text-muted);
-  font-size: 8px;
-  letter-spacing: 0.09em;
-}
-
-.signal-continuity-ledger article {
   display: grid;
-  grid-template-columns: 38px 88px minmax(180px, 1fr) minmax(150px, auto);
-  gap: 20px;
-  align-items: center;
-  min-height: 112px;
-  border-top: 1px solid var(--border);
+  margin: 40px 0 0 !important;
+  padding: 0 !important;
+  border-top: 1px solid var(--ink);
+  list-style: none;
 }
 
-.signal-continuity-ledger article > span,
-.signal-continuity-ledger article > em,
-.signal-continuity-ledger article > small {
-  color: var(--text-muted);
-  font-size: 8px;
-  font-style: normal;
-  letter-spacing: 0.06em;
+.signal-continuity-ledger li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: baseline;
+  margin: 0 !important;
+  padding: 18px 0 !important;
+  border-bottom: 1px solid var(--border);
 }
 
-.signal-continuity-ledger article > strong {
+.signal-continuity-ledger strong {
   color: var(--ink);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
-  letter-spacing: -0.025em;
 }
 
-.signal-continuity-ledger article > small {
+.signal-continuity-ledger small {
+  color: var(--text-muted);
+  font-size: 12px;
   text-align: right;
 }
 
-.signal-continuity-ledger footer {
-  display: flex;
-  min-height: 58px;
-  align-items: center;
-  gap: 10px;
-  border-top: 1px solid var(--border);
-  color: var(--text-muted);
-  font-size: 8px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.signal-continuity-ledger footer i {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--ink);
+.signal-continuity-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: clamp(40px, 5vw, 64px) 24px;
+  border-radius: 28px;
+  background:
+    radial-gradient(60% 50% at 50% 40%, var(--signal-surface) 0%, transparent 100%),
+    var(--bg-alt);
 }
 
 .signal-download {
@@ -1360,7 +1030,15 @@ header [data-slot="base"] {
 
 .signal-download .signal-section-index,
 .signal-download .term-version-badge {
-  color: #777777;
+  color: #8a8a8a;
+}
+
+.signal-download .term-version-badge {
+  font-family: var(--font-mono) !important;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .signal-download h2 {
@@ -1372,50 +1050,122 @@ header [data-slot="base"] {
   color: #969696;
 }
 
+.signal-download-groups {
+  display: grid;
+  gap: 36px;
+}
+
+.signal-download-group > p {
+  margin: 0 0 14px !important;
+  color: #8a8a8a;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* 按卡片最小宽度自动排列：放得下三张就一行三张，不够就两张、一张，不靠断点。 */
 .signal-download-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 12px;
 }
 
-.signal-download-grid .term-download-link {
+.signal-download-groups[data-mobile-first] .signal-download-group:last-child {
+  order: -1;
+}
+
+.bothub-download-card.term-download-link {
+  position: relative;
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 5px 12px;
-  min-height: 126px;
-  align-content: center;
-  padding: 24px;
-  border: 1px solid #292929;
-  border-radius: 6px;
-  background: #0c0c0c;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  gap: 4px 16px;
+  align-items: center;
+  min-height: 96px;
+  padding: 20px 22px;
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+  background: #0d0d0d;
   color: #ffffff;
-  transition: border-color 160ms ease, background 160ms ease;
+  text-decoration: none;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
 }
 
-.signal-download-grid .term-download-link:hover {
-  border-color: #777777;
-  background: #151515;
+.bothub-download-card.term-download-link:hover {
+  border-color: #6a6a6a;
+  background: #161616;
   color: #ffffff;
+  transform: translateY(-2px);
 }
 
-.signal-download-grid .term-prompt {
-  grid-row: 1 / span 3;
-  color: #777777;
+.bothub-download-card[data-recommended] {
+  border-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #000000 !important;
 }
 
-.signal-download-grid .term-cmd-text {
-  color: #ffffff;
+.bothub-download-icon {
+  grid-row: 1 / span 2;
+  width: 28px;
+  height: 28px;
+}
+
+.bothub-download-text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.bothub-download-text strong {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.bothub-download-text small {
+  overflow: hidden;
+  color: #8a8a8a;
+  font-size: 12.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bothub-download-meta {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+  color: #8a8a8a;
   font-family: var(--font-mono) !important;
   font-size: 11px;
 }
 
-.signal-download-grid .term-version,
-.signal-download-grid .term-label,
-.signal-download-grid .term-download-status {
-  grid-column: 2;
-  margin-left: 0;
-  color: #777777;
-  font-size: 9px;
+.bothub-download-meta em {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #000000;
+  color: #ffffff;
+  font-family: var(--font-sans) !important;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.bothub-download-arrow {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  display: none;
+}
+
+.bothub-download-status {
+  grid-column: 2 / -1;
+  color: #8a8a8a;
+  font-size: 11.5px;
+}
+
+[data-recommended] .bothub-download-text small,
+[data-recommended] .bothub-download-meta,
+[data-recommended] .bothub-download-status {
+  color: #555555;
 }
 
 .signal-resources {
@@ -1436,10 +1186,10 @@ header [data-slot="base"] {
 .signal-resource-grid > a {
   position: relative;
   display: grid;
-  min-height: 220px;
-  align-content: space-between;
-  gap: 10px;
-  padding: 28px;
+  min-height: 132px;
+  align-content: start;
+  gap: 8px;
+  padding: 28px 48px 28px 28px;
   color: var(--text-primary);
   transition: background 160ms ease;
 }
@@ -1454,7 +1204,6 @@ header [data-slot="base"] {
 }
 
 .signal-resource-grid strong {
-  align-self: end;
   font-size: 20px;
   font-weight: 500;
 }
@@ -1487,14 +1236,6 @@ header [data-slot="base"] {
   margin: 0;
   color: var(--text-secondary);
   font-size: 14px;
-}
-
-.signal-community p > span {
-  margin-right: 18px;
-  color: var(--text-muted);
-  font-family: var(--font-mono) !important;
-  font-size: 9px;
-  letter-spacing: 0.08em;
 }
 
 .signal-community .term-download-link {
@@ -1578,7 +1319,6 @@ footer,
 
 @media (max-width: 980px) {
   .signal-section-head,
-  .signal-manifesto,
   .signal-continuity,
   .signal-download-head {
     grid-template-columns: 1fr;
@@ -1596,9 +1336,6 @@ footer,
     min-height: 0;
   }
 
-  .signal-principles > article {
-    grid-template-columns: 36px minmax(150px, 0.8fr) minmax(180px, 1.2fr);
-  }
 
   .signal-resource-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1614,25 +1351,6 @@ footer,
 }
 
 @media (max-width: 700px) {
-  .signal-ticker {
-    grid-template-columns: repeat(2, 1fr);
-    width: calc(100% - 32px);
-  }
-
-  .signal-ticker > span {
-    min-height: 58px;
-  }
-
-  .signal-ticker > span:nth-child(3) {
-    padding-left: 0;
-    border-top: 1px solid var(--border);
-    border-left: 0;
-  }
-
-  .signal-ticker > span:nth-child(4) {
-    border-top: 1px solid var(--border);
-  }
-
   .signal-section {
     width: calc(100% - 32px);
     padding-block: 88px;
@@ -1677,14 +1395,24 @@ footer,
 
   .signal-model-row {
     grid-template-areas:
-      "identity"
-      "kind"
-      "capabilities"
-      "price";
-    grid-template-columns: minmax(0, 1fr);
-    gap: 12px 16px;
+      "identity identity"
+      "capabilities price";
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 16px;
     min-height: 0;
-    padding: 24px 0;
+    padding: 16px;
+  }
+
+  .signal-model-kind {
+    display: none;
+  }
+
+  .signal-model-price {
+    text-align: right;
+  }
+
+  .signal-model-capabilities {
+    align-self: end;
   }
 
   .signal-model-identity {
@@ -1693,17 +1421,15 @@ footer,
 
   .signal-model-kind {
     grid-area: kind;
-    padding-left: 40px;
   }
 
   .signal-model-capabilities {
     grid-area: capabilities;
-    padding-left: 40px;
   }
 
   .signal-model-price {
     grid-area: price;
-    padding: 4px 0 0 40px;
+    padding: 0;
   }
 
   .signal-model-footer {
@@ -1723,31 +1449,27 @@ footer,
     padding: 52px 0;
   }
 
-  .signal-capability-copy > span {
-    margin-bottom: 34px;
-  }
-
   .signal-tool-index > div {
-    grid-template-columns: 28px minmax(0, 1fr) 18px;
-    gap: 12px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
     padding: 17px 0;
-  }
-
-  .signal-tool-index em {
-    grid-column: 2;
-  }
-
-  .signal-tool-index i {
-    grid-column: 3;
-    grid-row: 1 / span 2;
   }
 
   .signal-knowledge-field {
     gap: 38px;
   }
 
+  .signal-knowledge-types {
+    gap: 4px 18px;
+  }
+
   .signal-knowledge-types span {
-    font-size: clamp(34px, 12vw, 54px);
+    font-size: clamp(28px, 9vw, 40px);
+  }
+
+  /* 窄屏会折行，斜杠会落到行首，改用间距分隔。 */
+  .signal-knowledge-types span + span::before {
+    content: none;
   }
 
   .signal-knowledge-outcome {
@@ -1773,20 +1495,23 @@ footer,
     border-left: 0;
   }
 
-  .signal-manifesto {
-    gap: 64px;
-  }
-
-  .signal-principles > article {
-    grid-template-columns: 32px 1fr;
-  }
-
-  .signal-principles p {
-    grid-column: 2;
-  }
 
   .signal-continuity {
-    gap: 56px;
+    gap: 48px;
+  }
+
+  .signal-continuity-ledger li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .signal-continuity-ledger small {
+    text-align: left;
+  }
+
+  .signal-continuity-stage {
+    margin-inline: -16px;
+    border-radius: 0;
   }
 
   .signal-continuity-ledger article {
@@ -1806,12 +1531,8 @@ footer,
     text-align: left;
   }
 
-  .signal-download-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .signal-download-grid .term-download-link {
-    min-height: 104px;
+  .bothub-download-card.term-download-link {
+    min-height: 80px;
   }
 
   .signal-resource-grid {
@@ -1825,7 +1546,7 @@ footer,
   }
 
   .signal-resource-grid > a {
-    min-height: 170px;
+    min-height: 0;
   }
 
   .signal-community {

@@ -3,5 +3,5 @@ withDefaults(defineProps<{ label?: string }>(), { label: 'APK' })
 </script>
 
 <template>
-  <DownloadButton platform="android" channel="apk" :label="label"><slot /></DownloadButton>
+  <DownloadButton platform="android" channel="apk" title="APK" :label="label"><slot /></DownloadButton>
 </template>

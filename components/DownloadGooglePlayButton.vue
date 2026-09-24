@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{ label?: string }>(), {
-  label: 'Recommended',
+  label: '',
 })
 
 const DEFAULT_GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.jiangzikang.bothub'
@@ -23,40 +23,28 @@ const downloadHref = computed(() => {
 })
 
 const { locale } = useDocusI18n()
-const opening = ref(false)
-const commandText = computed(() => {
-  return locale.value === 'zh' ? './安装 --平台=google-play' : './install --platform=google-play'
-})
-
-const sourceStatusText = computed(() => {
-  if (opening.value) {
-    return locale.value === 'zh' ? '正在打开官方 Google Play 下载源...' : 'opening official Google Play source...'
-  }
-  return ''
-})
-
-const handleClick = (): void => {
-  opening.value = true
-  window.setTimeout(() => {
-    opening.value = false
-  }, 900)
-}
+const detected = useDetectedPlatform()
+const recommended = computed(() => detected.value === 'android')
+const subLabel = computed(() => props.label || (locale.value === 'en' ? 'Recommended for Android' : 'Android 推荐渠道'))
 </script>
 
 <template>
   <a
     :href="downloadHref"
-    class="term-download-link"
+    class="term-download-link bothub-download-card"
     data-platform="google-play"
-    :data-source-state="opening ? 'downloading' : 'ready'"
+    :data-recommended="recommended ? 'true' : undefined"
     target="_blank"
     rel="noopener"
-    @click="handleClick"
   >
-    <span class="term-prompt">&gt;</span>
-    <span class="term-cmd-text">{{ commandText }}</span>
-    <span class="term-version">Android</span>
-    <span class="term-label"><slot>{{ props.label }}</slot></span>
-    <span v-if="sourceStatusText" class="term-download-status">{{ sourceStatusText }}</span>
+    <UIcon name="i-logos-google-play-icon" class="bothub-download-icon" />
+    <span class="bothub-download-text">
+      <strong>Google Play</strong>
+      <small><slot>{{ subLabel }}</slot></small>
+    </span>
+    <span class="bothub-download-meta">
+      <em v-if="recommended">{{ locale === 'en' ? 'For this device' : '适合当前设备' }}</em>
+    </span>
+    <i class="bothub-download-arrow" aria-hidden="true">↗</i>
   </a>
 </template>

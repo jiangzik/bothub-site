@@ -1,7 +1,7 @@
 ---
 seo:
-  title: BotHub - One workspace for all your AI
-  description: BotHub connects frontier AI models, image generation, local tools, knowledge bases, scheduled tasks, IM bots, and cross-device remote control.
+  title: BotHub - The AI you want, all in one app
+  description: BotHub is an AI desktop app. Use GPT, DeepSeek, Qwen and more after you sign in, let it work on your computer, run tasks on a schedule, and check in from your phone.
 ---
 
 ::landing-page

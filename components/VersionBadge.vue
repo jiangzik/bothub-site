@@ -13,12 +13,10 @@ const { data } = useVersionManifest()
 const versionValue = computed(() => data.value?.version || loading.value)
 const versionText = computed(() => {
   const value = `v${versionValue.value}`
-  return label.value ? `${label.value}: ${value}` : value
+  return label.value ? `${label.value} ${value}` : value
 })
 </script>
 
 <template>
-  <p class="term-version-badge">
-    <span class="term-sys">[sys]</span> {{ versionText }}
-  </p>
+  <p class="term-version-badge">{{ versionText }}</p>
 </template>

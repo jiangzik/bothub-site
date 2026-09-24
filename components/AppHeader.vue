@@ -3,6 +3,7 @@ const appConfig = useAppConfig()
 const site = useSiteConfig()
 
 const { locale, localePath, isEnabled, locales } = useDocusI18n()
+const docsPath = useDocsPath()
 
 const downloadLabel = computed(() => locale.value === 'en' ? 'Download' : '下载')
 const headerOpen = ref(false)
@@ -68,24 +69,24 @@ const headerOpen = ref(false)
           class="mobile-menu-link"
           @click="headerOpen = false"
         >
-          {{ locale === 'en' ? 'Capabilities' : '能力' }}
+          {{ locale === 'en' ? 'Features' : '功能' }}
         </NuxtLink>
         <NuxtLink
           :to="`${localePath('/')}#continuity`"
           class="mobile-menu-link"
           @click="headerOpen = false"
         >
-          {{ locale === 'en' ? 'Continuity' : '跨端' }}
+          {{ locale === 'en' ? 'Cross-device' : '跨端协同' }}
         </NuxtLink>
         <NuxtLink
-          :to="localePath('/quick-start/overview')"
+          :to="docsPath('/quick-start/overview')"
           class="mobile-menu-link"
           @click="headerOpen = false"
         >
           {{ locale === 'en' ? 'Quick Start' : '快速开始' }}
         </NuxtLink>
         <NuxtLink
-          :to="localePath('/manual/overview')"
+          :to="docsPath('/manual/overview')"
           class="mobile-menu-link"
           @click="headerOpen = false"
         >

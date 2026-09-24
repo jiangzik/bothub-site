@@ -31,9 +31,9 @@ const isZh = computed(() => locale.value !== 'en')
 const activeFilter = ref<ModelFilter>('all')
 
 const copy = computed(() => isZh.value ? {
-  index: '01 / 模型广场',
-  title: '模型在变，入口不用变。',
-  intro: '这里不是一张写死的宣传图。BotHub 直接读取公开模型目录，把当前可用的对话、视觉、图像、视频与语音能力放在同一个入口。',
+  index: '模型广场',
+  title: '现在能用的模型',
+  intro: '登录就能用，按用量计费，价格都列在下面。也可以填自己的 API Key。',
   filters: {
     all: '全部',
     chat: '对话',
@@ -60,8 +60,8 @@ const copy = computed(() => isZh.value ? {
     embedding: '语义向量',
     text: '文本',
   },
-  live: '公开目录 · 实时同步',
-  syncing: '正在同步公开目录',
+  count: (n: number) => `共 ${n} 个模型`,
+  syncing: '正在加载模型列表',
   free: '免费额度',
   metered: '按量计费',
   inputOutput: '每百万 tokens · 输入 / 输出',
@@ -70,12 +70,11 @@ const copy = computed(() => isZh.value ? {
   perAudio: '按文本用量',
   perTextBytes: '每百万文本字节',
   included: '登录即可用',
-  endpoint: 'PUBLIC API · /v1/ai/models',
-  more: '目录由 BotHub 服务实时提供，具体模型与价格以使用时为准。',
+  more: '模型和价格会更新，以实际使用时为准。',
 } : {
-  index: '01 / MODEL PLAZA',
-  title: 'Models change. Your entry point does not.',
-  intro: 'This is not a hard-coded marketing graphic. BotHub reads its public catalog directly, bringing current chat, vision, image, video, and voice capabilities into one place.',
+  index: 'Models',
+  title: 'Models you can use today',
+  intro: 'Sign in and start. Pay only for what you use; prices are listed below. You can also bring your own API key.',
   filters: {
     all: 'All',
     chat: 'Chat',
@@ -102,8 +101,8 @@ const copy = computed(() => isZh.value ? {
     embedding: 'Embeddings',
     text: 'Text',
   },
-  live: 'Public catalog · live sync',
-  syncing: 'Syncing public catalog',
+  count: (n: number) => `${n} models`,
+  syncing: 'Loading models',
   free: 'Free quota',
   metered: 'Usage based',
   inputOutput: 'Per 1M tokens · input / output',
@@ -112,8 +111,7 @@ const copy = computed(() => isZh.value ? {
   perAudio: 'By text usage',
   perTextBytes: 'Per 1M text bytes',
   included: 'Available after sign-in',
-  endpoint: 'PUBLIC API · /v1/ai/models',
-  more: 'The catalog comes live from BotHub. Models and pricing may change at time of use.',
+  more: 'Models and prices change over time. What you see in the app is current.',
 })
 
 const apiBaseUrl = String(runtimeConfig.public.cloudApiBaseUrl || 'https://bothub-api.bookab.info').replace(/\/+$/, '')
@@ -165,8 +163,10 @@ const { data: catalog } = await useAsyncData(
   { default: emptyCatalog },
 )
 
+// 预渲染时已经带了一份目录；打开页面后再取一次最新的，模型数量和价格都以线上为准。
+// 本地开发域名不在服务端的跨域白名单里，跳过，免得控制台刷红。
 onMounted(async () => {
-  if (window.location.origin !== 'https://bothub.bookab.info') {
+  if (['localhost', '127.0.0.1'].includes(window.location.hostname)) {
     return
   }
 
@@ -276,12 +276,12 @@ const priceCopy = (model: PublicModel): { value: string, unit: string } => {
             :class="{ active: activeFilter === item.value }"
             @click="activeFilter = item.value"
           >
-            {{ item.label }} <span>{{ String(item.count).padStart(2, '0') }}</span>
+            {{ item.label }} <span>{{ item.count }}</span>
           </button>
         </div>
         <p class="signal-model-live" aria-live="polite">
           <i :class="{ syncing: models.length === 0 }" />
-          {{ models.length > 0 ? `${String(models.length).padStart(2, '0')} ${copy.live}` : copy.syncing }}
+          {{ models.length > 0 ? copy.count(models.length) : copy.syncing }}
         </p>
       </div>
 
@@ -290,9 +290,8 @@ const priceCopy = (model: PublicModel): { value: string, unit: string } => {
       </div>
 
       <div class="signal-model-list">
-        <article v-for="(model, index) in visibleModels" :key="model.id" class="signal-model-row">
+        <article v-for="model in visibleModels" :key="model.id" class="signal-model-row">
           <div class="signal-model-identity">
-            <span>{{ String(index + 1).padStart(2, '0') }}</span>
             <div>
               <strong>{{ model.display_name || model.id }}</strong>
               <small v-if="model.summary">{{ model.summary }}</small>
@@ -311,7 +310,6 @@ const priceCopy = (model: PublicModel): { value: string, unit: string } => {
       </div>
 
       <footer class="signal-model-footer">
-        <span>{{ copy.endpoint }}</span>
         <p>{{ copy.more }}</p>
       </footer>
     </div>
