@@ -92,6 +92,13 @@ const headerOpen = ref(false)
         >
           {{ locale === 'en' ? 'Manual' : '使用手册' }}
         </NuxtLink>
+        <NuxtLink
+          :to="docsPath('/pay')"
+          class="mobile-menu-link"
+          @click="headerOpen = false"
+        >
+          {{ locale === 'en' ? 'Top up' : '充值' }}
+        </NuxtLink>
       </div>
     </template>
   </UHeader>

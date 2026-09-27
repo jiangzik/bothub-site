@@ -14,6 +14,7 @@ const LEGACY_REDIRECTS: Record<string, string> = {
   '/en/manual': '/en/manual/overview',
   '/en/faq': '/en/faq/overview',
   '/en/privacy-policy': '/en/faq/privacy-policy',
+  '/pay': '/zh/pay',
 }
 
 const normalizePath = (pathname: string): string => {

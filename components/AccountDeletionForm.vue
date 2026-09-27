@@ -115,7 +115,11 @@ async function postJson(path: string, payload: Record<string, unknown>) {
 
   const data = await response.json().catch(() => ({} as Record<string, unknown>))
   if (!response.ok) {
-    const apiError = typeof data.error === 'string' ? data.error : ''
+    // 服务端的错误形状是 { error: { code, message } }；个别旧路径可能直接给字符串。
+    const error = data.error as { message?: unknown } | string | undefined
+    const apiError = typeof error === 'string'
+      ? error
+      : typeof error?.message === 'string' ? error.message : ''
     throw new Error(apiError || copy.value.fallbackError)
   }
   return data

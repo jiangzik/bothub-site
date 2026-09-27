@@ -49,7 +49,7 @@ const toContentRoute = (filePath: string): string => {
 }
 
 const prerenderRoutes = (() => {
-  const routes = new Set<string>(['/', '/zh', '/en'])
+  const routes = new Set<string>(['/', '/zh', '/en', '/zh/pay', '/en/pay'])
   for (const filePath of walkMarkdownFiles(CONTENT_ROOT)) {
     routes.add(toContentRoute(filePath))
   }
