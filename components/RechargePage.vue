@@ -721,7 +721,7 @@ const { localePath } = useDocusI18n()
 </script>
 
 <template>
-  <div class="recharge">
+  <div class="recharge" :class="{ 'recharge--auth': !user }">
     <header class="recharge-head">
       <h1>{{ copy.title }}</h1>
       <p>{{ copy.subtitle }}</p>
@@ -995,6 +995,16 @@ const { localePath } = useDocusI18n()
 
 .auth-card {
   max-width: 440px;
+}
+
+/* 未登录时页面只有一张登录卡片：标题与卡片一起居中。 */
+.recharge--auth .recharge-head {
+  text-align: center;
+}
+
+.recharge--auth .auth-card {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .form {
