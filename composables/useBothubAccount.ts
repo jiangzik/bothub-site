@@ -1,5 +1,5 @@
 /**
- * 官网上的 BotHub 账号会话：邮箱密码 / Google 登录、access token 过期时用 refresh token 换一次、登出。
+ * 官网上的 BotHub 账号会话：邮箱注册 / 密码 / Google 登录、access token 过期时用 refresh token 换一次、登出。
  *
  * 会话只存在这台浏览器的 localStorage 里，和 App 的登录互不影响（服务端的「登录设备」列表里会多一条「BotHub 官网」）。
  * 所有调用都是跨域打到 cloud-api，CORS 白名单里已有官网域名。
@@ -167,8 +167,12 @@ export function useBothubAccount() {
     await signIn('/v1/auth/google/login', { idToken, nonce })
   }
 
-  async function sendResetCode(email: string): Promise<void> {
-    await request('/v1/auth/email/send-code', { body: { email, purpose: 'reset_password' } })
+  async function sendEmailCode(email: string, purpose: 'register' | 'reset_password', invitationCode?: string): Promise<void> {
+    await request('/v1/auth/email/send-code', { body: { email, purpose, ...(invitationCode ? { invitationCode } : {}) } })
+  }
+
+  async function register(email: string, password: string, code: string, invitationCode?: string): Promise<void> {
+    await signIn('/v1/auth/register', { email, password, code, ...(invitationCode ? { invitationCode } : {}) })
   }
 
   async function resetPassword(email: string, code: string, newPassword: string): Promise<void> {
@@ -197,7 +201,8 @@ export function useBothubAccount() {
     authed,
     login,
     loginWithGoogle,
-    sendResetCode,
+    sendEmailCode,
+    register,
     resetPassword,
     logout,
   }

@@ -117,3 +117,43 @@ test('rejected Google credentials do not overwrite the current account session',
   assert.equal(first.session.value.token, stored.token)
   assert.deepEqual(JSON.parse(storage.get('bothub.web.session')), stored)
 })
+
+test('registration sends a register-purpose code without creating a session', async () => {
+  const requests = []
+  const { first, storage } = harness(async (url, init) => {
+    requests.push({ url, body: JSON.parse(init.body) })
+    return json(200, { success: true, ttlSec: 600 })
+  })
+  await first.sendEmailCode('new@example.com', 'register', 'invite-123')
+  assert.deepEqual(requests, [{ url: 'https://api.example.com/v1/auth/email/send-code', body: {
+    email: 'new@example.com', purpose: 'register', invitationCode: 'invite-123',
+  } }])
+  assert.deepEqual(JSON.parse(storage.get('bothub.web.session')), stored)
+})
+
+test('email registration uses the App registration endpoint and immediately shares the session', async () => {
+  const requests = []
+  const newUser = { id: 'new-account', email: 'new@example.com', name: null }
+  const signedIn = { token: 'registered-access', refreshToken: 'registered-refresh', user: newUser }
+  const { first, second, storage } = harness(async (url, init) => {
+    requests.push({ url, body: JSON.parse(init.body) })
+    return json(200, signedIn)
+  })
+  await first.register(newUser.email, 'synthetic-password', '123456')
+  assert.deepEqual(requests, [{ url: 'https://api.example.com/v1/auth/register', body: {
+    email: newUser.email, password: 'synthetic-password', code: '123456',
+    clientInfo: { platform: 'web', deviceName: 'BotHub 官网' },
+  } }])
+  assert.equal(second.user.value.id, newUser.id)
+  assert.deepEqual(JSON.parse(storage.get('bothub.web.session')), signedIn)
+})
+
+test('an expired code or existing email leaves the session unchanged and is not retried', async () => {
+  for (const status of [400, 409]) {
+    let requests = 0
+    const { first, storage } = harness(async () => { requests++; return json(status, { error: { code: status === 409 ? 'CONFLICT' : 'BAD_REQUEST', message: 'Registration rejected' } }) })
+    await assert.rejects(first.register('new@example.com', 'synthetic-password', '123456'), error => error.status === status)
+    assert.equal(requests, 1)
+    assert.deepEqual(JSON.parse(storage.get('bothub.web.session')), stored)
+  }
+})

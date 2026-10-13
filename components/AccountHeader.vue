@@ -4,6 +4,8 @@ const docsPath = useDocsPath()
 const account = useBothubAccount()
 const user = account.user
 const open = ref(false)
+const authMode = ref<'login' | 'register' | 'reset'>('login')
+const authTitle = computed(() => authMode.value === 'register' ? (zh.value ? '注册 BotHub' : 'Create a BotHub account') : authMode.value === 'reset' ? (zh.value ? '设置新密码' : 'Set a new password') : (zh.value ? '登录 BotHub' : 'Sign in to BotHub'))
 const zh = computed(() => locale.value !== 'en')
 const displayName = computed(() => user.value?.name?.trim() || user.value?.email || '')
 const shortcuts = computed(() => [
@@ -15,7 +17,7 @@ const items = computed(() => [
   ...shortcuts.value.map(link => ({ ...link, class: 'lg:hidden' })),
   { label: zh.value ? '退出登录' : 'Sign out', onSelect: () => account.logout() },
 ])
-function showLogin(): void { open.value = true }
+function showLogin(): void { authMode.value = 'login'; open.value = true }
 onMounted(account.restore)
 watch(user, (value) => { if (value) open.value = false })
 </script>
@@ -30,8 +32,8 @@ watch(user, (value) => { if (value) open.value = false })
       </UDropdownMenu>
     </template>
     <button v-else type="button" class="bothub-header-link" @click="showLogin">{{ zh ? '登录' : 'Sign in' }}</button>
-    <UModal v-model:open="open" :title="zh ? '登录 BotHub' : 'Sign in to BotHub'" :ui="{ content: 'max-w-md' }">
-      <template #body><AccountAuthForm :lang="zh ? 'zh' : 'en'" :show-login-title="false" /></template>
+    <UModal v-model:open="open" :title="authTitle" :ui="{ content: 'max-w-md' }">
+      <template #body><AccountAuthForm v-model:mode="authMode" :lang="zh ? 'zh' : 'en'" :show-title="false" /></template>
     </UModal>
   </ClientOnly>
 </template>
