@@ -179,3 +179,21 @@ jobs:
             --exclude='/version.json' \
             -e "ssh $SSH_ARGS" \
             dist/ "$TARGET:$TARGET_PATH/"
+
+      - name: Verify deployed website routes
+        if: ${{ steps.check-cn-deploy.outputs.enabled == 'true' }}
+        env:
+          SITE_BASE_PATH: ${{ vars.CN_NUXT_APP_BASE_URL }}
+        run: |
+          set -euo pipefail
+          BASE_PATH="$(printf '%s' "${SITE_BASE_PATH:-/}" | sed -E 's#^/+##; s#/+$##')"
+          SITE_URL="https://bothub.bookab.info/${BASE_PATH:+$BASE_PATH/}"
+          for ROUTE in "" zh zh/ en en/ zh/models en/models zh/status en/status zh/faq/overview en/faq/overview zh/api/overview en/api/overview zh/macos-install en/macos-install zh/account en/account zh/pay en/pay; do
+            URL="${SITE_URL}${ROUTE}"
+            STATUS="$(curl --fail --silent --show-error --location --max-redirs 1 --max-time 20 --output /dev/null --write-out '%{http_code}' "$URL")"
+            if [ "$STATUS" != "200" ]; then
+              echo "Website route failed: $URL (HTTP $STATUS)" >&2
+              exit 1
+            fi
+            echo "Verified $URL (HTTP 200)"
+          done

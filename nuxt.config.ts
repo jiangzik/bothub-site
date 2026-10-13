@@ -1,5 +1,6 @@
 import { existsSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { normalizeDocusRoutes } from './scripts/normalize-docus-routes.mjs'
 
 // 版本号 / 下载 URL 全部由 client 端从 https://bothub.bookab.info/version.json
 // fetch 得到，build 阶段不需要知道任何版本信息。
@@ -92,15 +93,6 @@ const siteOrigin = new URL(siteUrl).origin
 export default defineNuxtConfig({
   extends: ['docus'],
   sourcemap: false,
-  hooks: {
-    'pages:extend'(pages) {
-      for (const page of pages) {
-        if (page.file?.includes('node_modules/docus/app/templates/landing.vue')) {
-          page.path = '/'
-        }
-      }
-    },
-  },
   ssr: true,
   colorMode: {
     preference: 'light',
@@ -233,6 +225,8 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
+      failOnError: true,
+      autoSubfolderIndex: false,
       crawlLinks: true,
       routes: prerenderRoutes,
     },
@@ -246,6 +240,8 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     (_options, nuxt) => {
       nuxt.hook('modules:done', () => {
+        // Register after Docus and i18n so the final localized routes are normalized.
+        nuxt.hook('pages:resolved', normalizeDocusRoutes)
         nuxt.options.appConfig.github = false as never
 
         const locales = nuxt.options.i18n?.locales || []
