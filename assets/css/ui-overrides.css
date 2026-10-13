@@ -187,21 +187,6 @@ header [data-slot="title"] {
   text-shadow: none;
 }
 
-header [data-slot="base"] {
-  border: 1px solid var(--border) !important;
-  border-radius: 2px !important;
-  background: transparent !important;
-  color: var(--text-primary) !important;
-  box-shadow: none !important;
-  font-size: 11px;
-}
-
-header [data-slot="base"]:hover {
-  border-color: var(--terra) !important;
-  background: transparent !important;
-  color: var(--terra) !important;
-}
-
 header a[data-slot="base"]:has(.terminal-logo),
 header [data-slot="title"] a[data-slot="base"] {
   padding: 0 !important;

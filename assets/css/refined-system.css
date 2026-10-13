@@ -78,9 +78,21 @@ header [data-slot="container"] {
   background: transparent;
 }
 
-header [data-slot="base"] {
-  border-color: transparent !important;
-  border-radius: 6px !important;
+header [data-slot="base"],
+header [data-slot="base"]:hover {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--ink) !important;
+  box-shadow: none !important;
+}
+
+.bothub-header-theme {
+  transition: transform 160ms ease;
+}
+
+.bothub-header-theme:hover {
+  transform: translateY(-2px);
 }
 
 .bothub-header-nav {
@@ -115,25 +127,12 @@ header [data-slot="base"] {
 }
 
 .bothub-header-link:focus-visible,
+.bothub-header-theme:focus-visible,
 .signal-model-filters button:focus-visible {
   border-radius: 2px;
   outline: 1px solid var(--ink);
   outline-offset: 4px;
 }
-
-.bothub-header-download i {
-  font-family: var(--font-mono) !important;
-  font-size: 13px;
-  font-style: normal;
-  line-height: 1;
-  transition: transform 160ms ease;
-}
-
-
-.bothub-header-download:hover i {
-  transform: translateY(2px);
-}
-
 
 .mobile-menu-body {
   gap: 0;
@@ -383,7 +382,7 @@ header [data-slot="base"] {
 
 @media (prefers-reduced-motion: reduce) {
   .bothub-header-link,
-  .bothub-header-download i,
+  .bothub-header-theme,
   .signal-button {
     transition: none;
   }
@@ -471,14 +470,7 @@ header [data-slot="base"] {
   line-height: 1.8;
 }
 
-.signal-model-plaza {
-  padding-top: clamp(100px, 10vw, 144px);
-  border-bottom: 1px solid var(--border);
-}
 
-.signal-model-plaza-head {
-  margin-bottom: clamp(48px, 6vw, 72px);
-}
 
 .signal-model-browser {
   border-top: 1px solid var(--ink);
@@ -1110,7 +1102,7 @@ header [data-slot="base"] {
 
 .signal-resource-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -1268,18 +1260,6 @@ footer,
     min-height: 0;
   }
 
-
-  .signal-resource-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .signal-resource-grid > a:nth-child(3) {
-    border-left: 0;
-  }
-
-  .signal-resource-grid > a:nth-child(n + 3) {
-    border-top: 1px solid var(--border);
-  }
 }
 
 @media (max-width: 700px) {
@@ -1426,7 +1406,6 @@ footer,
     border-top: 1px solid var(--border);
     border-left: 0;
   }
-
 
   .signal-continuity {
     gap: 48px;

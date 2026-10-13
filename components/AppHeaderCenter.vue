@@ -9,8 +9,8 @@ const labels = computed(() => locale.value === 'en'
 
 <template>
   <nav class="bothub-header-nav" :aria-label="labels.product">
-    <NuxtLink class="bothub-header-link" :to="docsPath('/manual/overview')">{{ labels.docs }}</NuxtLink>
+    <NuxtLink class="bothub-header-link" :to="docsPath('/faq/overview')">{{ labels.docs }}</NuxtLink>
     <NuxtLink class="bothub-header-link" :to="localePath('/status')">{{ labels.status }}</NuxtLink>
-    <NuxtLink class="bothub-header-link" :to="`${localePath('/')}#models`">{{ labels.models }}</NuxtLink>
+    <NuxtLink class="bothub-header-link" :to="localePath('/models')">{{ labels.models }}</NuxtLink>
   </nav>
 </template>

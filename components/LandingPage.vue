@@ -10,7 +10,7 @@ const copy = computed(() => isZh.value ? {
   heroSubtitle: 'GPT、DeepSeek、通义千问等模型，登录就能用。它还能读你的文件、开网页、跑命令；出门在外，用手机也能接着管。',
   alsoOn: '也支持',
   allPlatforms: '全部平台',
-  guide: '查看使用指南',
+  guide: '查看常见问题',
   labels: { features: '功能', continuity: '跨端' },
   capabilitiesTitle: '说一声，它自己动手',
   capabilitiesIntro: '你说要做什么，它会自己去翻文件、开网页、跑命令。删文件这类操作，会先问过你。',
@@ -43,7 +43,6 @@ const copy = computed(() => isZh.value ? {
   ],
   continuityTitle: '人不在电脑前，也能管上面的任务',
   continuityBody: '用 Android 手机连上家里或公司的电脑，随时看 Claude Code、Codex 跑到哪了，需要你确认时直接在手机上回。iOS 版正在做。',
-  continuityLink: '怎么连接手机和电脑',
   continuityChannels: [
     { label: 'desktop', title: '在电脑上干活', meta: 'macOS · Windows · Linux' },
     { label: 'phone', title: '在手机上远程查看和回复', meta: 'Android · iOS 开发中' },
@@ -56,10 +55,9 @@ const copy = computed(() => isZh.value ? {
   apkLabel: '直接安装，不用应用商店',
   resourcesTitle: '使用帮助',
   resources: [
-    { title: '快速开始', body: '安装、登录、发出第一条消息', to: '/quick-start/overview' },
-    { title: '使用手册', body: '模型、工具、知识库和定时任务', to: '/manual/overview' },
-    { title: '常见问题', body: '下载失败、连不上、模型报错', to: '/faq/overview' },
-    { title: '隐私政策', body: '我们存什么、存在哪、怎么删号', to: '/faq/privacy-policy' },
+    { title: '常见问题', body: '安装、网络、模型和功能使用', to: '/faq/overview' },
+    { title: '开发者 API', body: '用 API Key 接入对话、生图、视频和向量模型', to: '/api/overview' },
+    { title: 'macOS 安装指南', body: '首次安装和启动问题的处理方法', to: '/macos-install' },
   ],
   community: '有问题或想法？来 QQ 群聊聊。',
   join: '加入 QQ 群',
@@ -68,7 +66,7 @@ const copy = computed(() => isZh.value ? {
   heroSubtitle: 'Use GPT, DeepSeek, Qwen and more right after you sign in. BotHub can also read your files, open web pages, and run commands. Away from your desk? Pick it up on your phone.',
   alsoOn: 'Also on',
   allPlatforms: 'All platforms',
-  guide: 'Read the guide',
+  guide: 'Read the FAQ',
   labels: { features: 'Features', continuity: 'On the go' },
   capabilitiesTitle: 'Ask for it. BotHub does the work.',
   capabilitiesIntro: 'Tell it what you need and it goes through your files, opens web pages, and runs commands to get it done. It checks with you before anything risky, like deleting files.',
@@ -101,7 +99,6 @@ const copy = computed(() => isZh.value ? {
   ],
   continuityTitle: 'Away from your desk? Your tasks keep going.',
   continuityBody: 'Connect your Android phone to your computer at home or at work. See how Claude Code or Codex is doing, and reply from your phone when it needs you. iOS is in development.',
-  continuityLink: 'How to connect your phone',
   continuityChannels: [
     { label: 'desktop', title: 'Does the work on your computer', meta: 'macOS · Windows · Linux' },
     { label: 'phone', title: 'Check in and reply from your phone', meta: 'Android · iOS in development' },
@@ -114,10 +111,9 @@ const copy = computed(() => isZh.value ? {
   apkLabel: 'Install directly, no app store',
   resourcesTitle: 'Help',
   resources: [
-    { title: 'Quick Start', body: 'Install, sign in, send your first message', to: '/quick-start/overview' },
-    { title: 'Manual', body: 'Models, tools, knowledge bases, schedules', to: '/manual/overview' },
-    { title: 'FAQ', body: 'Download problems, connection issues, model errors', to: '/faq/overview' },
-    { title: 'Privacy Policy', body: 'What we store, where, and how to delete your account', to: '/faq/privacy-policy' },
+    { title: 'FAQ', body: 'Installation, networking, models and features', to: '/faq/overview' },
+    { title: 'Developer API', body: 'Connect chat, image, video and embedding models', to: '/api/overview' },
+    { title: 'macOS Install Guide', body: 'Help with installation and first launch', to: '/macos-install' },
   ],
   community: 'Questions or ideas? Come chat in our QQ group.',
   join: 'Join QQ Group',
@@ -133,7 +129,7 @@ const copy = computed(() => isZh.value ? {
           <p class="signal-hero-lede">{{ copy.heroSubtitle }}</p>
           <div class="signal-hero-actions">
             <HeroDownloadButton />
-            <NuxtLink class="signal-button signal-button-quiet" :to="docsPath('/quick-start/overview')">{{ copy.guide }} <span aria-hidden="true">→</span></NuxtLink>
+            <NuxtLink class="signal-button signal-button-quiet" :to="docsPath('/faq/overview')">{{ copy.guide }} <span aria-hidden="true">→</span></NuxtLink>
           </div>
           <p class="signal-platforms">
             <span>{{ copy.alsoOn }}</span>
@@ -146,7 +142,19 @@ const copy = computed(() => isZh.value ? {
       </div>
     </section>
 
-    <ModelPlaza />
+    <section id="download" class="signal-download" aria-labelledby="download-title">
+      <div class="signal-download-head"><div><h2 id="download-title">{{ copy.downloadTitle }}</h2></div><div class="signal-download-meta"><VersionBadge :label="isZh ? '最新版本' : 'Latest version'" /><p>{{ copy.downloadBody }}</p></div></div>
+      <div class="signal-download-groups" :data-mobile-first="detectedPlatform === 'android' || undefined">
+        <div class="signal-download-group">
+          <p>{{ copy.desktopGroup }}</p>
+          <div class="signal-download-grid"><DownloadMacButton label="Apple Silicon / Intel" /><DownloadWindowsButton label="Windows 10+" /><DownloadLinuxButton label="AppImage" /></div>
+        </div>
+        <div class="signal-download-group">
+          <p>{{ copy.mobileGroup }}</p>
+          <div class="signal-download-grid signal-download-grid-mobile"><DownloadGooglePlayButton /><DownloadApkButton :label="copy.apkLabel" /></div>
+        </div>
+      </div>
+    </section>
 
     <section id="capabilities" class="signal-section signal-capabilities" aria-labelledby="capabilities-title">
       <header class="signal-section-head">
@@ -189,26 +197,12 @@ const copy = computed(() => isZh.value ? {
             <strong>{{ channel.title }}</strong><small>{{ channel.meta }}</small>
           </li>
         </ul>
-        <NuxtLink class="signal-text-link" :to="docsPath('/manual/overview')">{{ copy.continuityLink }} <span aria-hidden="true">→</span></NuxtLink>
       </div>
       <div class="signal-continuity-stage">
         <PhoneDemo />
       </div>
     </section>
 
-    <section id="download" class="signal-download" aria-labelledby="download-title">
-      <div class="signal-download-head"><div><h2 id="download-title">{{ copy.downloadTitle }}</h2></div><div class="signal-download-meta"><VersionBadge :label="isZh ? '最新版本' : 'Latest version'" /><p>{{ copy.downloadBody }}</p></div></div>
-      <div class="signal-download-groups" :data-mobile-first="detectedPlatform === 'android' || undefined">
-        <div class="signal-download-group">
-          <p>{{ copy.desktopGroup }}</p>
-          <div class="signal-download-grid"><DownloadMacButton label="Apple Silicon / Intel" /><DownloadWindowsButton label="Windows 10+" /><DownloadLinuxButton label="AppImage" /></div>
-        </div>
-        <div class="signal-download-group">
-          <p>{{ copy.mobileGroup }}</p>
-          <div class="signal-download-grid signal-download-grid-mobile"><DownloadGooglePlayButton /><DownloadApkButton :label="copy.apkLabel" /></div>
-        </div>
-      </div>
-    </section>
 
     <section id="resources" class="signal-section signal-resources" aria-labelledby="resources-title">
       <header class="signal-resources-head"><h2 id="resources-title">{{ copy.resourcesTitle }}</h2></header>

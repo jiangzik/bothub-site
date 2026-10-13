@@ -34,7 +34,6 @@ const activeFilter = ref<ModelFilter>('all')
 
 const copy = computed(() => isZh.value ? {
   index: '模型广场',
-  title: '现在能用的模型',
   intro: '登录就能用，按用量计费，价格都列在下面。也可以填自己的 API Key。',
   filters: {
     all: '全部',
@@ -74,8 +73,7 @@ const copy = computed(() => isZh.value ? {
   included: '登录即可用',
   more: '模型和价格会更新，以实际使用时为准。',
 } : {
-  index: 'Models',
-  title: 'Models you can use today',
+  index: 'Model Plaza',
   intro: 'Sign in and start. Pay only for what you use; prices are listed below. You can also bring your own API key.',
   filters: {
     all: 'All',
@@ -175,9 +173,7 @@ const filterItems = computed(() => (Object.keys(copy.value.filters) as ModelFilt
   count: models.value.filter(model => matchesFilter(model, value)).length,
 })))
 
-const visibleModels = computed(() => models.value
-  .filter(model => matchesFilter(model, activeFilter.value))
-  .slice(0, 7))
+const visibleModels = computed(() => models.value.filter(model => matchesFilter(model, activeFilter.value)))
 
 const kindLabel = (kind: ModelKind): string => copy.value.kinds[kind as keyof typeof copy.value.kinds] || kind.replaceAll('_', ' ')
 
@@ -236,11 +232,10 @@ const priceCopy = (model: PublicModel): { value: string, unit: string } => {
 </script>
 
 <template>
-  <section id="models" class="signal-section signal-model-plaza" aria-labelledby="model-plaza-title">
+  <main class="signal-section signal-model-plaza" aria-labelledby="model-plaza-title">
     <header class="signal-section-head signal-model-plaza-head">
       <div>
-        <p class="signal-section-index">{{ copy.index }}</p>
-        <h2 id="model-plaza-title">{{ copy.title }}</h2>
+        <h1 id="model-plaza-title">{{ copy.index }}</h1>
       </div>
       <p>{{ copy.intro }}</p>
     </header>
@@ -300,10 +295,13 @@ const priceCopy = (model: PublicModel): { value: string, unit: string } => {
         <NuxtLink :to="localePath('/status')">{{ isZh ? '查看模型服务状态' : 'View model service status' }} →</NuxtLink>
       </footer>
     </div>
-  </section>
+  </main>
 </template>
 
 <style scoped>
+.signal-model-plaza { padding: 56px 0 96px; border-bottom: 0; }
+.signal-model-plaza-head { margin-bottom: 32px; }
+h1 { margin: 0; color: var(--ink); font-size: 32px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 .model-status-link { display: inline-flex; margin-left: 10px; vertical-align: middle; }
 .signal-model-footer a { font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
 </style>
