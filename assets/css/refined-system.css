@@ -121,6 +121,14 @@ header [data-slot="base"]:hover {
   transition: color 160ms ease, transform 160ms ease;
 }
 
+.bothub-header-account-name {
+  display: block;
+  max-width: clamp(96px, 35vw, 140px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .bothub-header-link:hover {
   color: var(--ink);
   transform: translateY(-2px);

@@ -16,7 +16,7 @@ const headerOpen = ref(false)
       container: 'min-h-(--ui-header-height) gap-x-2 sm:gap-x-4 lg:gap-x-6 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]',
       left: 'flex-none shrink-0 lg:justify-self-start',
       center: 'hidden lg:flex justify-center lg:justify-self-center',
-      right: 'min-w-0 flex-none flex-nowrap gap-1.5 sm:gap-3 lg:gap-6 lg:justify-self-end',
+      right: 'min-w-0 flex-none flex-nowrap gap-1.5 sm:gap-3 lg:gap-4 xl:gap-6 lg:max-w-full lg:justify-self-end',
       header: 'min-h-(--ui-header-height) gap-x-2 sm:gap-x-4',
     }"
     :to="localePath('/')"
