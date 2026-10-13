@@ -12,7 +12,14 @@ const headerOpen = ref(false)
 <template>
   <UHeader
     v-model:open="headerOpen"
-    :ui="{ center: 'hidden lg:flex flex-1' }"
+    :ui="{
+      root: 'h-auto',
+      container: 'min-h-(--ui-header-height) gap-x-4 py-2 sm:gap-x-6',
+      left: 'lg:flex-none',
+      center: 'hidden lg:flex flex-1 justify-end',
+      right: 'min-w-0 flex-wrap gap-x-4 gap-y-0 sm:gap-x-6 lg:flex-none',
+      header: 'h-auto min-h-(--ui-header-height) gap-x-4 py-2 sm:gap-x-6',
+    }"
     :to="localePath('/')"
     :title="appConfig.header?.title || site.name"
   >
@@ -27,7 +34,7 @@ const headerOpen = ref(false)
 
       <NuxtLink
         :to="`${localePath('/')}#download`"
-        class="bothub-header-download"
+        class="bothub-header-link bothub-header-download"
       >
         <span>{{ downloadLabel }}</span>
         <i aria-hidden="true">↓</i>
@@ -41,17 +48,11 @@ const headerOpen = ref(false)
             <div class="h-8 w-8 animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-md" />
           </template>
         </ClientOnly>
-
-        <USeparator
-          orientation="vertical"
-          class="h-8"
-        />
       </template>
 
       <ClientOnly>
         <UColorModeButton />
       </ClientOnly>
-
     </template>
 
     <template #body>
@@ -63,20 +64,6 @@ const headerOpen = ref(false)
           @click="headerOpen = false"
         >
           {{ locale === 'en' ? 'Model Plaza' : '模型广场' }}
-        </NuxtLink>
-        <NuxtLink
-          :to="`${localePath('/')}#capabilities`"
-          class="mobile-menu-link"
-          @click="headerOpen = false"
-        >
-          {{ locale === 'en' ? 'Features' : '功能' }}
-        </NuxtLink>
-        <NuxtLink
-          :to="`${localePath('/')}#continuity`"
-          class="mobile-menu-link"
-          @click="headerOpen = false"
-        >
-          {{ locale === 'en' ? 'Cross-device' : '跨端协同' }}
         </NuxtLink>
         <NuxtLink
           :to="docsPath('/quick-start/overview')"

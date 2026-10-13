@@ -8,18 +8,13 @@ const currentLocaleName = computed(() => {
 
 <template>
   <UPopover
-    mode="hover"
     :content="{ align: 'end' }"
   >
-    <UButton
-      color="neutral"
-      variant="ghost"
-      class="language-select-trigger"
-    >
+    <button type="button" class="bothub-header-link" :aria-label="locale === 'en' ? 'Language' : '切换语言'">
       {{ currentLocaleName }}
-    </UButton>
+    </button>
 
-    <template #content>
+    <template #content="{ close }">
       <ul class="language-select-menu">
         <li
           v-for="localeItem in locales"
@@ -29,6 +24,7 @@ const currentLocaleName = computed(() => {
             class="language-select-item"
             :to="switchLocalePath(localeItem.code) as string"
             :aria-label="localeItem.name"
+            @click="close"
             :aria-current="localeItem.code === locale ? 'page' : undefined"
           >
             {{ localeItem.name }}

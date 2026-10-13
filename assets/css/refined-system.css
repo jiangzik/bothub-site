@@ -83,85 +83,13 @@ header [data-slot="base"] {
   border-radius: 6px !important;
 }
 
-.bothub-header-center {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 22px;
-}
-
 .bothub-header-nav {
   display: flex;
   align-items: center;
-  gap: clamp(20px, 2.4vw, 36px);
+  gap: 24px;
 }
 
-.bothub-header-nav a {
-  position: relative;
-  display: inline-flex;
-  min-height: 34px;
-  align-items: center;
-  color: var(--text-primary);
-  font-size: 13px;
-  font-weight: 400;
-  transition: color 160ms ease, transform 160ms ease;
-}
-
-.bothub-header-nav a:hover {
-  color: var(--ink);
-  transform: translateY(-2px);
-}
-
-.bothub-header-models {
-  display: inline-flex;
-  min-height: 34px;
-  align-items: center;
-  gap: 8px;
-  padding-left: 16px;
-  border-left: 1px solid var(--border);
-  color: var(--ink);
-  font-size: 12px;
-  font-weight: 500;
-  transition: color 160ms ease, transform 160ms ease;
-  white-space: nowrap;
-}
-
-.bothub-header-models:hover {
-  color: var(--ink);
-  transform: translateY(-2px);
-}
-
-.bothub-header-models:focus-visible,
-.signal-model-filters button:focus-visible {
-  border-radius: 2px;
-  outline: 1px solid var(--ink);
-  outline-offset: 4px;
-}
-
-.bothub-header-models > i {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: currentColor;
-  transition: box-shadow 160ms ease, transform 160ms ease;
-}
-
-.bothub-header-models:hover > i {
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ink) 10%, transparent);
-  transform: scale(1.25);
-}
-
-.bothub-header-models > span {
-  color: var(--text-muted);
-  font-family: var(--font-mono) !important;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.bothub-header-download {
+.bothub-header-link {
   position: relative;
   display: inline-flex;
   min-height: 34px;
@@ -174,8 +102,23 @@ header [data-slot="base"] {
   color: var(--ink);
   font-size: 12px;
   font-weight: 500;
+  line-height: 1.65;
   text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
   transition: color 160ms ease, transform 160ms ease;
+}
+
+.bothub-header-link:hover {
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.bothub-header-link:focus-visible,
+.signal-model-filters button:focus-visible {
+  border-radius: 2px;
+  outline: 1px solid var(--ink);
+  outline-offset: 4px;
 }
 
 .bothub-header-download i {
@@ -186,19 +129,11 @@ header [data-slot="base"] {
   transition: transform 160ms ease;
 }
 
-.bothub-header-download:hover {
-  color: var(--ink);
-  transform: translateY(-2px);
-}
 
 .bothub-header-download:hover i {
   transform: translateY(2px);
 }
 
-.bothub-header-download:focus-visible {
-  outline: 1px solid var(--ink);
-  outline-offset: 4px;
-}
 
 .mobile-menu-body {
   gap: 0;
@@ -447,10 +382,7 @@ header [data-slot="base"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bothub-header-nav a,
-  .bothub-header-models,
-  .bothub-header-models > i,
-  .bothub-header-download,
+  .bothub-header-link,
   .bothub-header-download i,
   .signal-button {
     transition: none;
