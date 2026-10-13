@@ -234,6 +234,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       cloudApiBaseUrl: (process.env.NUXT_PUBLIC_CLOUD_API_BASE_URL || 'https://bothub-api.bookab.info').trim(),
+      // Same public OAuth client as Electron and the deployed cloud-api.
+      googleClientId: '749592724172-phqq94l9me0247ptln2pj7dln2mrq2fc.apps.googleusercontent.com',
     },
   },
   modules: [

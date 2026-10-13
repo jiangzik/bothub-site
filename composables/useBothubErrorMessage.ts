@@ -1,9 +1,10 @@
 import type { Ref } from 'vue'
 import { BothubApiError } from '~/composables/useBothubAccount'
 export function useBothubErrorMessage(zh: Ref<boolean>) {
-  return (error: unknown, context: 'login' | 'other' = 'other'): string => {
+  return (error: unknown, context: 'login' | 'google' | 'other' = 'other'): string => {
     if (error instanceof BothubApiError) {
       if (error.status === 429) return zh.value ? '操作太频繁，请稍后再试。' : 'Too many attempts. Please try again later.'
+      if (error.status === 401 && context === 'google') return zh.value ? 'Google 登录验证失败，请重试。' : 'Google sign-in verification failed. Please try again.'
       if (error.status === 401) return context === 'login'
         ? (zh.value ? '邮箱或密码不正确。' : 'Incorrect email or password.')
         : (zh.value ? '登录已过期，请重新登录。' : 'Your session expired. Sign in again.')

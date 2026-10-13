@@ -89,3 +89,31 @@ test('key creation is not replayed on a server failure', async () => {
   await assert.rejects(first.authed('/v1/developer/api-keys', { body: { name: 'My app' } }), error => error.status === 500)
   assert.equal(requests, 1)
 })
+
+
+test('Google login uses the App OAuth endpoint and the same shared persisted session', async () => {
+  const requests = []
+  const signedIn = { token: 'google-access', refreshToken: 'google-refresh', user }
+  const { first, second, storage } = harness(async (url, init) => {
+    requests.push({ url, init })
+    return json(200, signedIn)
+  })
+  await first.loginWithGoogle('signed-google-id-token', 'page-nonce')
+  assert.equal(requests[0].url, 'https://api.example.com/v1/auth/google/login')
+  assert.deepEqual(JSON.parse(requests[0].init.body), {
+    idToken: 'signed-google-id-token', nonce: 'page-nonce',
+    clientInfo: { platform: 'web', deviceName: 'BotHub 官网' },
+  })
+  assert.equal(second.user.value.id, user.id)
+  assert.equal(second.session.value.token, signedIn.token)
+  assert.deepEqual(JSON.parse(storage.get('bothub.web.session')), signedIn)
+  await second.authed('/v1/developer/api-keys')
+  assert.equal(requests[1].init.headers.Authorization, 'Bearer google-access')
+})
+
+test('rejected Google credentials do not overwrite the current account session', async () => {
+  const { first, storage } = harness(async () => denied())
+  await assert.rejects(first.loginWithGoogle('invalid-google-id-token', 'page-nonce'), error => error.status === 401)
+  assert.equal(first.session.value.token, stored.token)
+  assert.deepEqual(JSON.parse(storage.get('bothub.web.session')), stored)
+})

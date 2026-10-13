@@ -1,5 +1,5 @@
 /**
- * 官网上的 BotHub 账号会话：邮箱密码登录、access token 过期时用 refresh token 换一次、登出。
+ * 官网上的 BotHub 账号会话：邮箱密码 / Google 登录、access token 过期时用 refresh token 换一次、登出。
  *
  * 会话只存在这台浏览器的 localStorage 里，和 App 的登录互不影响（服务端的「登录设备」列表里会多一条「BotHub 官网」）。
  * 所有调用都是跨域打到 cloud-api，CORS 白名单里已有官网域名。
@@ -154,11 +154,17 @@ export function useBothubAccount() {
     }
   }
 
-  async function login(email: string, password: string): Promise<void> {
-    const data = await request('/v1/auth/login', {
-      body: { email, password, clientInfo: WEB_CLIENT_INFO },
-    }) as { token: string; refreshToken: string; user: BothubUser }
+  async function signIn(path: string, body: Record<string, unknown>): Promise<void> {
+    const data = await request(path, { body: { ...body, clientInfo: WEB_CLIENT_INFO } }) as StoredSession
     setSession({ token: data.token, refreshToken: data.refreshToken, user: data.user })
+  }
+
+  async function login(email: string, password: string): Promise<void> {
+    await signIn('/v1/auth/login', { email, password })
+  }
+
+  async function loginWithGoogle(idToken: string, nonce: string): Promise<void> {
+    await signIn('/v1/auth/google/login', { idToken, nonce })
   }
 
   async function sendResetCode(email: string): Promise<void> {
@@ -166,10 +172,7 @@ export function useBothubAccount() {
   }
 
   async function resetPassword(email: string, code: string, newPassword: string): Promise<void> {
-    const data = await request('/v1/auth/reset-password', {
-      body: { email, code, newPassword, clientInfo: WEB_CLIENT_INFO },
-    }) as { token: string; refreshToken: string; user: BothubUser }
-    setSession({ token: data.token, refreshToken: data.refreshToken, user: data.user })
+    await signIn('/v1/auth/reset-password', { email, code, newPassword })
   }
 
   async function logout(): Promise<void> {
@@ -193,6 +196,7 @@ export function useBothubAccount() {
     request,
     authed,
     login,
+    loginWithGoogle,
     sendResetCode,
     resetPassword,
     logout,

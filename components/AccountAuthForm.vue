@@ -6,13 +6,14 @@ const zh = computed(() => props.lang !== 'en')
 const copy = computed(() => zh.value
   ? {
       loginTitle: '登录 BotHub 账号',
-      loginHint: '使用在 App 里注册的邮箱和密码登录。',
+      loginHint: '与 App 共用同一个 BotHub 账号。',
+      orEmail: '或使用邮箱登录',
       email: '邮箱',
       password: '密码',
       login: '登录',
       loggingIn: '登录中…',
       forgot: '忘记密码 / 还没设置过密码',
-      noAccount: '还没有账号？先下载 BotHub 注册。',
+      noAccount: '首次使用 Google 登录将创建 BotHub 账号。',
       download: '下载 BotHub',
       resetTitle: '设置新密码',
       resetHint: '通过 Google 或 Apple 登录的账号也可以在这里设置密码，之后就能用邮箱登录。',
@@ -30,13 +31,14 @@ const copy = computed(() => zh.value
     }
   : {
       loginTitle: 'Sign in to BotHub',
-      loginHint: 'Use the email and password you registered in the app.',
+      loginHint: 'Use the same BotHub account as the app.',
+      orEmail: 'Or sign in with email',
       email: 'Email',
       password: 'Password',
       login: 'Sign in',
       loggingIn: 'Signing in…',
       forgot: 'Forgot password / never set one',
-      noAccount: 'No account yet? Download BotHub to sign up.',
+      noAccount: 'Signing in with Google for the first time creates a BotHub account.',
       download: 'Download BotHub',
       resetTitle: 'Set a new password',
       resetHint: 'Accounts that sign in with Google or Apple can set a password here to sign in with email.',
@@ -94,6 +96,20 @@ async function handleLogin(): Promise<void> {
   finally {
     authBusy.value = false
   }
+}
+
+async function handleGoogleLogin(idToken: string, nonce: string): Promise<void> {
+  if (authBusy.value) return
+  authBusy.value = true
+  setAuthMessage('')
+  try {
+    await account.loginWithGoogle(idToken, nonce)
+    password.value = ''
+  }
+  catch (error) {
+    setAuthMessage(describeError(error, 'google'))
+  }
+  finally { authBusy.value = false }
 }
 
 function startCooldown(seconds: number): void {
@@ -156,6 +172,8 @@ onBeforeUnmount(() => { if (cooldownTimer) clearInterval(cooldownTimer) })
         <template v-if="authMode === 'login'">
           <h2 v-if="props.showLoginTitle">{{ copy.loginTitle }}</h2>
           <p class="muted">{{ copy.loginHint }}</p>
+          <ClientOnly><GoogleSignInButton :lang="zh ? 'zh' : 'en'" :disabled="authBusy" @credential="handleGoogleLogin" /></ClientOnly>
+          <div class="auth-divider">{{ copy.orEmail }}</div>
           <form class="form" @submit.prevent="handleLogin">
             <label class="field">
               <span>{{ copy.email }}</span>
@@ -219,6 +237,8 @@ h2 { margin: 0; font-size: 20px; font-weight: 650; }
   font-size: 14px;
   line-height: 1.7;
 }
+.auth-divider { display: flex; align-items: center; gap: 12px; margin-top: 20px; color: var(--text-secondary); font-size: 12px; }
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 .form {
   margin-top: 18px;
   display: flex;
