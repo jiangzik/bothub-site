@@ -9,10 +9,6 @@ const DOWNLOAD_KEYS: Record<DownloadPlatform, keyof VersionManifest> = {
   linux: 'linux',
 }
 
-const DEFAULT_URLS: Partial<Record<DownloadPlatform, string>> = {
-  android: '/downloads/app-release.apk',
-}
-
 // Shared by every download entry point: resolves the manifest URL, probes the
 // fastest mirror on hover/focus and starts the download on click.
 export const usePlatformDownload = (platform: MaybeRefOrGetter<DownloadPlatform | null>) => {
@@ -23,7 +19,7 @@ export const usePlatformDownload = (platform: MaybeRefOrGetter<DownloadPlatform 
   const downloadHref = computed(() => {
     const target = toValue(platform)
     if (!target) return ''
-    return getVersionEntryUrl(data.value?.[DOWNLOAD_KEYS[target]]) || DEFAULT_URLS[target] || ''
+    return getVersionEntryUrl(data.value?.[DOWNLOAD_KEYS[target]])
   })
 
   const version = computed(() => data.value?.version || '')

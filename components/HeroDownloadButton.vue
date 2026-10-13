@@ -1,29 +1,25 @@
 <script setup lang="ts">
 import type { DownloadPlatform } from '~/composables/usePlatformDownload'
+import { preferredDownloadPlatform } from '~/utils/platform-download'
 
-const GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.jiangzikang.bothub'
 const PLATFORM_NAMES: Record<DownloadPlatform, string> = { mac: 'macOS', windows: 'Windows', linux: 'Linux', android: 'Android' }
 
 const { locale } = useDocusI18n()
 const isZh = computed(() => locale.value !== 'en')
 const detected = useDetectedPlatform()
 
-const directPlatform = computed<DownloadPlatform | null>(() => {
-  const value = detected.value
-  return value === 'mac' || value === 'windows' || value === 'linux' ? value : null
-})
+const directPlatform = computed(() => preferredDownloadPlatform(detected.value))
 
 const { downloadHref, effectiveHref, version, statusText, warm, start } = usePlatformDownload(directPlatform)
 
-const mode = computed<'direct' | 'play' | 'anchor'>(() => {
-  if (detected.value === 'android') return 'play'
+const mode = computed<'direct' | 'anchor'>(() => {
   if (directPlatform.value && downloadHref.value) return 'direct'
   return 'anchor'
 })
 
 const label = computed(() => {
-  if (mode.value === 'play') return isZh.value ? '在 Google Play 获取' : 'Get it on Google Play'
   if (mode.value === 'direct' && directPlatform.value) {
+    if (directPlatform.value === 'android') return isZh.value ? '下载 Android APK' : 'Download Android APK'
     const name = PLATFORM_NAMES[directPlatform.value]
     return isZh.value ? `下载 ${name} 版` : `Download for ${name}`
   }
@@ -31,7 +27,6 @@ const label = computed(() => {
 })
 
 const href = computed(() => {
-  if (mode.value === 'play') return GOOGLE_PLAY_URL
   if (mode.value === 'direct') return effectiveHref.value
   return '#download'
 })
@@ -54,10 +49,9 @@ const onClick = (event: MouseEvent) => {
     <a
       class="signal-button signal-button-primary"
       :href="href"
-      :target="mode === 'play' ? '_blank' : undefined"
-      :rel="mode === 'play' ? 'noopener' : undefined"
       :download="mode === 'direct' ? '' : undefined"
       @pointerenter="mode === 'direct' && warm()"
+      @focus="mode === 'direct' && warm()"
       @click="onClick"
     >
       <span>{{ label }}</span>

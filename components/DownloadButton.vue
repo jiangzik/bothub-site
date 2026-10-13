@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import type { DownloadPlatform } from '~/composables/usePlatformDownload'
+import { preferredDownloadPlatform } from '~/utils/platform-download'
 
-const PLATFORM_CONFIG: Record<DownloadPlatform, { icon: string, title: string, subLabel: string, alwaysRender: boolean }> = {
-  android: { icon: 'i-simple-icons-android', title: 'Android APK', subLabel: 'APK', alwaysRender: true },
-  mac: { icon: 'i-simple-icons-apple', title: 'macOS', subLabel: 'DMG', alwaysRender: false },
-  windows: { icon: 'i-simple-icons-windows11', title: 'Windows', subLabel: 'EXE · Win 10+', alwaysRender: false },
-  linux: { icon: 'i-simple-icons-linux', title: 'Linux', subLabel: 'AppImage', alwaysRender: false },
+const PLATFORM_CONFIG: Record<DownloadPlatform, { icon: string, title: string, subLabel: string }> = {
+  android: { icon: 'i-simple-icons-android', title: 'Android APK', subLabel: 'APK' },
+  mac: { icon: 'i-simple-icons-apple', title: 'macOS', subLabel: 'DMG' },
+  windows: { icon: 'i-simple-icons-windows11', title: 'Windows', subLabel: 'EXE · Win 10+' },
+  linux: { icon: 'i-simple-icons-linux', title: 'Linux', subLabel: 'AppImage' },
 }
 
-const props = withDefaults(defineProps<{ platform: DownloadPlatform, label?: string, title?: string, channel?: string }>(), {
+const props = withDefaults(defineProps<{ platform: DownloadPlatform, label?: string, title?: string }>(), {
   label: '',
   title: '',
-  channel: '',
 })
 
 const config = PLATFORM_CONFIG[props.platform]
@@ -19,9 +19,8 @@ const { downloadHref, effectiveHref, version, selecting, sourceState, statusText
 const detected = useDetectedPlatform()
 const { locale } = useDocusI18n()
 
-// The APK is a fallback channel; Android visitors are pointed at Google Play instead.
-const recommended = computed(() => !props.channel && detected.value === props.platform)
-const shouldRender = computed(() => config.alwaysRender || !!downloadHref.value)
+const recommended = computed(() => preferredDownloadPlatform(detected.value) === props.platform)
+const shouldRender = computed(() => !!downloadHref.value)
 </script>
 
 <template>

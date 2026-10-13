@@ -23,9 +23,7 @@ const downloadHref = computed(() => {
 })
 
 const { locale } = useDocusI18n()
-const detected = useDetectedPlatform()
-const recommended = computed(() => detected.value === 'android')
-const subLabel = computed(() => props.label || (locale.value === 'en' ? 'Recommended for Android' : 'Android 推荐渠道'))
+const subLabel = computed(() => props.label || (locale.value === 'en' ? 'Install via Google Play' : '通过 Google Play 安装'))
 </script>
 
 <template>
@@ -33,7 +31,6 @@ const subLabel = computed(() => props.label || (locale.value === 'en' ? 'Recomme
     :href="downloadHref"
     class="term-download-link bothub-download-card"
     data-platform="google-play"
-    :data-recommended="recommended ? 'true' : undefined"
     target="_blank"
     rel="noopener"
   >
@@ -41,9 +38,6 @@ const subLabel = computed(() => props.label || (locale.value === 'en' ? 'Recomme
     <span class="bothub-download-text">
       <strong>Google Play</strong>
       <small><slot>{{ subLabel }}</slot></small>
-    </span>
-    <span class="bothub-download-meta">
-      <em v-if="recommended">{{ locale === 'en' ? 'For this device' : '适合当前设备' }}</em>
     </span>
     <i class="bothub-download-arrow" aria-hidden="true">↗</i>
   </a>

@@ -4,6 +4,7 @@ const docsPath = useDocsPath()
 
 const isZh = computed(() => locale.value !== 'en')
 const detectedPlatform = useDetectedPlatform()
+const { status: downloadStatus, error: downloadError, refresh: retryDownloads } = useVersionManifest()
 
 const copy = computed(() => isZh.value ? {
   heroTitle: ['好用的 AI，', '都在这一个 App 里'],
@@ -144,6 +145,8 @@ const copy = computed(() => isZh.value ? {
 
     <section id="download" class="signal-download" aria-labelledby="download-title">
       <div class="signal-download-head"><div><h2 id="download-title">{{ copy.downloadTitle }}</h2></div><div class="signal-download-meta"><VersionBadge :label="isZh ? '最新版本' : 'Latest version'" /><p>{{ copy.downloadBody }}</p></div></div>
+      <p v-if="downloadStatus === 'idle' || downloadStatus === 'pending'" class="signal-download-notice" role="status">{{ isZh ? '正在获取最新版本…' : 'Loading the latest release…' }}</p>
+      <p v-else-if="downloadError" class="signal-download-notice" role="alert">{{ isZh ? '下载信息加载失败，请重试。' : 'Could not load downloads. Please try again.' }} <button type="button" @click="retryDownloads()">{{ isZh ? '重试' : 'Retry' }}</button></p>
       <div class="signal-download-groups" :data-mobile-first="detectedPlatform === 'android' || undefined">
         <div class="signal-download-group">
           <p>{{ copy.desktopGroup }}</p>
@@ -151,7 +154,7 @@ const copy = computed(() => isZh.value ? {
         </div>
         <div class="signal-download-group">
           <p>{{ copy.mobileGroup }}</p>
-          <div class="signal-download-grid signal-download-grid-mobile"><DownloadGooglePlayButton /><DownloadApkButton :label="copy.apkLabel" /></div>
+          <div class="signal-download-grid signal-download-grid-mobile"><DownloadApkButton :label="copy.apkLabel" /><DownloadGooglePlayButton /></div>
         </div>
       </div>
     </section>

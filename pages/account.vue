@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import type { DeveloperKey } from '~/types/developer-key'
+import { developerKeyState, groupDeveloperKeys } from '~/utils/developer-keys'
 const { locale } = useDocusI18n()
 const docsPath = useDocsPath()
 const zh = computed(() => locale.value !== 'en')
 const account = useBothubAccount()
 const user = account.user
 const keys = ref<DeveloperKey[]>([])
+const keyGroup = ref<'available' | 'unavailable'>('available')
+const now = ref(Date.now())
+const keyGroups = computed(() => groupDeveloperKeys(keys.value, now.value))
+const visibleKeys = computed(() => keyGroups.value[keyGroup.value])
+const keyList = ref<HTMLElement | null>(null)
+let clock: ReturnType<typeof setInterval> | undefined
 const name = ref('')
 const loading = ref(false)
 const creating = ref(false)
@@ -24,7 +31,7 @@ async function loadKeys(): Promise<void> {
   message.value = ''
   try {
     const data = await account.authed<{ items: DeveloperKey[] }>('/v1/developer/api-keys')
-    if (current === generation) keys.value = data.items
+    if (current === generation) { now.value = Date.now(); keys.value = data.items }
   }
   catch (error) { if (current === generation) message.value = describe(error) }
   finally { if (current === generation) loading.value = false }
@@ -38,7 +45,9 @@ async function createKey(): Promise<void> {
   try {
     const result = await account.authed<{ apiKey: string; item: DeveloperKey }>('/v1/developer/api-keys', { body: { name: name.value.trim() } })
     if (current !== generation) return
+    now.value = Date.now()
     keys.value = [result.item, ...keys.value]
+    keyGroup.value = 'available'
     secret.value = result.apiKey
     copied.value = false
     secretOpen.value = true
@@ -60,7 +69,7 @@ async function revokeKey(): Promise<void> {
   try {
     await account.authed(`/v1/developer/api-keys/${encodeURIComponent(id)}`, { method: 'DELETE' })
     if (current !== generation) return
-    keys.value = keys.value.map(item => item.id === id ? { ...item, status: 'revoked' } : item)
+    keys.value = keys.value.filter(item => item.id !== id)
     revokeOpen.value = false
   }
   catch (error) { if (current === generation) message.value = describe(error) }
@@ -69,15 +78,18 @@ async function revokeKey(): Promise<void> {
 function closeSecret(): void { secretOpen.value = false }
 function cancelRevoke(): void { revokeOpen.value = false }
 function keyState(key: DeveloperKey): string {
-  if (key.status === 'revoked') return zh.value ? '已撤销' : 'Revoked'
-  if (key.status === 'disabled') return zh.value ? '已停用' : 'Disabled'
-  if (key.expiresAt != null && key.expiresAt <= Date.now()) return zh.value ? '已过期' : 'Expired'
-  return zh.value ? '可用' : 'Active'
+  const state = developerKeyState(key, now.value)
+  if (state === 'disabled') return zh.value ? '已停用' : 'Disabled'
+  if (state === 'expired') return zh.value ? '已过期' : 'Expired'
+  if (state === 'available') return zh.value ? '可用' : 'Active'
+  return zh.value ? '不可用' : 'Unavailable'
 }
+watch(keyGroup, async () => { await nextTick(); keyList.value?.scrollTo({ top: 0 }) })
 watch(secretOpen, (open) => { if (!open) { secret.value = ''; copied.value = false } })
 watch(() => user.value?.id, (id) => {
   generation++
   keys.value = []
+  keyGroup.value = 'available'
   secretOpen.value = false
   secret.value = ''
   revokeOpen.value = false
@@ -86,8 +98,11 @@ watch(() => user.value?.id, (id) => {
   loading.value = creating.value = revoking.value = false
   if (id) void loadKeys()
 }, { immediate: true })
-onMounted(account.restore)
-onBeforeUnmount(() => { generation++; secret.value = '' })
+onMounted(() => {
+  account.restore()
+  clock = setInterval(() => { now.value = Date.now() }, 1000)
+})
+onBeforeUnmount(() => { generation++; secret.value = ''; clearInterval(clock) })
 useSeoMeta({ title: 'API Keys', robots: 'noindex' })
 </script>
 <template>
@@ -109,12 +124,18 @@ useSeoMeta({ title: 'API Keys', robots: 'noindex' })
         <p v-if="message" role="alert" class="key-error">{{ message }}</p>
         <section class="key-card">
           <div class="key-list-head"><h2>{{ zh ? '我的密钥' : 'My keys' }}</h2><UButton color="neutral" variant="ghost" :loading="loading" :disabled="creating || revoking" @click="loadKeys">{{ zh ? '刷新' : 'Refresh' }}</UButton></div>
-          <p v-if="loading" role="status">{{ zh ? '加载中…' : 'Loading…' }}</p>
-          <p v-else-if="!keys.length && !message" class="key-note">{{ zh ? '还没有 API Key，创建一个即可开始。' : 'No API keys yet. Create one to get started.' }}</p>
-          <article v-for="key in keys" :key="key.id" class="key-item">
-            <div><strong>{{ key.name }}</strong><code>{{ key.keyHint }}</code><small>{{ keyState(key) }} · {{ new Date(key.createdAt).toLocaleDateString(zh ? 'zh-CN' : 'en-US') }} · {{ key.scopes.join(', ') }}</small></div>
-            <UButton v-if="key.status !== 'revoked'" color="error" variant="ghost" :disabled="revoking" @click="revokeTarget = key; revokeOpen = true">{{ zh ? '撤销' : 'Revoke' }}</UButton>
-          </article>
+          <div class="key-filters" role="group" :aria-label="zh ? '密钥分组' : 'Key groups'">
+            <button type="button" :aria-pressed="keyGroup === 'available'" @click="keyGroup = 'available'">{{ zh ? '可用' : 'Available' }} <span>{{ keyGroups.available.length }}</span></button>
+            <button type="button" :aria-pressed="keyGroup === 'unavailable'" @click="keyGroup = 'unavailable'">{{ zh ? '不可用' : 'Unavailable' }} <span>{{ keyGroups.unavailable.length }}</span></button>
+          </div>
+          <p v-if="loading" role="status" class="key-note">{{ zh ? '加载中…' : 'Loading…' }}</p>
+          <p v-else-if="!visibleKeys.length && !message" class="key-note">{{ keyGroup === 'available' ? (zh ? '暂无可用密钥，创建一个即可开始。' : 'No available keys. Create one to get started.') : (zh ? '暂无停用或过期的密钥。' : 'No disabled or expired keys.') }}</p>
+          <div v-else-if="visibleKeys.length" ref="keyList" class="key-list" role="region" :aria-label="zh ? '密钥列表' : 'API key list'" tabindex="0">
+            <article v-for="key in visibleKeys" :key="key.id" class="key-item">
+              <div><strong>{{ key.name }}</strong><code>{{ key.keyHint }}</code><small>{{ keyState(key) }} · {{ new Date(key.createdAt).toLocaleDateString(zh ? 'zh-CN' : 'en-US') }} · {{ key.scopes.join(', ') }}</small></div>
+              <UButton color="error" variant="ghost" :disabled="revoking" @click="revokeTarget = key; revokeOpen = true">{{ zh ? '撤销' : 'Revoke' }}</UButton>
+            </article>
+          </div>
         </section>
         <section class="key-card"><h2>{{ zh ? '接入 API' : 'Connect to the API' }}</h2><p class="key-note">Base URL</p><code class="key-base">{{ account.apiBaseUrl }}/v1</code><NuxtLink :to="docsPath('/api/overview')" class="key-docs">{{ zh ? '查看 API 文档' : 'Read API documentation' }} →</NuxtLink></section>
       </template>
@@ -141,7 +162,15 @@ h2 { font-size: 18px; font-weight: 650; margin: 0; }
 .key-create { display: flex; gap: 12px; align-items: end; margin-top: 20px; }
 .key-create label { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px; }
 .key-note { margin: 12px 0 0; }
-.key-item { border-top: 1px solid var(--border); padding: 20px 0; margin-top: 12px; }
+.key-filters { display: flex; gap: 6px; margin-top: 16px; }
+.key-filters button { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border: 0; border-radius: 6px; background: transparent; color: var(--text-secondary); font-size: 13px; cursor: pointer; }
+.key-filters button[aria-pressed="true"] { background: var(--sand); color: var(--text-primary); font-weight: 600; }
+.key-filters button:hover { color: var(--text-primary); }
+.key-filters span { font-variant-numeric: tabular-nums; }
+.key-list { max-height: 360px; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-gutter: stable; margin-top: 12px; }
+.key-list:focus-visible, .key-filters button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.key-item { border-top: 1px solid var(--border); padding: 16px 0; }
+.key-item > button { flex-shrink: 0; }
 .key-item > div { min-width: 0; display: flex; flex-direction: column; gap: 6px; overflow-wrap: anywhere; }
 .key-item code, .key-item small { color: var(--text-secondary); font-size: 12px; }
 .key-secret { display: block; white-space: pre-wrap; overflow-wrap: anywhere; user-select: all; font-size: 14px; line-height: 1.8; }

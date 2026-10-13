@@ -940,7 +940,7 @@ header [data-slot="base"]:hover {
 
 .signal-download {
   padding: clamp(100px, 11vw, 164px) max(24px, calc((100vw - 1280px) / 2));
-  background: var(--bg-alt);
+  background: var(--bg-page);
   color: var(--text-primary);
 }
 
@@ -972,6 +972,20 @@ header [data-slot="base"]:hover {
 .signal-download-meta > p {
   margin-top: 18px;
   color: var(--text-secondary);
+}
+
+.signal-download-notice {
+  margin-bottom: 24px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.signal-download-notice button {
+  margin-left: 8px;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
 }
 
 .signal-download-groups {
