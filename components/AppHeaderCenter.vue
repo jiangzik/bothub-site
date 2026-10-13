@@ -3,8 +3,8 @@ const { locale, localePath } = useDocusI18n()
 const docsPath = useDocsPath()
 
 const labels = computed(() => locale.value === 'en'
-  ? { product: 'Product', models: 'Model Plaza', capabilities: 'Features', continuity: 'Cross-device', docs: 'Docs', pay: 'Top up' }
-  : { product: '产品', models: '模型广场', capabilities: '功能', continuity: '跨端协同', docs: '文档', pay: '充值' })
+  ? { product: 'Product', models: 'Model Plaza', capabilities: 'Features', continuity: 'Cross-device', docs: 'Docs', status: 'Service status' }
+  : { product: '产品', models: '模型广场', capabilities: '功能', continuity: '跨端协同', docs: '文档', status: '服务状态' })
 
 const homePath = computed(() => localePath('/'))
 </script>
@@ -15,7 +15,7 @@ const homePath = computed(() => localePath('/'))
       <NuxtLink :to="`${homePath}#capabilities`">{{ labels.capabilities }}</NuxtLink>
       <NuxtLink :to="`${homePath}#continuity`">{{ labels.continuity }}</NuxtLink>
       <NuxtLink :to="docsPath('/manual/overview')">{{ labels.docs }}</NuxtLink>
-      <NuxtLink :to="docsPath('/pay')">{{ labels.pay }}</NuxtLink>
+      <NuxtLink :to="localePath('/status')">{{ labels.status }}</NuxtLink>
     </nav>
     <NuxtLink class="bothub-header-models" :to="`${homePath}#models`">
       <i />{{ labels.models }}

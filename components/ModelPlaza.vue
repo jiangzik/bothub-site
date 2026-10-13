@@ -25,7 +25,9 @@ interface ModelCatalogResponse {
   data: PublicModel[]
 }
 
-const { locale } = useDocusI18n()
+const { locale, localePath } = useDocusI18n()
+const { data: serviceStatus, error: serviceStatusError } = useModelServiceStatus()
+const statusByModel = computed(() => new Map(serviceStatus.value?.models.map(model => [model.id, model.state]) || []))
 const runtimeConfig = useRuntimeConfig()
 const isZh = computed(() => locale.value !== 'en')
 const activeFilter = ref<ModelFilter>('all')
@@ -150,33 +152,12 @@ const fetchCatalog = async (): Promise<ModelCatalogResponse> => {
   }
 }
 
-const { data: catalog } = await useAsyncData(
+const { data: catalog, error: catalogError, status: catalogStatus, refresh: refreshCatalog } = await useAsyncData(
   `bothub-public-model-catalog-${locale.value}`,
-  async () => {
-    try {
-      return await fetchCatalog()
-    }
-    catch {
-      return emptyCatalog()
-    }
-  },
+  fetchCatalog,
   { default: emptyCatalog },
 )
-
-// 预渲染时已经带了一份目录；打开页面后再取一次最新的，模型数量和价格都以线上为准。
-// 本地开发域名不在服务端的跨域白名单里，跳过，免得控制台刷红。
-onMounted(async () => {
-  if (['localhost', '127.0.0.1'].includes(window.location.hostname)) {
-    return
-  }
-
-  try {
-    catalog.value = await fetchCatalog()
-  }
-  catch {
-    // Keep the prerendered catalog if a live refresh is temporarily unavailable.
-  }
-})
+onMounted(() => { void refreshCatalog() })
 
 const models = computed(() => catalog.value?.data || [])
 
@@ -294,6 +275,7 @@ const priceCopy = (model: PublicModel): { value: string, unit: string } => {
           <div class="signal-model-identity">
             <div>
               <strong>{{ model.display_name || model.id }}</strong>
+              <NuxtLink v-if="statusByModel.has(model.id)" :to="localePath('/status')" class="model-status-link"><ServiceStateBadge :state="serviceStatusError ? undefined : statusByModel.get(model.id)" /></NuxtLink>
               <small v-if="model.summary">{{ model.summary }}</small>
             </div>
           </div>
@@ -306,12 +288,22 @@ const priceCopy = (model: PublicModel): { value: string, unit: string } => {
             <small>{{ priceCopy(model).unit }}</small>
           </div>
         </article>
-        <div v-if="visibleModels.length === 0" class="signal-model-empty">{{ copy.syncing }}</div>
+        <div v-if="catalogError" class="signal-model-empty" role="alert">
+          {{ isZh ? '模型列表加载失败。' : 'Could not load models.' }}
+          <UButton color="neutral" variant="ghost" :loading="catalogStatus === 'pending'" @click="refreshCatalog()">{{ isZh ? '重试' : 'Retry' }}</UButton>
+        </div>
+        <div v-else-if="visibleModels.length === 0" class="signal-model-empty">{{ catalogStatus === 'pending' ? copy.syncing : (isZh ? '暂无匹配模型' : 'No matching models') }}</div>
       </div>
 
       <footer class="signal-model-footer">
         <p>{{ copy.more }}</p>
+        <NuxtLink :to="localePath('/status')">{{ isZh ? '查看模型服务状态' : 'View model service status' }} →</NuxtLink>
       </footer>
     </div>
   </section>
 </template>
+
+<style scoped>
+.model-status-link { display: inline-flex; margin-left: 10px; vertical-align: middle; }
+.signal-model-footer a { font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
+</style>

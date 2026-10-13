@@ -29,6 +29,9 @@ export class BothubApiError extends Error {
 }
 
 const SESSION_STORAGE_KEY = 'bothub.web.session'
+// Keyed by the shared session object, so every component joins the same refresh.
+const refreshes = new WeakMap<StoredSession, Promise<StoredSession>>()
+
 const WEB_CLIENT_INFO = { platform: 'web', deviceName: 'BotHub 官网' }
 
 function readStoredSession(): StoredSession | null {
@@ -72,6 +75,7 @@ export function useBothubAccount() {
 
   // 同一页面里多个组件共用一份会话。
   const session = useState<StoredSession | null>('bothub-web-session', () => null)
+  const revision = useState('bothub-web-session-revision', () => 0)
   const restored = useState('bothub-web-session-restored', () => false)
 
   function restore(): void {
@@ -81,6 +85,7 @@ export function useBothubAccount() {
   }
 
   function setSession(next: StoredSession | null): void {
+    revision.value++
     session.value = next
     writeStoredSession(next)
   }
@@ -92,50 +97,60 @@ export function useBothubAccount() {
     const response = await fetch(`${apiBaseUrl}${path}`, {
       method: init.method ?? (init.body !== undefined ? 'POST' : 'GET'),
       headers,
+      signal: AbortSignal.timeout(15_000),
       body: init.body !== undefined ? JSON.stringify(init.body) : undefined,
     })
     return parseResponse(response)
   }
 
-  /** 并发的几个请求同时撞上过期，只换一次 token。 */
-  let refreshing: Promise<boolean> | null = null
+  const authRequired = () => new BothubApiError('Not signed in', 401, 'AUTH_REQUIRED', undefined)
 
-  async function refreshSession(): Promise<boolean> {
-    const current = session.value
-    if (!current) return false
-    if (!refreshing) {
-      refreshing = (async () => {
+  async function refreshSession(current: StoredSession, expectedRevision: number): Promise<StoredSession> {
+    if (revision.value !== expectedRevision || !session.value) throw authRequired()
+    // Another request may have already rotated this token before its 401 arrived.
+    if (session.value.token !== current.token) return session.value
+    let pending = refreshes.get(current)
+    if (!pending) {
+      pending = (async () => {
         try {
           const data = await request('/v1/auth/refresh', {
             body: { refreshToken: current.refreshToken, clientInfo: WEB_CLIENT_INFO },
           }) as { token: string; refreshToken: string }
-          setSession({ ...current, token: data.token, refreshToken: data.refreshToken })
-          return true
+          if (revision.value !== expectedRevision) throw authRequired()
+          const next = { ...current, token: data.token, refreshToken: data.refreshToken }
+          session.value = next
+          writeStoredSession(next)
+          return next
         }
         catch (error) {
-          // refresh 被拒（过期、被撤销、账号停用）= 这份会话没用了；网络错误则保留，下次再试。
-          if (error instanceof BothubApiError && error.status >= 400 && error.status < 500) setSession(null)
+          if (revision.value === expectedRevision && error instanceof BothubApiError
+            && [400, 401, 403].includes(error.status)) setSession(null)
           throw error
         }
-        finally {
-          refreshing = null
-        }
+        finally { refreshes.delete(current) }
       })()
+      refreshes.set(current, pending)
     }
-    return refreshing
+    return pending
   }
 
-  /** 带登录态的请求：401 时换一次 token 再试，还是 401 就当作已登出。 */
+  /** Only retry after authentication rejection; never retry a failed mutation. */
   async function authed<T>(path: string, init: { method?: string; body?: unknown } = {}): Promise<T> {
     const current = session.value
-    if (!current) throw new BothubApiError('Not signed in', 401, 'AUTH_REQUIRED', undefined)
+    const expectedRevision = revision.value
+    if (!current) throw authRequired()
     try {
       return await request(path, { ...init, token: current.token }) as T
     }
     catch (error) {
       if (!(error instanceof BothubApiError) || error.status !== 401) throw error
-      await refreshSession()
-      return await request(path, { ...init, token: session.value?.token ?? null }) as T
+      const next = await refreshSession(current, expectedRevision)
+      if (revision.value !== expectedRevision) throw authRequired()
+      try { return await request(path, { ...init, token: next.token }) as T }
+      catch (retryError) {
+        if (revision.value === expectedRevision && retryError instanceof BothubApiError && retryError.status === 401) setSession(null)
+        throw retryError
+      }
     }
   }
 

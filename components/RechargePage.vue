@@ -98,25 +98,6 @@ const copy = computed(() => zh.value
   ? {
       title: '充值',
       subtitle: '为你的 BotHub 账号充值 AI 余额或开通 Pro，付款后立即到账，所有设备通用。',
-      loginTitle: '登录 BotHub 账号',
-      loginHint: '使用在 App 里注册的邮箱和密码登录。',
-      email: '邮箱',
-      password: '密码',
-      login: '登录',
-      loggingIn: '登录中…',
-      forgot: '忘记密码 / 还没设置过密码',
-      noAccount: '还没有账号？先下载 BotHub 注册，再回来充值。',
-      download: '下载 BotHub',
-      resetTitle: '设置新密码',
-      resetHint: '通过 Google 或 Apple 登录的账号也可以在这里设置密码，之后就能用邮箱登录。',
-      code: '验证码',
-      sendCode: '发送验证码',
-      sending: '发送中…',
-      resendIn: (s: number) => `${s} 秒后可重发`,
-      codeSent: '如果这个邮箱已注册，验证码会发到邮箱里。',
-      newPassword: '新密码（至少 8 位）',
-      resetSubmit: '设置并登录',
-      backToLogin: '返回登录',
       signedInAs: '当前账号',
       logout: '退出登录',
       balance: 'AI 余额',
@@ -157,38 +138,10 @@ const copy = computed(() => zh.value
       closedHint: '订单没有作废：如果之后完成了付款，会自动到账。',
       wechatBrowser: '微信内置浏览器无法打开支付宝，请点右上角「…」选择「在浏览器打开」。',
       appOnly: '当前付款方式只能在 App 内使用。',
-      errInvalidEmail: '请输入有效的邮箱地址。',
-      errPassword: '请输入密码。',
-      errCredentials: '邮箱或密码不正确。',
-      errCode: '请输入 6 位验证码。',
-      errNewPassword: '新密码至少 8 位。',
-      errRateLimit: '操作太频繁，请稍后再试。',
-      errDisabled: (reason: string | null) => reason ? `账号已被停用：${reason}` : '账号已被停用。',
-      errGeneric: '请求失败，请稍后重试。',
-      errSession: '登录已过期，请重新登录。',
     }
   : {
       title: 'Top up',
       subtitle: 'Add AI credits or get Pro for your BotHub account. Credited instantly and shared across all your devices.',
-      loginTitle: 'Sign in to BotHub',
-      loginHint: 'Use the email and password you registered in the app.',
-      email: 'Email',
-      password: 'Password',
-      login: 'Sign in',
-      loggingIn: 'Signing in…',
-      forgot: 'Forgot password / never set one',
-      noAccount: 'No account yet? Download BotHub to sign up, then come back.',
-      download: 'Download BotHub',
-      resetTitle: 'Set a new password',
-      resetHint: 'Accounts that sign in with Google or Apple can set a password here to sign in with email.',
-      code: 'Verification code',
-      sendCode: 'Send code',
-      sending: 'Sending…',
-      resendIn: (s: number) => `Resend in ${s}s`,
-      codeSent: 'If this email is registered, a code has been sent.',
-      newPassword: 'New password (8+ characters)',
-      resetSubmit: 'Set password and sign in',
-      backToLogin: 'Back to sign in',
       signedInAs: 'Signed in as',
       logout: 'Sign out',
       balance: 'AI credits',
@@ -229,33 +182,9 @@ const copy = computed(() => zh.value
       closedHint: 'The order is still valid: if you finish paying later, it will be credited automatically.',
       wechatBrowser: 'WeChat’s built-in browser can’t open Alipay. Tap “…” and choose “Open in browser”.',
       appOnly: 'This payment method is only available in the app.',
-      errInvalidEmail: 'Please enter a valid email address.',
-      errPassword: 'Please enter your password.',
-      errCredentials: 'Incorrect email or password.',
-      errCode: 'Please enter the 6-digit code.',
-      errNewPassword: 'Password must be at least 8 characters.',
-      errRateLimit: 'Too many attempts. Please try again later.',
-      errDisabled: (reason: string | null) => reason ? `Account disabled: ${reason}` : 'Account disabled.',
-      errGeneric: 'Request failed. Please try again later.',
-      errSession: 'Your session expired. Please sign in again.',
     })
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const ACCOUNT_DISABLED_PREFIX = 'Account disabled'
-
-function describeError(error: unknown, context: 'login' | 'other' = 'other'): string {
-  if (error instanceof BothubApiError) {
-    if (error.status === 429) return copy.value.errRateLimit
-    if (error.status === 403 && error.message.startsWith(ACCOUNT_DISABLED_PREFIX)) {
-      const reason = error.message.slice(ACCOUNT_DISABLED_PREFIX.length).replace(/^:\s*/, '').trim()
-      return copy.value.errDisabled(reason || null)
-    }
-    if (error.status === 401) return context === 'login' ? copy.value.errCredentials : copy.value.errSession
-    if (error.status < 500 && error.message) return error.message
-    return copy.value.errGeneric
-  }
-  return copy.value.errGeneric
-}
+const describeError = useBothubErrorMessage(zh)
 
 // ─── 设备 ──────────────────────────────────────────────
 
@@ -330,109 +259,15 @@ const planLabel = computed(() => {
 })
 
 async function loadEntitlements(): Promise<void> {
-  if (!user.value) return
+  const userId = user.value?.id
+  if (!userId) return
   try {
-    entitlements.value = await account.authed<Entitlements>('/v1/me/entitlements')
+    const result = await account.authed<Entitlements>('/v1/me/entitlements')
+    if (user.value?.id === userId) entitlements.value = result
   }
   catch (error) {
     console.warn('[bothub] load entitlements failed', error)
-    if (error instanceof BothubApiError && error.status === 401) {
-      await account.logout()
-      authMessage.value = copy.value.errSession
-    }
-  }
-}
-
-const authMode = ref<'login' | 'reset'>('login')
-const email = ref('')
-const password = ref('')
-const resetCode = ref('')
-const newPassword = ref('')
-const authBusy = ref(false)
-const authMessage = ref('')
-const authMessageTone = ref<'error' | 'info'>('error')
-const cooldown = ref(0)
-let cooldownTimer: ReturnType<typeof setInterval> | null = null
-
-function normalizedEmail(): string | null {
-  const value = email.value.trim().toLowerCase()
-  return EMAIL_REGEX.test(value) ? value : null
-}
-
-function setAuthMessage(text: string, tone: 'error' | 'info' = 'error'): void {
-  authMessage.value = text
-  authMessageTone.value = tone
-}
-
-async function handleLogin(): Promise<void> {
-  const value = normalizedEmail()
-  if (!value) return setAuthMessage(copy.value.errInvalidEmail)
-  if (!password.value) return setAuthMessage(copy.value.errPassword)
-  authBusy.value = true
-  setAuthMessage('')
-  try {
-    await account.login(value, password.value)
-    password.value = ''
-    await afterSignedIn()
-  }
-  catch (error) {
-    setAuthMessage(describeError(error, 'login'))
-  }
-  finally {
-    authBusy.value = false
-  }
-}
-
-function startCooldown(seconds: number): void {
-  if (cooldownTimer) clearInterval(cooldownTimer)
-  cooldown.value = seconds
-  cooldownTimer = setInterval(() => {
-    cooldown.value = Math.max(0, cooldown.value - 1)
-    if (cooldown.value === 0 && cooldownTimer) {
-      clearInterval(cooldownTimer)
-      cooldownTimer = null
-    }
-  }, 1000)
-}
-
-async function handleSendCode(): Promise<void> {
-  const value = normalizedEmail()
-  if (!value) return setAuthMessage(copy.value.errInvalidEmail)
-  if (cooldown.value > 0) return
-  authBusy.value = true
-  setAuthMessage('')
-  try {
-    await account.sendResetCode(value)
-    startCooldown(60)
-    setAuthMessage(copy.value.codeSent, 'info')
-  }
-  catch (error) {
-    setAuthMessage(describeError(error))
-  }
-  finally {
-    authBusy.value = false
-  }
-}
-
-async function handleReset(): Promise<void> {
-  const value = normalizedEmail()
-  if (!value) return setAuthMessage(copy.value.errInvalidEmail)
-  if (!/^\d{6}$/.test(resetCode.value.trim())) return setAuthMessage(copy.value.errCode)
-  if (newPassword.value.length < 8) return setAuthMessage(copy.value.errNewPassword)
-  authBusy.value = true
-  setAuthMessage('')
-  try {
-    await account.resetPassword(value, resetCode.value.trim(), newPassword.value)
-    resetCode.value = ''
-    newPassword.value = ''
-    authMode.value = 'login'
-    await afterSignedIn()
-  }
-  catch (error) {
-    setAuthMessage(describeError(error))
-  }
-  finally {
-    authBusy.value = false
+    if (!user.value || user.value.id === userId) configError.value = describeError(error)
   }
 }
 
@@ -700,24 +535,30 @@ function onVisibilityChange(): void {
   if (!selected.value) resumePendingOrder()
 }
 
+watch(() => user.value?.id, (id, previous) => {
+  if (id === previous) return
+  generation++
+  stopPolling()
+  selected.value = null
+  currentOutTradeNo = null
+  stage.value = 'confirm'
+  if (previous) clearPendingOrder()
+  entitlements.value = null
+  if (id) { configError.value = ''; void afterSignedIn() }
+}, { immediate: true })
+
 onMounted(() => {
   detectDevice()
   account.restore()
   void loadCheckoutConfig()
-  if (user.value) {
-    email.value = user.value.email
-    void afterSignedIn()
-  }
   document.addEventListener('visibilitychange', onVisibilityChange)
 })
 
 onBeforeUnmount(() => {
   stopPolling()
-  if (cooldownTimer) clearInterval(cooldownTimer)
   document.removeEventListener('visibilitychange', onVisibilityChange)
 })
 
-const { localePath } = useDocusI18n()
 </script>
 
 <template>
@@ -730,60 +571,8 @@ const { localePath } = useDocusI18n()
     <ClientOnly>
       <!-- 未登录 -->
       <section v-if="!user" class="card auth-card">
-        <template v-if="authMode === 'login'">
-          <h2>{{ copy.loginTitle }}</h2>
-          <p class="muted">{{ copy.loginHint }}</p>
-          <form class="form" @submit.prevent="handleLogin">
-            <label class="field">
-              <span>{{ copy.email }}</span>
-              <input v-model="email" type="email" autocomplete="username" inputmode="email" placeholder="you@example.com">
-            </label>
-            <label class="field">
-              <span>{{ copy.password }}</span>
-              <input v-model="password" type="password" autocomplete="current-password">
-            </label>
-            <button class="btn btn-primary" type="submit" :disabled="authBusy">
-              {{ authBusy ? copy.loggingIn : copy.login }}
-            </button>
-          </form>
-          <p v-if="authMessage" class="message" :data-tone="authMessageTone">{{ authMessage }}</p>
-          <div class="auth-links">
-            <button type="button" class="link" @click="authMode = 'reset'; setAuthMessage('')">{{ copy.forgot }}</button>
-            <span class="muted">
-              {{ copy.noAccount }}
-              <NuxtLink :to="`${localePath('/')}#download`">{{ copy.download }}</NuxtLink>
-            </span>
-          </div>
-        </template>
-
-        <template v-else>
-          <h2>{{ copy.resetTitle }}</h2>
-          <p class="muted">{{ copy.resetHint }}</p>
-          <form class="form" @submit.prevent="handleReset">
-            <label class="field">
-              <span>{{ copy.email }}</span>
-              <input v-model="email" type="email" autocomplete="username" inputmode="email" placeholder="you@example.com">
-            </label>
-            <div class="field-row">
-              <label class="field">
-                <span>{{ copy.code }}</span>
-                <input v-model="resetCode" type="text" maxlength="6" inputmode="numeric" autocomplete="one-time-code">
-              </label>
-              <button type="button" class="btn btn-secondary" :disabled="authBusy || cooldown > 0" @click="handleSendCode">
-                {{ cooldown > 0 ? copy.resendIn(cooldown) : copy.sendCode }}
-              </button>
-            </div>
-            <label class="field">
-              <span>{{ copy.newPassword }}</span>
-              <input v-model="newPassword" type="password" autocomplete="new-password">
-            </label>
-            <button class="btn btn-primary" type="submit" :disabled="authBusy">{{ copy.resetSubmit }}</button>
-          </form>
-          <p v-if="authMessage" class="message" :data-tone="authMessageTone">{{ authMessage }}</p>
-          <div class="auth-links">
-            <button type="button" class="link" @click="authMode = 'login'; setAuthMessage('')">{{ copy.backToLogin }}</button>
-          </div>
-        </template>
+        <AccountAuthForm :lang="lang" />
+        <p v-if="configError" class="message" role="alert" data-tone="error">{{ configError }}</p>
       </section>
 
       <!-- 已登录 -->
@@ -1007,47 +796,6 @@ const { localePath } = useDocusI18n()
   margin-right: auto;
 }
 
-.form {
-  margin-top: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-  min-width: 0;
-}
-
-.field span {
-  color: var(--text-secondary);
-  font-size: 13px;
-}
-
-.field input {
-  width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: transparent;
-  color: var(--text-primary);
-  font-size: 15px;
-  padding: 10px 12px;
-  outline: none;
-}
-
-.field input:focus-visible {
-  border-color: var(--ink);
-}
-
-.field-row {
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-}
-
 .btn {
   display: inline-flex;
   align-items: center;
@@ -1096,20 +844,6 @@ const { localePath } = useDocusI18n()
   text-decoration: underline;
   text-underline-offset: 3px;
   cursor: pointer;
-}
-
-.auth-links {
-  margin-top: 18px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.auth-links a {
-  color: var(--ink);
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 .message {

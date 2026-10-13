@@ -23,7 +23,7 @@ const headerOpen = ref(false)
     </template>
 
     <template #right>
-      <AppHeaderCTA />
+      <AccountHeader />
 
       <NuxtLink
         :to="`${localePath('/')}#download`"
@@ -93,11 +93,11 @@ const headerOpen = ref(false)
           {{ locale === 'en' ? 'Manual' : '使用手册' }}
         </NuxtLink>
         <NuxtLink
-          :to="docsPath('/pay')"
+          :to="localePath('/status')"
           class="mobile-menu-link"
           @click="headerOpen = false"
         >
-          {{ locale === 'en' ? 'Top up' : '充值' }}
+          {{ locale === 'en' ? 'Service status' : '服务状态' }}
         </NuxtLink>
       </div>
     </template>
