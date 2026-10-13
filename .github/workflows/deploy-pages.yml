@@ -31,6 +31,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Test application behavior
+        run: npm test
+
       - name: Resolve Pages base URL
         run: |
           set -euo pipefail
@@ -125,6 +128,9 @@ jobs:
       DEPLOY_PATH: ${{ vars.CN_DEPLOY_PATH }}
       CN_DEPLOY_SSH_KEY: ${{ secrets.CN_DEPLOY_SSH_KEY }}
     steps:
+      - name: Checkout routing configuration
+        uses: actions/checkout@v4
+
       - name: Check CN deploy config
         id: check-cn-deploy
         run: |
@@ -159,6 +165,18 @@ jobs:
             ssh-keyscan -p "$PORT" "$DEPLOY_HOST" >> ~/.ssh/known_hosts
           fi
           chmod 644 ~/.ssh/known_hosts
+      - name: Verify Nginx routing configuration
+        if: ${{ steps.check-cn-deploy.outputs.enabled == 'true' }}
+        run: |
+          set -euo pipefail
+          if ! ssh -i ~/.ssh/id_ed25519 -p "${DEPLOY_PORT:-22}" -o StrictHostKeyChecking=yes \
+            "$DEPLOY_USER@$DEPLOY_HOST" \
+            'cmp -s - /etc/nginx/snippets/bothub-site-routes.conf' \
+            < deployment/nginx/site-routes.conf; then
+            echo "Nginx routing differs from this commit. Install deployment/nginx/site-routes.conf using deployment/README.md before deploying." >&2
+            exit 1
+          fi
+
       - name: Sync files to CN server
         if: ${{ steps.check-cn-deploy.outputs.enabled == 'true' }}
         run: |
@@ -188,7 +206,7 @@ jobs:
           set -euo pipefail
           BASE_PATH="$(printf '%s' "${SITE_BASE_PATH:-/}" | sed -E 's#^/+##; s#/+$##')"
           SITE_URL="https://bothub.bookab.info/${BASE_PATH:+$BASE_PATH/}"
-          for ROUTE in "" zh zh/ en en/ zh/models en/models zh/status en/status zh/faq/overview en/faq/overview zh/api/overview en/api/overview zh/macos-install en/macos-install zh/account en/account zh/pay en/pay; do
+          for ROUTE in "" zh zh/ en en/ zh/models en/models zh/status en/status zh/faq/overview en/faq/overview zh/api/overview en/api/overview zh/macos-install zh/macos-install/ en/macos-install en/macos-install/ zh/_payload.json en/_payload.json zh/account en/account zh/pay en/pay; do
             URL="${SITE_URL}${ROUTE}"
             STATUS="$(curl --fail --silent --show-error --location --max-redirs 1 --max-time 20 --output /dev/null --write-out '%{http_code}' "$URL")"
             if [ "$STATUS" != "200" ]; then
@@ -196,4 +214,15 @@ jobs:
               exit 1
             fi
             echo "Verified $URL (HTTP 200)"
+          done
+          # These are content grouping directories, never pages. A payload/content
+          # directory must not produce an implicit directory redirect or an index.
+          for ROUTE in zh/api en/api; do
+            URL="${SITE_URL}${ROUTE}"
+            RESULT="$(curl --silent --show-error --max-time 20 --output /dev/null --write-out '%{http_code} %{redirect_url}' "$URL")"
+            if [ "$RESULT" != "404 " ]; then
+              echo "Non-page directory must return 404 without a redirect: $URL ($RESULT)" >&2
+              exit 1
+            fi
+            echo "Verified non-page directory $URL (HTTP 404, no redirect)"
           done

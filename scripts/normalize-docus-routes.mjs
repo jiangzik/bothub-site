@@ -1,9 +1,9 @@
 /** @typedef {{ path: string, file?: string, children?: DocusRoute[] }} DocusRoute */
 
 /**
- * i18n already prefixes each route with /zh or /en. Docus's extra optional
- * :lang parameter would let the homepage swallow one-segment documents.
- * Run after route localization and remove that duplicate parameter.
+ * Let @nuxtjs/i18n be the sole owner of locale routing. Remove Docus's
+ * optional locale segment before localization, so the landing route is /
+ * and documents use /:slug(.*)*. No runtime redirects or alternate routes.
  * @param {DocusRoute[]} pages
  */
 export function normalizeDocusRoutes(pages) {
@@ -11,7 +11,7 @@ export function normalizeDocusRoutes(pages) {
     const file = page.file?.replaceAll('\\', '/') || ''
     if (file.endsWith('/docus/app/templates/landing.vue')
       || file.endsWith('/docus/app/pages/[[lang]]/[...slug].vue')) {
-      page.path = page.path.replace('/:' + 'lang?', '') || '/'
+      page.path = page.path.replace('/:lang?', '') || '/'
     }
     if (page.children) normalizeDocusRoutes(page.children)
   }

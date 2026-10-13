@@ -940,8 +940,8 @@ header [data-slot="base"]:hover {
 
 .signal-download {
   padding: clamp(100px, 11vw, 164px) max(24px, calc((100vw - 1280px) / 2));
-  background: #000000;
-  color: #ffffff;
+  background: var(--bg-alt);
+  color: var(--text-primary);
 }
 
 .signal-download-head {
@@ -954,7 +954,7 @@ header [data-slot="base"]:hover {
 
 .signal-download .signal-section-index,
 .signal-download .term-version-badge {
-  color: #8a8a8a;
+  color: var(--text-muted);
 }
 
 .signal-download .term-version-badge {
@@ -966,12 +966,12 @@ header [data-slot="base"]:hover {
 }
 
 .signal-download h2 {
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 .signal-download-meta > p {
   margin-top: 18px;
-  color: #969696;
+  color: var(--text-secondary);
 }
 
 .signal-download-groups {
@@ -981,7 +981,7 @@ header [data-slot="base"]:hover {
 
 .signal-download-group > p {
   margin: 0 0 14px !important;
-  color: #8a8a8a;
+  color: var(--text-muted);
   font-size: 13px;
   font-weight: 500;
 }
@@ -1005,25 +1005,24 @@ header [data-slot="base"]:hover {
   align-items: center;
   min-height: 96px;
   padding: 20px 22px;
-  border: 1px solid #2a2a2a;
+  border: 1px solid var(--border);
   border-radius: 14px;
-  background: #0d0d0d;
-  color: #ffffff;
+  background: var(--signal-surface);
+  color: var(--text-primary);
   text-decoration: none;
   transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
 }
 
 .bothub-download-card.term-download-link:hover {
-  border-color: #6a6a6a;
-  background: #161616;
-  color: #ffffff;
+  border-color: var(--ink);
+  background: var(--bg-page);
+  color: var(--text-primary);
   transform: translateY(-2px);
 }
 
-.bothub-download-card[data-recommended] {
-  border-color: #ffffff !important;
-  background: #ffffff !important;
-  color: #000000 !important;
+.bothub-download-card.term-download-link[data-recommended] {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
 }
 
 .bothub-download-icon {
@@ -1046,7 +1045,7 @@ header [data-slot="base"]:hover {
 
 .bothub-download-text small {
   overflow: hidden;
-  color: #8a8a8a;
+  color: var(--text-muted);
   font-size: 12.5px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1056,7 +1055,7 @@ header [data-slot="base"]:hover {
   display: grid;
   justify-items: end;
   gap: 4px;
-  color: #8a8a8a;
+  color: var(--text-muted);
   font-family: var(--font-mono) !important;
   font-size: 11px;
 }
@@ -1064,8 +1063,8 @@ header [data-slot="base"]:hover {
 .bothub-download-meta em {
   padding: 2px 8px;
   border-radius: 999px;
-  background: #000000;
-  color: #ffffff;
+  background: var(--ink);
+  color: var(--cream-light);
   font-family: var(--font-sans) !important;
   font-size: 11px;
   font-style: normal;
@@ -1082,14 +1081,8 @@ header [data-slot="base"]:hover {
 
 .bothub-download-status {
   grid-column: 2 / -1;
-  color: #8a8a8a;
+  color: var(--text-muted);
   font-size: 11.5px;
-}
-
-[data-recommended] .bothub-download-text small,
-[data-recommended] .bothub-download-meta,
-[data-recommended] .bothub-download-status {
-  color: #555555;
 }
 
 .signal-resources {

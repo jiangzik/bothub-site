@@ -240,8 +240,8 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     (_options, nuxt) => {
       nuxt.hook('modules:done', () => {
-        // Register after Docus and i18n so the final localized routes are normalized.
-        nuxt.hook('pages:resolved', normalizeDocusRoutes)
+        // Docus contributes pages first; i18n alone adds locale prefixes afterwards.
+        nuxt.hook('pages:extend', normalizeDocusRoutes)
         nuxt.options.appConfig.github = false as never
 
         const locales = nuxt.options.i18n?.locales || []
@@ -268,7 +268,7 @@ export default defineNuxtConfig({
   i18n: {
     baseUrl: siteOrigin,
     defaultLocale: 'zh',
-    strategy: 'prefix_except_default',
+    strategy: 'prefix',
     langDir: 'locales',
     locales: [
       { code: 'zh', name: '中文', file: 'zh.json' },
