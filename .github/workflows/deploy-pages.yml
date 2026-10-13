@@ -206,7 +206,7 @@ jobs:
           set -euo pipefail
           BASE_PATH="$(printf '%s' "${SITE_BASE_PATH:-/}" | sed -E 's#^/+##; s#/+$##')"
           SITE_URL="https://bothub.bookab.info/${BASE_PATH:+$BASE_PATH/}"
-          for ROUTE in "" zh zh/ en en/ zh/models en/models zh/status en/status zh/faq/overview en/faq/overview zh/api/overview en/api/overview zh/macos-install zh/macos-install/ en/macos-install en/macos-install/ zh/_payload.json en/_payload.json zh/account en/account zh/pay en/pay; do
+          for ROUTE in "" zh zh/ en en/ zh/models en/models zh/status en/status zh/faq/overview en/faq/overview zh/api/overview en/api/overview zh/faq/macos-install zh/faq/macos-install/ en/faq/macos-install en/faq/macos-install/ zh/_payload.json en/_payload.json zh/account en/account zh/pay en/pay; do
             URL="${SITE_URL}${ROUTE}"
             STATUS="$(curl --fail --silent --show-error --location --max-redirs 1 --max-time 20 --output /dev/null --write-out '%{http_code}' "$URL")"
             if [ "$STATUS" != "200" ]; then
@@ -215,14 +215,14 @@ jobs:
             fi
             echo "Verified $URL (HTTP 200)"
           done
-          # These are content grouping directories, never pages. A payload/content
-          # directory must not produce an implicit directory redirect or an index.
-          for ROUTE in zh/api en/api; do
+          # Content grouping directories and removed document routes are not pages.
+          # Neither may produce an implicit directory redirect or an index.
+          for ROUTE in zh/api en/api zh/macos-install en/macos-install; do
             URL="${SITE_URL}${ROUTE}"
             RESULT="$(curl --silent --show-error --max-time 20 --output /dev/null --write-out '%{http_code} %{redirect_url}' "$URL")"
             if [ "$RESULT" != "404 " ]; then
-              echo "Non-page directory must return 404 without a redirect: $URL ($RESULT)" >&2
+              echo "Non-page path must return 404 without a redirect: $URL ($RESULT)" >&2
               exit 1
             fi
-            echo "Verified non-page directory $URL (HTTP 404, no redirect)"
+            echo "Verified non-page path $URL (HTTP 404, no redirect)"
           done

@@ -13,11 +13,11 @@ const headerOpen = ref(false)
     v-model:open="headerOpen"
     :ui="{
       root: 'h-auto',
-      container: 'min-h-(--ui-header-height) gap-x-4 py-2 sm:gap-x-6 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]',
-      left: 'lg:flex-none lg:justify-self-start',
+      container: 'min-h-(--ui-header-height) gap-x-2 sm:gap-x-4 lg:gap-x-6 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]',
+      left: 'flex-none shrink-0 lg:justify-self-start',
       center: 'hidden lg:flex justify-center lg:justify-self-center',
-      right: 'min-w-0 flex-wrap gap-x-4 gap-y-0 sm:gap-x-6 lg:flex-none lg:max-w-full lg:justify-self-end',
-      header: 'h-auto min-h-(--ui-header-height) gap-x-4 py-2 sm:gap-x-6',
+      right: 'min-w-0 flex-none flex-nowrap gap-1.5 sm:gap-3 lg:gap-6 lg:justify-self-end',
+      header: 'min-h-(--ui-header-height) gap-x-2 sm:gap-x-4',
     }"
     :to="localePath('/')"
     :title="appConfig.header?.title || site.name"
@@ -31,20 +31,17 @@ const headerOpen = ref(false)
     <template #right>
       <AccountHeader />
 
-
-      <template v-if="isEnabled && locales.length > 1">
-        <ClientOnly>
-          <LanguageSelect />
-
-          <template #fallback>
-            <div class="h-8 w-8 animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-md" />
-          </template>
-        </ClientOnly>
-      </template>
-
-      <ClientOnly>
-        <UColorModeButton class="bothub-header-theme" />
-      </ClientOnly>
+      <div class="hidden lg:contents">
+        <template v-if="isEnabled && locales.length > 1">
+          <ClientOnly>
+            <LanguageSelect />
+            <template #fallback>
+              <div class="h-8 w-8 animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-md" />
+            </template>
+          </ClientOnly>
+        </template>
+        <ClientOnly><UColorModeButton class="bothub-header-theme" /></ClientOnly>
+      </div>
     </template>
 
     <template #body>
@@ -63,9 +60,6 @@ const headerOpen = ref(false)
         <NuxtLink :to="docsPath('/api/overview')" class="mobile-menu-link" @click="headerOpen = false">
           {{ locale === 'en' ? 'Developer API' : '开发者 API' }}
         </NuxtLink>
-        <NuxtLink :to="docsPath('/macos-install')" class="mobile-menu-link" @click="headerOpen = false">
-          {{ locale === 'en' ? 'macOS Install Guide' : 'macOS 安装指南' }}
-        </NuxtLink>
         <NuxtLink
           :to="localePath('/status')"
           class="mobile-menu-link"
@@ -73,6 +67,12 @@ const headerOpen = ref(false)
         >
           {{ locale === 'en' ? 'Service status' : '服务状态' }}
         </NuxtLink>
+        <div class="mobile-menu-preferences">
+          <ClientOnly>
+            <LanguageSelect v-if="isEnabled && locales.length > 1" />
+            <UColorModeButton class="bothub-header-theme" />
+          </ClientOnly>
+        </div>
       </div>
     </template>
   </UHeader>

@@ -31,8 +31,9 @@ test('localized home cannot swallow one-segment documents', () => {
   for (const locale of ['zh', 'en']) {
     assert.equal(router.resolve(`/${locale}`).name, `home-${locale}`)
     assert.equal(router.resolve(`/${locale}/`).name, `home-${locale}`)
-    assert.equal(router.resolve(`/${locale}/macos-install`).name, `docs-${locale}`)
+    assert.equal(router.resolve(`/${locale}/single-document`).name, `docs-${locale}`)
     assert.equal(router.resolve(`/${locale}/faq/overview`).name, `docs-${locale}`)
+    assert.equal(router.resolve(`/${locale}/faq/macos-install`).name, `docs-${locale}`)
     assert.equal(router.resolve(`/${locale}/models`).name, `models-${locale}`)
   }
 })

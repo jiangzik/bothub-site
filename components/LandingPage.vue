@@ -58,7 +58,7 @@ const copy = computed(() => isZh.value ? {
   resources: [
     { title: '常见问题', body: '安装、网络、模型和功能使用', to: '/faq/overview' },
     { title: '开发者 API', body: '用 API Key 接入对话、生图、视频和向量模型', to: '/api/overview' },
-    { title: 'macOS 安装指南', body: '首次安装和启动问题的处理方法', to: '/macos-install' },
+    { title: 'macOS 安装指南', body: '首次安装和启动问题的处理方法', to: '/faq/macos-install' },
   ],
   community: '有问题或想法？来 QQ 群聊聊。',
   join: '加入 QQ 群',
@@ -114,7 +114,7 @@ const copy = computed(() => isZh.value ? {
   resources: [
     { title: 'FAQ', body: 'Installation, networking, models and features', to: '/faq/overview' },
     { title: 'Developer API', body: 'Connect chat, image, video and embedding models', to: '/api/overview' },
-    { title: 'macOS Install Guide', body: 'Help with installation and first launch', to: '/macos-install' },
+    { title: 'macOS Install Guide', body: 'Help with installation and first launch', to: '/faq/macos-install' },
   ],
   community: 'Questions or ideas? Come chat in our QQ group.',
   join: 'Join QQ Group',

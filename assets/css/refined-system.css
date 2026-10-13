@@ -139,6 +139,16 @@ header [data-slot="base"]:hover {
   padding: 14px 18px 22px;
 }
 
+.mobile-menu-preferences {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
 .mobile-menu-cmd {
   margin-bottom: 12px;
   padding: 8px 0 14px;

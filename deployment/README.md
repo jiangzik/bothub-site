@@ -1,6 +1,6 @@
 # 官网静态路由部署
 
-官网由 Nuxt/Nitro 生成静态文件，`autoSubfolderIndex: false`：页面为 `zh.html`、`zh/macos-install.html`，同名目录只放 `_payload.json`。`@nuxtjs/i18n` 是语言前缀的唯一生成者，Docus 的可选 `:lang?` 在本地化之前移除；所有页面链接使用无尾斜杠路径。
+官网由 Nuxt/Nitro 生成静态文件，`autoSubfolderIndex: false`：页面为 `zh.html`、`zh/faq/macos-install.html`，同名目录只放 `_payload.json`。`@nuxtjs/i18n` 是语言前缀的唯一生成者，Docus 的可选 `:lang?` 在本地化之前移除；所有页面链接使用无尾斜杠路径。
 
 ## Nginx 配置归属
 
