@@ -31,7 +31,7 @@ watch(user, (value) => { if (value) open.value = false })
     </template>
     <button v-else type="button" class="bothub-header-link" @click="showLogin">{{ zh ? '登录' : 'Sign in' }}</button>
     <UModal v-model:open="open" :title="zh ? '登录 BotHub' : 'Sign in to BotHub'" :ui="{ content: 'max-w-md' }">
-      <template #body><AccountAuthForm :lang="zh ? 'zh' : 'en'" /></template>
+      <template #body><AccountAuthForm :lang="zh ? 'zh' : 'en'" :show-login-title="false" /></template>
     </UModal>
   </ClientOnly>
 </template>

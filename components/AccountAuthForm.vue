@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{ lang?: 'zh' | 'en' }>(), { lang: 'zh' })
+const props = withDefaults(defineProps<{ lang?: 'zh' | 'en', showLoginTitle?: boolean }>(), { lang: 'zh', showLoginTitle: true })
 const account = useBothubAccount()
 const { localePath } = useDocusI18n()
 const zh = computed(() => props.lang !== 'en')
@@ -154,7 +154,7 @@ onBeforeUnmount(() => { if (cooldownTimer) clearInterval(cooldownTimer) })
 <template>
   <div class="account-auth-form">
         <template v-if="authMode === 'login'">
-          <h2>{{ copy.loginTitle }}</h2>
+          <h2 v-if="props.showLoginTitle">{{ copy.loginTitle }}</h2>
           <p class="muted">{{ copy.loginHint }}</p>
           <form class="form" @submit.prevent="handleLogin">
             <label class="field">
