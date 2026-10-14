@@ -491,16 +491,17 @@ header [data-slot="base"]:hover {
 
 
 .signal-model-browser {
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .signal-model-toolbar {
   display: flex;
-  min-height: 72px;
+  min-height: 64px;
   align-items: stretch;
   justify-content: space-between;
-  gap: 32px;
+  gap: 24px;
+  padding-inline: 18px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -566,28 +567,17 @@ header [data-slot="base"]:hover {
   white-space: nowrap;
 }
 
-.signal-model-live i {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--ink);
-}
-
-.signal-model-live i.syncing {
-  background: var(--text-muted);
-}
-
 .signal-model-table-head,
 .signal-model-row {
   display: grid;
-  grid-template-columns: minmax(300px, 1.3fr) minmax(88px, 0.34fr) minmax(280px, 1fr) minmax(190px, 0.68fr);
+  grid-template-columns: minmax(0, 1.55fr) 72px minmax(0, 0.9fr) minmax(0, 0.8fr);
   gap: 24px;
   align-items: center;
 }
 
 .signal-model-table-head {
   min-height: 46px;
-  padding: 0 22px;
+  padding: 0 18px;
   border-bottom: 1px solid var(--border);
   color: var(--text-muted);
   font-family: var(--font-mono) !important;
@@ -602,17 +592,17 @@ header [data-slot="base"]:hover {
 }
 
 .signal-model-list {
-  background: var(--signal-surface);
+  background: transparent;
 }
 
 .signal-model-row {
-  min-height: 96px;
-  padding: 16px 22px;
+  min-height: 88px;
+  padding: 18px;
   transition: background 160ms ease;
 }
 
 .signal-model-row + .signal-model-row {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
 }
 
 .signal-model-row:hover {
@@ -623,6 +613,21 @@ header [data-slot="base"]:hover {
   min-width: 0;
 }
 
+.signal-model-identity > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px 12px;
+}
+
+.signal-model-identity strong {
+  grid-column: 1;
+}
+
+.signal-model-identity small {
+  grid-column: 1 / -1;
+}
+
 .signal-model-kind,
 .signal-model-capabilities span,
 .signal-model-price small,
@@ -630,7 +635,7 @@ header [data-slot="base"]:hover {
   display: block;
   overflow: hidden;
   color: var(--ink);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.01em;
   text-overflow: ellipsis;
@@ -640,18 +645,19 @@ header [data-slot="base"]:hover {
 .signal-model-identity small {
   display: -webkit-box;
   overflow: hidden;
-  margin-top: 5px;
+  margin-top: 0;
   color: var(--text-muted);
-  font-size: 11px;
-  line-height: 1.45;
+  font-size: 12px;
+  line-height: 1.6;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
 }
 
 .signal-model-kind {
   color: var(--text-secondary);
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -664,7 +670,8 @@ header [data-slot="base"]:hover {
 
 .signal-model-capabilities span {
   color: var(--text-secondary);
-  font-size: 11px;
+  font-size: 12px;
+  font-weight: 400;
   white-space: nowrap;
 }
 
@@ -681,8 +688,9 @@ header [data-slot="base"]:hover {
 .signal-model-price strong {
   display: block;
   color: var(--ink);
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .signal-model-price small {
@@ -690,9 +698,10 @@ header [data-slot="base"]:hover {
   margin-top: 4px;
   color: var(--text-muted);
   font-size: 11px;
-  letter-spacing: 0.04em;
-  line-height: 1.4;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1.5;
+  font-weight: 400;
+  white-space: normal;
 }
 
 .signal-model-empty {
@@ -1273,12 +1282,6 @@ footer,
     grid-template-columns: 1fr;
   }
 
-  .signal-model-table-head,
-  .signal-model-row {
-    grid-template-columns: minmax(230px, 1.15fr) 72px minmax(180px, 0.95fr) minmax(150px, 0.7fr);
-    gap: 16px;
-  }
-
   .signal-capability-row {
     grid-template-columns: 1fr;
     gap: 52px;
@@ -1300,6 +1303,7 @@ footer,
 
   .signal-model-toolbar {
     min-height: auto;
+    padding-inline: 16px;
     align-items: flex-start;
     flex-direction: column-reverse;
     gap: 0;
@@ -1489,4 +1493,8 @@ footer,
     align-items: flex-start;
     flex-direction: column;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signal-model-row { transition: none; }
 }

@@ -256,7 +256,6 @@ const priceCopy = (model: PublicModel): { value: string, unit: string } => {
           </button>
         </div>
         <p class="signal-model-live" aria-live="polite">
-          <i :class="{ syncing: models.length === 0 }" />
           {{ models.length > 0 ? copy.count(models.length) : copy.syncing }}
         </p>
       </div>
@@ -269,7 +268,7 @@ const priceCopy = (model: PublicModel): { value: string, unit: string } => {
         <article v-for="model in visibleModels" :key="model.id" class="signal-model-row">
           <div class="signal-model-identity">
             <div>
-              <strong>{{ model.display_name || model.id }}</strong>
+              <strong :title="model.display_name || model.id">{{ model.display_name || model.id }}</strong>
               <NuxtLink v-if="statusByModel.has(model.id)" :to="localePath('/status')" class="model-status-link"><ServiceStateBadge :state="serviceStatusError ? undefined : statusByModel.get(model.id)" /></NuxtLink>
               <small v-if="model.summary">{{ model.summary }}</small>
             </div>
@@ -300,8 +299,10 @@ const priceCopy = (model: PublicModel): { value: string, unit: string } => {
 
 <style scoped>
 .signal-model-plaza { padding: 56px 0 96px; border-bottom: 0; }
-.signal-model-plaza-head { margin-bottom: 32px; }
+.signal-model-plaza-head { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 32px; }
+.signal-model-plaza-head > p { max-width: 680px; margin: 0; font-size: 14px; line-height: 1.8; }
 h1 { margin: 0; color: var(--ink); font-size: 32px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
-.model-status-link { display: inline-flex; margin-left: 10px; vertical-align: middle; }
+.model-status-link { display: inline-flex; grid-column: 2; text-decoration: none; }
+.model-status-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 .signal-model-footer a { font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
 </style>
