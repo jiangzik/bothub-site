@@ -570,7 +570,7 @@ header [data-slot="base"]:hover {
 .signal-model-table-head,
 .signal-model-row {
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) 72px minmax(0, 0.9fr) minmax(0, 0.8fr);
+  grid-template-columns: minmax(0, 2.4fr) minmax(72px, 0.45fr) minmax(0, 1fr);
   gap: 24px;
   align-items: center;
 }
@@ -613,23 +613,7 @@ header [data-slot="base"]:hover {
   min-width: 0;
 }
 
-.signal-model-identity > div {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 6px 12px;
-}
-
-.signal-model-identity strong {
-  grid-column: 1;
-}
-
-.signal-model-identity small {
-  grid-column: 1 / -1;
-}
-
 .signal-model-kind,
-.signal-model-capabilities span,
 .signal-model-price small,
 .signal-model-identity strong {
   display: block;
@@ -645,7 +629,7 @@ header [data-slot="base"]:hover {
 .signal-model-identity small {
   display: -webkit-box;
   overflow: hidden;
-  margin-top: 0;
+  margin-top: 6px;
   color: var(--text-muted);
   font-size: 12px;
   line-height: 1.6;
@@ -659,26 +643,6 @@ header [data-slot="base"]:hover {
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-}
-
-.signal-model-capabilities {
-  display: flex;
-  min-width: 0;
-  flex-wrap: wrap;
-  gap: 5px 0;
-}
-
-.signal-model-capabilities span {
-  color: var(--text-secondary);
-  font-size: 12px;
-  font-weight: 400;
-  white-space: nowrap;
-}
-
-.signal-model-capabilities span + span::before {
-  margin: 0 8px;
-  color: var(--border);
-  content: "/";
 }
 
 .signal-model-price {
@@ -1337,23 +1301,15 @@ footer,
   .signal-model-row {
     grid-template-areas:
       "identity identity"
-      "capabilities price";
+      "kind price";
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 8px 16px;
     min-height: 0;
     padding: 16px;
   }
 
-  .signal-model-kind {
-    display: none;
-  }
-
   .signal-model-price {
     text-align: right;
-  }
-
-  .signal-model-capabilities {
-    align-self: end;
   }
 
   .signal-model-identity {
@@ -1362,10 +1318,6 @@ footer,
 
   .signal-model-kind {
     grid-area: kind;
-  }
-
-  .signal-model-capabilities {
-    grid-area: capabilities;
   }
 
   .signal-model-price {

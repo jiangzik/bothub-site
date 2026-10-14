@@ -13,8 +13,7 @@ interface PublicModel {
   display_name: string
   kind: ModelKind
   input_modalities?: string[]
-  output_modalities?: string[]
-  capabilities?: Record<string, unknown>
+  capabilities?: { vision?: boolean }
   billing?: string
   summary?: string | null
   pricing?: ModelPricing | null
@@ -26,8 +25,6 @@ interface ModelCatalogResponse {
 }
 
 const { locale, localePath } = useDocusI18n()
-const { data: serviceStatus, error: serviceStatusError } = useModelServiceStatus()
-const statusByModel = computed(() => new Map(serviceStatus.value?.models.map(model => [model.id, model.state]) || []))
 const runtimeConfig = useRuntimeConfig()
 const isZh = computed(() => locale.value !== 'en')
 const activeFilter = ref<ModelFilter>('all')
@@ -42,24 +39,13 @@ const copy = computed(() => isZh.value ? {
     creative: '生成',
     free: '免费额度',
   },
-  columns: ['模型', '类型', '能力', '价格'],
+  columns: ['模型', '类型', '价格'],
   kinds: {
     chat: '对话',
     embedding: '向量',
     image_generation: '图像',
     video_generation: '视频',
     text_to_speech: '语音',
-  },
-  capabilities: {
-    reasoning: '推理',
-    vision: '视觉',
-    tools: '工具调用',
-    search: '联网搜索',
-    image: '图像生成',
-    video: '视频生成',
-    audio: '语音合成',
-    embedding: '语义向量',
-    text: '文本',
   },
   count: (n: number) => `共 ${n} 个模型`,
   syncing: '正在加载模型列表',
@@ -82,24 +68,13 @@ const copy = computed(() => isZh.value ? {
     creative: 'Generate',
     free: 'Free quota',
   },
-  columns: ['Model', 'Type', 'Capabilities', 'Pricing'],
+  columns: ['Model', 'Type', 'Pricing'],
   kinds: {
     chat: 'Chat',
     embedding: 'Embedding',
     image_generation: 'Image',
     video_generation: 'Video',
     text_to_speech: 'Voice',
-  },
-  capabilities: {
-    reasoning: 'Reasoning',
-    vision: 'Vision',
-    tools: 'Tool use',
-    search: 'Web search',
-    image: 'Image generation',
-    video: 'Video generation',
-    audio: 'Voice synthesis',
-    embedding: 'Embeddings',
-    text: 'Text',
   },
   count: (n: number) => `${n} models`,
   syncing: 'Loading models',
@@ -130,12 +105,8 @@ const fetchCatalog = async (): Promise<ModelCatalogResponse> => {
       display_name: model.display_name,
       kind: model.kind,
       input_modalities: model.input_modalities,
-      output_modalities: model.output_modalities,
       capabilities: {
-        reasoning: model.capabilities?.reasoning === true,
         vision: model.capabilities?.vision === true,
-        tools: model.capabilities?.tools === true,
-        search: model.capabilities?.search === true,
       },
       billing: model.billing,
       summary: model.summary,
@@ -176,23 +147,6 @@ const filterItems = computed(() => (Object.keys(copy.value.filters) as ModelFilt
 const visibleModels = computed(() => models.value.filter(model => matchesFilter(model, activeFilter.value)))
 
 const kindLabel = (kind: ModelKind): string => copy.value.kinds[kind as keyof typeof copy.value.kinds] || kind.replaceAll('_', ' ')
-
-const capabilityLabels = (model: PublicModel): string[] => {
-  if (model.kind === 'image_generation') return [copy.value.capabilities.image]
-  if (model.kind === 'video_generation') return [copy.value.capabilities.video]
-  if (model.kind === 'text_to_speech') return [copy.value.capabilities.audio]
-  if (model.kind === 'embedding') return [copy.value.capabilities.embedding]
-
-  const capabilities = model.capabilities || {}
-  const items = [
-    capabilities.reasoning === true ? copy.value.capabilities.reasoning : '',
-    capabilities.vision === true ? copy.value.capabilities.vision : '',
-    capabilities.tools === true ? copy.value.capabilities.tools : '',
-    capabilities.search === true ? copy.value.capabilities.search : '',
-  ].filter(Boolean)
-
-  return items.length > 0 ? items.slice(0, 3) : [copy.value.capabilities.text]
-}
 
 const formatAmount = (value: number): string => new Intl.NumberFormat(isZh.value ? 'zh-CN' : 'en-US', {
   minimumFractionDigits: value < 1 ? 2 : 0,
@@ -267,16 +221,10 @@ const priceCopy = (model: PublicModel): { value: string, unit: string } => {
       <div class="signal-model-list">
         <article v-for="model in visibleModels" :key="model.id" class="signal-model-row">
           <div class="signal-model-identity">
-            <div>
-              <strong :title="model.display_name || model.id">{{ model.display_name || model.id }}</strong>
-              <NuxtLink v-if="statusByModel.has(model.id)" :to="localePath('/status')" class="model-status-link"><ServiceStateBadge :state="serviceStatusError ? undefined : statusByModel.get(model.id)" /></NuxtLink>
-              <small v-if="model.summary">{{ model.summary }}</small>
-            </div>
+            <strong :title="model.display_name || model.id">{{ model.display_name || model.id }}</strong>
+            <small v-if="model.summary">{{ model.summary }}</small>
           </div>
           <span class="signal-model-kind">{{ kindLabel(model.kind) }}</span>
-          <div class="signal-model-capabilities">
-            <span v-for="capability in capabilityLabels(model)" :key="capability">{{ capability }}</span>
-          </div>
           <div class="signal-model-price">
             <strong>{{ priceCopy(model).value }}</strong>
             <small>{{ priceCopy(model).unit }}</small>
@@ -302,7 +250,5 @@ const priceCopy = (model: PublicModel): { value: string, unit: string } => {
 .signal-model-plaza-head { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 32px; }
 .signal-model-plaza-head > p { max-width: 680px; margin: 0; font-size: 14px; line-height: 1.8; }
 h1 { margin: 0; color: var(--ink); font-size: 32px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
-.model-status-link { display: inline-flex; grid-column: 2; text-decoration: none; }
-.model-status-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 .signal-model-footer a { font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
 </style>
