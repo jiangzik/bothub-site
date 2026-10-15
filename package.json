@@ -11,11 +11,9 @@
     "@iconify-json/logos": "^1.2.11",
     "better-sqlite3": "^12.5.0",
     "docus": "5.4.2",
-    "nuxt": "^4.2.2",
-    "qrcode": "^1.5.4"
+    "nuxt": "^4.2.2"
   },
   "devDependencies": {
-    "@types/qrcode": "^1.5.6",
     "typescript": "^5.9.3"
   }
 }

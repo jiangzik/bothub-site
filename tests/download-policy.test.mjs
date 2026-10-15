@@ -17,38 +17,7 @@ function loadUtility(file) {
   vm.runInNewContext(compiled, context)
   return context.exports
 }
-const { developerKeyState, groupDeveloperKeys } = loadUtility('developer-keys')
 const { preferredDownloadPlatform } = loadUtility('platform-download')
-const key = (id, status = 'active', expiresAt = null) => ({
-  id, status, expiresAt, name: id, keyHint: 'test-only-hint', scopes: ['chat'], createdAt: 0,
-})
-
-test('available group excludes revoked, disabled, expired and unknown states', () => {
-  const active = key('available')
-  const groups = groupDeveloperKeys([
-    active, key('revoked', 'revoked'), key('disabled', 'disabled'),
-    key('expired', 'active', 999), key('boundary', 'active', 1000),
-    key('future', 'active', 1001), key('unknown', 'pending'),
-  ], 1000)
-  assert.deepEqual([...groups.available].map(item => item.id), ['available', 'future'])
-  assert.deepEqual([...groups.unavailable].map(item => item.id), ['disabled', 'expired', 'boundary', 'unknown'])
-  assert.equal(groups.available[0], active)
-})
-
-test('revoked keys remain excluded regardless of their expiration date', () => {
-  assert.equal(developerKeyState(key('revoked', 'revoked', 1), 1000), null)
-  const groups = groupDeveloperKeys([key('one', 'revoked'), key('two', 'revoked', 1001)], 1000)
-  assert.equal(groups.available.length + groups.unavailable.length, 0)
-})
-
-test('expiration moves an active key to unavailable at the exact boundary', () => {
-  const expiring = key('expiring', 'active', 1000)
-  assert.equal(groupDeveloperKeys([expiring], 999).available.length, 1)
-  assert.equal(groupDeveloperKeys([expiring], 1000).available.length, 0)
-  assert.equal(groupDeveloperKeys([expiring], 1000).unavailable[0], expiring)
-  assert.equal(developerKeyState(expiring, 1000), 'expired')
-})
-
 test('Android uses the APK platform through the shared direct-download policy', () => {
   assert.equal(preferredDownloadPlatform('android'), 'android')
   for (const platform of ['mac', 'windows', 'linux']) assert.equal(preferredDownloadPlatform(platform), platform)
