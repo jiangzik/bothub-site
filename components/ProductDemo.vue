@@ -1,7 +1,8 @@
 <script setup lang="ts">
-// A hand-drawn, animated replica of the BotHub desktop chat window
-// (sidebar, bot switcher, tool-call timeline, composer). No screenshots:
-// every frame is HTML, so it stays crisp, themable and localized.
+// A hand-drawn, animated replica of the BotHub desktop chat window as it
+// ships today (sidebar, bot switcher in the title bar, activity group,
+// deliverable card, composer). No screenshots: every frame is HTML, so it
+// stays crisp, themable and localized. Strings mirror packages/ui/locales.
 
 const { locale } = useDocusI18n()
 const runtimeConfig = useRuntimeConfig()
@@ -11,90 +12,100 @@ const baseURL = runtimeConfig.app.baseURL || '/'
 const logoSrc = `${baseURL.endsWith('/') ? baseURL : `${baseURL}/`}logo.png`
 
 const copy = computed(() => isZh.value ? {
-  label: 'BotHub 桌面端演示：整理发票、生成表格并发送到飞书',
+  label: 'BotHub 桌面端演示：把「下载」里九月的发票整理成汇总表',
   nav: [
-    { icon: 'i-lucide-search', label: '搜索' },
-    { icon: 'i-lucide-star', label: '收藏' },
-    { icon: 'i-lucide-folder', label: '工作区' },
-    { icon: 'i-lucide-clock', label: '定时任务' },
+    { icon: 'i-lucide-square-pen', label: '开始新对话', key: '⌘N' },
+    { icon: 'i-lucide-search', label: '搜索', key: '⌘K' },
+    { icon: 'i-lucide-clock-4', label: '定时任务', key: '' },
   ],
-  computer: '电脑',
-  today: '今天',
-  yesterday: '昨天',
-  conversations: ['九月发票整理', '周报草稿', '竞品调研笔记'],
-  older: ['翻译 README', '东京行程规划'],
-  user: 'Jiang',
+  groups: [
+    { label: '今天', items: ['周报草稿', '竞品调研笔记'] },
+    { label: '昨天', items: ['翻译 README', '东京行程规划'] },
+    { label: '7 天内', items: ['季度预算复盘', '读书笔记整理'] },
+  ],
+  newTitle: '九月发票整理',
+  settings: '设置',
   bot: '工作助理',
-  greeting: '今天能帮到你什么？',
+  emptyLead: '想聊点什么？随便说说也行',
+  emptyPresets: ['帮你理一理今天要做的事', '帮你写一段文字', '把一个概念讲明白'],
+  temporary: '开始临时对话',
   placeholder: '随便问点什么',
-  prompt: '把「下载」里九月的发票整理成表格，发到飞书财务群',
-  permission: '请求批准',
-  running: '处理中',
-  elapsed: '用时 14s',
+  prompt: '把「下载」里九月的发票整理成一张汇总表',
+  permission: '智能批准',
+  effort: '自动',
+  preparing: '等待模型响应',
   steps: [
-    { icon: 'i-lucide-folder-search', title: '探索文件', detail: '~/Downloads · 找到 12 张发票' },
-    { icon: 'i-lucide-file-text', title: '读取文件', detail: '发票_0903.pdf 等 12 个文件' },
-    { icon: 'i-lucide-square-terminal', title: '运行命令', detail: 'python3 extract_invoices.py' },
-    { icon: 'i-lucide-file-spreadsheet', title: '写入文件', detail: '~/Documents/九月发票汇总.xlsx' },
-    { icon: 'i-lucide-send', title: '发送消息', detail: '飞书 · 财务群' },
+    { activity: '运行命令', title: '列出「下载」里九月的发票' },
+    { activity: '读取文件', title: '读取 12 张发票' },
+    { activity: '运行命令', title: '提取金额和税号' },
+    { activity: '写入文件', title: '生成汇总表' },
   ],
-  reply: '已整理 12 张发票，合计 ¥8,420.00，其中 3 张为增值税专票。汇总表已保存，并发到了飞书「财务群」。',
-  file: { name: '九月发票汇总.xlsx', meta: '12 行 · 24 KB' },
-  toastTag: '手机上收到',
-  toastApp: '飞书 · 财务群',
-  toastTime: '刚刚',
-  toastBody: '工作助理：九月发票汇总.xlsx（12 张，合计 ¥8,420.00）',
+  running: (activity: string) => `正在${activity}…`,
+  summary: '运行了 2 条命令、读取了 12 个文件、写入了 1 个文件 · 14秒',
+  reply: '九月一共 12 张发票，合计 ¥8,420.00，按类型汇总如下：',
+  table: {
+    head: ['类型', '张数', '金额'],
+    rows: [['增值税专票', '3', '¥4,260.00'], ['增值税普票', '8', '¥3,860.00'], ['电子行程单', '1', '¥300.00']],
+  },
+  file: { name: '九月发票汇总.xlsx', kind: '文件', opening: '文件 · 正在打开' },
 } : {
-  label: 'BotHub desktop demo: organizing invoices into a spreadsheet and sending it to Feishu',
+  label: 'BotHub desktop demo: turning September invoices in Downloads into a summary sheet',
   nav: [
-    { icon: 'i-lucide-search', label: 'Search' },
-    { icon: 'i-lucide-star', label: 'Starred' },
-    { icon: 'i-lucide-folder', label: 'Workspaces' },
-    { icon: 'i-lucide-clock', label: 'Schedules' },
+    { icon: 'i-lucide-square-pen', label: 'Start new chat', key: '⌘N' },
+    { icon: 'i-lucide-search', label: 'Search', key: '⌘K' },
+    { icon: 'i-lucide-clock-4', label: 'Scheduled Tasks', key: '' },
   ],
-  computer: 'Computer',
-  today: 'Today',
-  yesterday: 'Yesterday',
-  conversations: ['September invoices', 'Weekly report', 'Competitor notes'],
-  older: ['Translate README', 'Tokyo itinerary'],
-  user: 'Jiang',
+  groups: [
+    { label: 'Today', items: ['Weekly report draft', 'Competitor notes'] },
+    { label: 'Yesterday', items: ['Translate README', 'Tokyo itinerary'] },
+    { label: 'Previous 7 days', items: ['Quarterly budget review', 'Reading notes'] },
+  ],
+  newTitle: 'September invoices',
+  settings: 'Settings',
   bot: 'Work Assistant',
-  greeting: 'How can I help today?',
+  emptyLead: 'Anything on your mind?',
+  emptyPresets: ['Sort out today\'s to-dos', 'Write something for you', 'Explain a concept'],
+  temporary: 'Start temporary chat',
   placeholder: 'Ask anything',
-  prompt: 'Turn September invoices in Downloads into a sheet and send it to the finance group',
-  permission: 'Ask first',
-  running: 'Working',
-  elapsed: 'Took 14s',
+  prompt: 'Turn the September invoices in Downloads into a summary sheet',
+  permission: 'Smart approval',
+  effort: 'Auto',
+  preparing: 'Waiting for response',
   steps: [
-    { icon: 'i-lucide-folder-search', title: 'Explore files', detail: '~/Downloads · 12 invoices found' },
-    { icon: 'i-lucide-file-text', title: 'Read files', detail: 'invoice_0903.pdf and 11 more' },
-    { icon: 'i-lucide-square-terminal', title: 'Run command', detail: 'python3 extract_invoices.py' },
-    { icon: 'i-lucide-file-spreadsheet', title: 'Write file', detail: '~/Documents/invoices-sep.xlsx' },
-    { icon: 'i-lucide-send', title: 'Send message', detail: 'Feishu · Finance' },
+    { activity: 'Running commands', title: 'List September invoices in Downloads' },
+    { activity: 'Reading files', title: 'Read 12 invoices' },
+    { activity: 'Running commands', title: 'Extract amounts and tax IDs' },
+    { activity: 'Writing files', title: 'Build the summary sheet' },
   ],
-  reply: 'Organized 12 invoices totaling ¥8,420.00, including 3 VAT special invoices. The sheet is saved and posted to the Finance group on Feishu.',
-  file: { name: 'invoices-sep.xlsx', meta: '12 rows · 24 KB' },
-  toastTag: 'On your phone',
-  toastApp: 'Feishu · Finance',
-  toastTime: 'now',
-  toastBody: 'Work Assistant: invoices-sep.xlsx (12 invoices, ¥8,420.00 total)',
+  running: (activity: string) => `${activity}…`,
+  summary: 'Ran 2 commands, read 12 files, wrote 1 file · 14s',
+  reply: '12 invoices in September, ¥8,420.00 in total. By type:',
+  table: {
+    head: ['Type', 'Count', 'Amount'],
+    rows: [['VAT special', '3', '¥4,260.00'], ['VAT general', '8', '¥3,860.00'], ['E-ticket', '1', '¥300.00']],
+  },
+  file: { name: 'invoices-sep.xlsx', kind: 'File', opening: 'File · opening' },
 })
 
-const state = reactive({
+const initialState = () => ({
   typed: 0,
   sent: false,
-  steps: 0,
+  step: 0,
   done: false,
-  collapsed: false,
   reply: 0,
+  rows: 0,
   file: false,
-  toast: false,
+  opening: false,
   fading: false,
 })
 
+const state = reactive(initialState())
+
 const running = computed(() => state.sent && !state.done)
 const typedText = computed(() => Array.from(copy.value.prompt).slice(0, state.typed).join(''))
+const replyLength = computed(() => Array.from(copy.value.reply).length)
 const replyText = computed(() => Array.from(copy.value.reply).slice(0, state.reply).join(''))
+const currentStep = computed(() => copy.value.steps[state.step - 1])
 
 const root = ref<HTMLElement | null>(null)
 let alive = false
@@ -116,56 +127,52 @@ const wait = async (ms: number) => {
   if (!alive) throw CANCEL
 }
 
-const reset = () => {
-  Object.assign(state, { typed: 0, sent: false, steps: 0, done: false, collapsed: false, reply: 0, file: false, toast: false, fading: false })
-}
-
 const showFinalFrame = () => {
-  Object.assign(state, {
-    typed: 0,
+  Object.assign(state, initialState(), {
     sent: true,
-    steps: copy.value.steps.length,
+    step: copy.value.steps.length,
     done: true,
-    collapsed: true,
-    reply: Array.from(copy.value.reply).length,
+    reply: replyLength.value,
+    rows: copy.value.table.rows.length,
     file: true,
-    toast: true,
-    fading: false,
   })
 }
 
 const play = async () => {
   try {
     while (alive) {
-      reset()
-      await wait(900)
+      Object.assign(state, initialState())
+      await wait(1500)
       const promptLength = Array.from(copy.value.prompt).length
       while (state.typed < promptLength) {
         state.typed += 1
-        await wait(isZh.value ? 70 : 34)
+        await wait(isZh.value ? 75 : 34)
       }
       await wait(450)
       state.sent = true
       state.typed = 0
+      await wait(900)
       for (let i = 1; i <= copy.value.steps.length; i += 1) {
-        await wait(i === 1 ? 500 : 780)
-        state.steps = i
+        state.step = i
+        await wait(1250)
       }
-      await wait(800)
       state.done = true
-      await wait(450)
-      state.collapsed = true
-      await wait(350)
-      const replyLength = Array.from(copy.value.reply).length
-      while (state.reply < replyLength) {
-        state.reply = Math.min(replyLength, state.reply + (isZh.value ? 1 : 3))
-        await wait(32)
+      await wait(400)
+      while (state.reply < replyLength.value) {
+        state.reply = Math.min(replyLength.value, state.reply + (isZh.value ? 1 : 3))
+        await wait(34)
       }
-      await wait(300)
+      for (let i = 1; i <= copy.value.table.rows.length; i += 1) {
+        await wait(200)
+        state.rows = i
+      }
+      await wait(400)
       state.file = true
-      await wait(700)
-      state.toast = true
-      await wait(4600)
+      await wait(1500)
+      state.opening = true
+      await wait(1300)
+      state.opening = false
+      await wait(3800)
       state.fading = true
       await wait(600)
     }
@@ -208,77 +215,89 @@ watch(locale, () => {
 <template>
   <div ref="root" class="pd" role="img" :aria-label="copy.label" :data-fading="state.fading || undefined">
     <div class="pd-window" aria-hidden="true">
+      <!-- 标题栏：侧栏色与页面色分区，Bot 切换器居中在对话列上方 -->
       <div class="pd-titlebar">
-        <span class="pd-lights"><i /><i /><i /></span>
-        <span class="pd-title">BotHub</span>
+        <div class="pd-titlebar-side">
+          <span class="pd-lights"><i /><i /><i /></span>
+          <span class="pd-bar-btn">
+            <svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5" /><path d="M9.5 4.5v15" /></svg>
+          </span>
+        </div>
+        <div class="pd-titlebar-main">
+          <span class="pd-bot">
+            <img :src="logoSrc" alt="">
+            <strong>{{ copy.bot }}</strong>
+            <UIcon name="i-lucide-chevron-down" />
+          </span>
+          <span class="pd-bar-btn pd-bar-right">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M15 4v16" /></svg>
+          </span>
+        </div>
       </div>
 
       <div class="pd-body">
         <aside class="pd-sidebar">
           <div class="pd-nav">
-            <span v-for="item in copy.nav" :key="item.icon"><UIcon :name="item.icon" />{{ item.label }}</span>
+            <span v-for="item in copy.nav" :key="item.icon"><UIcon :name="item.icon" /><em>{{ item.label }}</em><kbd v-if="item.key">{{ item.key }}</kbd></span>
           </div>
-          <div class="pd-nav pd-nav-computer">
-            <span><UIcon name="i-lucide-monitor" />{{ copy.computer }}<b /></span>
+          <div class="pd-list">
+            <template v-for="(group, groupIndex) in copy.groups" :key="group.label">
+              <p class="pd-group">{{ group.label }}</p>
+              <span v-if="groupIndex === 0 && state.sent" class="pd-row active pd-row-new">
+                <em>{{ copy.newTitle }}</em>
+                <i v-if="running" class="pd-ring" />
+              </span>
+              <span v-for="title in group.items" :key="title" class="pd-row"><em>{{ title }}</em></span>
+            </template>
           </div>
-          <p class="pd-group">{{ copy.today }}</p>
-          <div class="pd-convs">
-            <span v-for="(title, index) in copy.conversations" :key="title" :class="{ active: index === 0 }">
-              <em>{{ title }}</em>
-              <UIcon v-if="index === 0 && running" name="i-lucide-loader-circle" class="pd-spin" />
-            </span>
-          </div>
-          <p class="pd-group">{{ copy.yesterday }}</p>
-          <div class="pd-convs">
-            <span v-for="title in copy.older" :key="title"><em>{{ title }}</em></span>
-          </div>
-          <div class="pd-account">
-            <span class="pd-avatar">J</span>
-            <strong>{{ copy.user }}</strong>
-            <small>Pro</small>
-            <UIcon name="i-lucide-chevron-up" />
+          <div class="pd-nav pd-settings">
+            <span><UIcon name="i-lucide-settings" /><em>{{ copy.settings }}</em></span>
           </div>
         </aside>
 
         <main class="pd-main">
-          <div class="pd-topbar">
-            <span class="pd-bot">
-              <img :src="logoSrc" alt="">
-              <strong>{{ copy.bot }}</strong>
-              <UIcon name="i-lucide-chevron-down" />
-            </span>
-          </div>
-
           <div class="pd-thread">
-            <p class="pd-greeting" :data-hidden="state.sent || undefined">{{ copy.greeting }}</p>
+            <!-- 空状态：左对齐、贴近输入框 -->
+            <div class="pd-empty" :data-hidden="state.sent || undefined">
+              <p class="pd-empty-lead">{{ copy.emptyLead }}</p>
+              <p v-for="preset in copy.emptyPresets" :key="preset" class="pd-empty-row">{{ preset }}</p>
+              <span class="pd-temp">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" stroke-dasharray="3 3" /></svg>
+                {{ copy.temporary }}
+              </span>
+            </div>
 
             <div v-if="state.sent" class="pd-column">
               <div class="pd-user">{{ copy.prompt }}</div>
 
-              <div class="pd-work" :data-collapsed="state.collapsed || undefined">
-                <p class="pd-work-head">
-                  <span :class="{ 'pd-shimmer': running }">{{ state.done ? copy.elapsed : copy.running }}</span>
-                  <UIcon name="i-lucide-chevron-down" />
-                </p>
-                <ol class="pd-steps">
-                  <li v-for="(step, index) in copy.steps.slice(0, state.steps)" :key="step.icon">
-                      <span class="pd-step-icon">
-                        <UIcon v-if="!state.done && index === state.steps - 1" name="i-lucide-loader-circle" class="pd-spin" />
-                        <UIcon v-else :name="step.icon" />
-                      </span>
-                      <strong>{{ step.title }}</strong>
-                      <code>{{ step.detail }}</code>
-                  </li>
-                </ol>
+              <p v-if="state.step === 0" class="pd-activity"><span class="pd-shimmer">{{ copy.preparing }}</span></p>
+              <p v-else class="pd-activity" :data-done="state.done || undefined">
+                <template v-if="!state.done && currentStep">
+                  <span class="pd-shimmer">{{ copy.running(currentStep.activity) }}</span>
+                  <small :key="state.step">· {{ currentStep.title }}</small>
+                </template>
+                <span v-else>{{ copy.summary }}</span>
+                <UIcon name="i-lucide-chevron-right" />
+              </p>
+
+              <div v-if="state.reply > 0" class="pd-reply">
+                <p>{{ replyText }}<i v-if="state.reply < replyLength" class="pd-caret" /></p>
+                <table v-if="state.rows > 0">
+                  <thead><tr><th v-for="cell in copy.table.head" :key="cell">{{ cell }}</th></tr></thead>
+                  <tbody>
+                    <tr v-for="row in copy.table.rows.slice(0, state.rows)" :key="row[0]">
+                      <td v-for="(cell, index) in row" :key="index">{{ cell }}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
-              <p v-if="state.reply > 0" class="pd-reply">{{ replyText }}<i v-if="state.reply < Array.from(copy.reply).length" class="pd-caret" /></p>
-
-              <div v-if="state.file" class="pd-file">
-                  <span class="pd-file-icon"><UIcon name="i-lucide-file-spreadsheet" /></span>
-                  <span><strong>{{ copy.file.name }}</strong><small>{{ copy.file.meta }}</small></span>
-                  <UIcon name="i-lucide-arrow-up-right" />
-                </div>
+              <div v-if="state.file" class="pd-file" :data-opening="state.opening || undefined">
+                <UIcon name="i-lucide-file" class="pd-file-icon" />
+                <span><strong>{{ copy.file.name }}</strong><small>{{ state.opening ? copy.file.opening : copy.file.kind }}</small></span>
+                <i v-if="state.opening" class="pd-ring pd-ring-lg" />
+                <UIcon v-else name="i-lucide-external-link" class="pd-file-open" />
+              </div>
             </div>
           </div>
 
@@ -289,26 +308,20 @@ watch(locale, () => {
             </p>
             <div class="pd-tools">
               <span class="pd-icon-btn"><UIcon name="i-lucide-plus" /></span>
-              <span class="pd-pill"><UIcon name="i-lucide-shield-check" />{{ copy.permission }}</span>
+              <span class="pd-chip pd-perm"><UIcon name="i-lucide-shield-check" /><em>{{ copy.permission }}</em><UIcon name="i-lucide-chevron-down" class="pd-chev" /></span>
               <span class="pd-spacer" />
-              <span class="pd-pill pd-model"><UIcon name="i-lucide-sparkles" />gpt-5.5<UIcon name="i-lucide-chevron-down" /></span>
-              <span class="pd-send" :data-running="running || undefined">
-                <UIcon :name="running ? 'i-lucide-square' : 'i-lucide-arrow-up'" />
+              <span v-if="state.sent" class="pd-context">
+                <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" /><circle cx="10" cy="10" r="7" :style="{ strokeDashoffset: state.done ? 29 : 33 }" /></svg>
+              </span>
+              <span class="pd-chip pd-hide-narrow"><UIcon name="i-lucide-brain" />{{ copy.effort }}</span>
+              <span class="pd-chip">gpt-5.5<UIcon name="i-lucide-chevron-down" class="pd-chev" /></span>
+              <span class="pd-send" :data-running="running || undefined" :data-disabled="(!running && state.typed === 0) || undefined">
+                <svg v-if="running" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3" /></svg>
+                <svg v-else viewBox="0 0 24 24"><path d="M12 5v14M5 12l7-7 7 7" /></svg>
               </span>
             </div>
           </div>
         </main>
-      </div>
-    </div>
-
-    <div class="pd-toast" :data-show="state.toast || undefined" aria-hidden="true">
-      <p class="pd-toast-tag"><UIcon name="i-lucide-smartphone" />{{ copy.toastTag }}</p>
-      <div class="pd-toast-card">
-        <span class="pd-toast-app"><UIcon name="i-lucide-message-square" /></span>
-        <div>
-          <p><strong>{{ copy.toastApp }}</strong><small>{{ copy.toastTime }}</small></p>
-          <span>{{ copy.toastBody }}</span>
-        </div>
       </div>
     </div>
   </div>
@@ -316,74 +329,85 @@ watch(locale, () => {
 
 <style scoped>
 .pd {
-  --pd-bg: #fbfbfa;
-  --pd-surface: #fefdfd;
-  --pd-gray: #f3f1f0;
-  --pd-pill: #e9e7e6;
+  --pd-bg: #fefdfd;
+  --pd-sidebar: #f5f3f2;
+  --pd-variant: #f3f1f0;
+  --pd-card: #e9e7e6;
   --pd-text: #1d1a18;
   --pd-text2: #585553;
-  --pd-text3: #7a7674;
-  --pd-line: #e7e4e1;
+  --pd-text3: #716e6c;
+  --pd-divider: #d9d7d5;
   --pd-primary: #795a47;
-  --pd-user: #e0d9d4;
-  --pd-success: #276f49;
+  --pd-user: #f0f0ef;
+  --pd-user-text: #2e2e2e;
   --pd-shadow: 0 1px 0 rgb(40 30 20 / 3%), 0 40px 80px -32px rgb(40 30 20 / 32%), 0 16px 32px -20px rgb(40 30 20 / 20%);
 
   position: relative;
   container-type: inline-size;
   width: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif !important;
-  transition: opacity 500ms ease;
 }
 
 .pd * {
   font-family: inherit !important;
 }
 
-.pd[data-fading] .pd-thread > *,
-.pd[data-fading] .pd-toast {
+.pd[data-fading] .pd-column {
   opacity: 0 !important;
   transition: opacity 500ms ease;
 }
 
 :global(.dark .pd) {
   --pd-bg: #201f1e;
-  --pd-surface: #272625;
-  --pd-gray: #2f2d2c;
-  --pd-pill: #363432;
+  --pd-sidebar: #2a2927;
+  --pd-variant: #393836;
+  --pd-card: #343231;
   --pd-text: #e6e4e2;
-  --pd-text2: #b8b4b0;
-  --pd-text3: #8f8b87;
-  --pd-line: #393734;
+  --pd-text2: #a9a7a6;
+  --pd-text3: #8d8c8a;
+  --pd-divider: #494745;
   --pd-primary: #cca87f;
-  --pd-user: #3d352e;
-  --pd-success: #72c093;
+  --pd-user: #3a3a3a;
+  --pd-user-text: #e5e5e5;
   --pd-shadow: 0 40px 80px -32px rgb(0 0 0 / 70%);
 }
 
 .pd-window {
   overflow: hidden;
-  border: 1px solid var(--pd-line);
+  border: 1px solid color-mix(in srgb, var(--pd-divider) 70%, transparent);
   border-radius: 14px;
   background: var(--pd-bg);
   box-shadow: var(--pd-shadow);
   color: var(--pd-text);
-  font-size: 12.5px;
+  font-size: 13px;
+  font-weight: 450;
   line-height: 1.5;
 }
 
+/* Title bar */
 .pd-titlebar {
+  display: grid;
+  grid-template-columns: 184px minmax(0, 1fr);
+  height: 40px;
+}
+
+.pd-titlebar-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 14px;
+  border-right: 1px solid color-mix(in srgb, var(--pd-divider) 70%, transparent);
+  background: var(--pd-sidebar);
+}
+
+.pd-titlebar-main {
   position: relative;
   display: flex;
-  height: 34px;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid var(--pd-line);
 }
 
 .pd-lights {
-  position: absolute;
-  left: 14px;
   display: flex;
   gap: 7px;
 }
@@ -398,16 +422,57 @@ watch(locale, () => {
 .pd-lights i:nth-child(2) { background: #febc2e; }
 .pd-lights i:nth-child(3) { background: #28c840; }
 
-.pd-title {
-  color: var(--pd-text3);
-  font-size: 12px;
+.pd-bar-btn {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  color: var(--pd-text2);
+}
+
+.pd-bar-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.pd-bar-right {
+  position: absolute;
+  right: 10px;
+}
+
+.pd-bot {
+  display: inline-flex;
+  height: 32px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 8px;
+  border-radius: 12px;
+}
+
+.pd-bot img {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+
+.pd-bot strong {
+  font-size: 13px;
   font-weight: 500;
+}
+
+.pd-bot > :last-child {
+  width: 14px;
+  height: 14px;
+  color: var(--pd-text2);
 }
 
 .pd-body {
   display: grid;
-  grid-template-columns: 172px minmax(0, 1fr);
-  height: 452px;
+  grid-template-columns: 184px minmax(0, 1fr);
+  height: 470px;
 }
 
 /* Sidebar */
@@ -415,8 +480,9 @@ watch(locale, () => {
   display: flex;
   min-width: 0;
   flex-direction: column;
-  padding: 10px 8px;
-  border-right: 1px solid var(--pd-line);
+  padding: 4px 8px 10px;
+  border-right: 1px solid color-mix(in srgb, var(--pd-divider) 70%, transparent);
+  background: var(--pd-sidebar);
 }
 
 .pd-nav {
@@ -425,109 +491,83 @@ watch(locale, () => {
 }
 
 .pd-nav span,
-.pd-convs span {
+.pd-row {
   display: flex;
   min-height: 28px;
   align-items: center;
-  gap: 8px;
-  padding: 0 8px;
-  border-radius: 7px;
+  gap: 9px;
+  padding: 0 9px;
+  border-radius: 8px;
   color: var(--pd-text);
   font-size: 12.5px;
 }
 
-.pd-nav :deep(svg),
-.pd-nav :deep(.iconify) {
-  width: 15px;
-  height: 15px;
-  color: var(--pd-text2);
-}
-
-.pd-nav-computer {
-  margin-top: 6px;
-  padding-top: 6px;
-  border-top: 1px solid var(--pd-line);
-}
-
-.pd-nav-computer b {
-  width: 6px;
-  height: 6px;
-  margin-left: auto;
-  border-radius: 50%;
-  background: var(--pd-success);
-}
-
-.pd-group {
-  margin: 14px 8px 4px !important;
-  color: var(--pd-text3);
-  font-size: 11px;
-  font-weight: 500;
-}
-
-.pd-convs {
-  display: grid;
-  gap: 1px;
-}
-
-.pd-convs span.active {
-  background: var(--pd-gray);
-}
-
-.pd-convs em {
+.pd-nav em,
+.pd-row em {
   overflow: hidden;
   font-style: normal;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.pd-convs .pd-spin {
+.pd-nav :deep(.iconify),
+.pd-nav :deep(svg) {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  color: var(--pd-text);
+}
+
+.pd-nav kbd {
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--pd-text3);
+  font-size: 11px;
+}
+
+.pd-list {
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+  padding-top: 8px;
+}
+
+.pd-group {
+  margin: 8px 9px 2px !important;
+  color: var(--pd-text3);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.pd-row.active {
+  background: color-mix(in srgb, var(--pd-text) 7%, transparent);
+}
+
+.pd-row-new {
+  animation: pd-in 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.pd-ring {
   flex: none;
   width: 13px;
   height: 13px;
   margin-left: auto;
-  color: var(--pd-text3);
-}
-
-.pd-account {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: auto;
-  padding: 8px 6px 2px;
-  border-top: 1px solid var(--pd-line);
-}
-
-.pd-avatar {
-  display: grid;
-  width: 24px;
-  height: 24px;
-  place-items: center;
+  border: 2px solid color-mix(in srgb, var(--pd-text2) 22%, transparent);
+  border-top-color: var(--pd-text2);
   border-radius: 50%;
-  background: var(--pd-primary);
-  color: var(--pd-bg);
-  font-size: 11px;
-  font-weight: 600;
+  animation: pd-spin 700ms linear infinite;
 }
 
-.pd-account strong {
-  font-size: 12.5px;
-  font-weight: 500;
+.pd-ring-lg {
+  width: 16px;
+  height: 16px;
 }
 
-.pd-account small {
-  padding: 1px 6px;
-  border-radius: 999px;
-  background: var(--pd-pill);
-  color: var(--pd-text2);
-  font-size: 10px;
-  font-weight: 600;
-}
-
-.pd-account > :last-child {
-  width: 14px;
-  height: 14px;
-  margin-left: auto;
-  color: var(--pd-text3);
+.pd-settings {
+  padding-top: 6px;
 }
 
 /* Main column */
@@ -538,68 +578,70 @@ watch(locale, () => {
   background: var(--pd-bg);
 }
 
-.pd-topbar {
-  display: flex;
-  height: 46px;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-}
-
-.pd-bot {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 4px 10px 4px 5px;
-  border-radius: 14px;
-  background: var(--pd-gray);
-}
-
-.pd-bot img {
-  width: 20px;
-  height: 20px;
-  border-radius: 6px;
-}
-
-.pd-bot strong {
-  font-size: 12.5px;
-  font-weight: 600;
-}
-
-.pd-bot > :last-child {
-  width: 13px;
-  height: 13px;
-  color: var(--pd-text3);
-}
-
 .pd-thread {
   position: relative;
   min-height: 0;
   flex: 1;
   overflow: hidden;
-  padding: 6px 22px 0;
+  padding: 8px 24px 0;
 }
 
-.pd-greeting {
+.pd-empty {
   position: absolute;
-  inset: 0;
-  display: grid;
-  margin: 0 !important;
-  place-items: center;
-  color: var(--pd-text);
-  font-size: 20px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  transition: opacity 250ms ease;
+  right: 0;
+  bottom: 14px;
+  left: 0;
+  width: min(100% - 48px, 400px);
+  margin: 0 auto;
+  transition: opacity 250ms ease, transform 250ms ease;
 }
 
-.pd-greeting[data-hidden] {
+.pd-empty[data-hidden] {
   opacity: 0;
+  transform: translateY(-6px);
+}
+
+.pd-empty-lead {
+  margin: 0 0 10px !important;
+  color: var(--pd-text) !important;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.36;
+}
+
+.pd-empty-row {
+  margin: 0 !important;
+  padding: 9px 0;
+  border-top: 1px solid color-mix(in srgb, var(--pd-divider) 60%, transparent);
+  color: var(--pd-text2) !important;
+  font-size: 13px;
+}
+
+.pd-temp {
+  display: flex;
+  width: max-content;
+  height: 26px;
+  align-items: center;
+  gap: 5px;
+  margin: 12px auto 0;
+  padding: 0 11px;
+  border: 1px solid var(--pd-divider);
+  border-radius: 13px;
+  color: var(--pd-text2);
+  font-size: 11px;
+}
+
+.pd-temp svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
 }
 
 .pd-column {
   display: flex;
-  max-width: 460px;
+  max-width: 440px;
   flex-direction: column;
   gap: 12px;
   margin: 0 auto;
@@ -608,184 +650,167 @@ watch(locale, () => {
 .pd-user {
   align-self: flex-end;
   max-width: 84%;
-  padding: 7px 13px;
-  border-radius: 16px;
+  padding: 7px 14px;
+  border-radius: 18px 5px 18px 18px;
   background: var(--pd-user);
-  color: var(--pd-text);
-  font-size: 12.5px;
+  color: var(--pd-user-text);
+  font-size: 13px;
+  line-height: 1.6;
   animation: pd-in 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.pd-work-head {
-  display: inline-flex;
+.pd-activity {
+  display: flex;
+  min-width: 0;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   margin: 0 !important;
-  color: var(--pd-text2);
-  font-size: 12px;
-}
-
-.pd-work-head > :last-child {
-  width: 13px;
-  height: 13px;
-  transition: transform 300ms ease;
-}
-
-.pd-work[data-collapsed] .pd-work-head > :last-child {
-  transform: rotate(-90deg);
-}
-
-.pd-shimmer {
-  background: linear-gradient(90deg, var(--pd-text3) 0%, var(--pd-text3) 35%, var(--pd-text) 50%, var(--pd-text3) 65%, var(--pd-text3) 100%);
-  background-size: 250% 100%;
-  background-clip: text;
-  color: transparent;
-  animation: pd-shimmer 1.6s linear infinite;
-}
-
-.pd-steps {
-  position: relative;
-  display: grid;
-  max-height: 200px;
-  margin: 8px 0 0 !important;
-  padding: 0 !important;
-  overflow: hidden;
-  list-style: none;
-  transition: max-height 420ms cubic-bezier(0.4, 0, 0.2, 1), opacity 300ms ease, margin 300ms ease;
-}
-
-.pd-work[data-collapsed] .pd-steps {
-  max-height: 0;
-  margin-top: 0 !important;
-  opacity: 0;
-}
-
-.pd-steps li {
-  position: relative;
-  display: grid;
-  grid-template-columns: 20px auto minmax(0, 1fr);
-  gap: 9px;
-  align-items: center;
-  min-height: 30px;
-  margin: 0 !important;
-  padding: 0 !important;
-  animation: pd-in 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.pd-steps li + li::before {
-  position: absolute;
-  top: -10px;
-  left: 9.5px;
-  width: 1px;
-  height: 12px;
-  background: var(--pd-line);
-  content: "";
-}
-
-.pd-step-icon {
-  display: grid;
-  width: 20px;
-  height: 20px;
-  place-items: center;
-  border-radius: 6px;
-  background: var(--pd-gray);
-  color: var(--pd-text2);
-}
-
-.pd-step-icon :deep(svg),
-.pd-step-icon :deep(.iconify) {
-  width: 12px;
-  height: 12px;
-}
-
-.pd-steps strong {
-  font-size: 12px;
+  color: var(--pd-text2) !important;
+  font-size: 13px;
   font-weight: 500;
   white-space: nowrap;
 }
 
-.pd-steps code {
+.pd-activity small {
   overflow: hidden;
-  padding: 0 !important;
-  border: 0 !important;
-  background: none !important;
-  color: var(--pd-text3) !important;
-  font-family: ui-monospace, "SF Mono", Menlo, monospace !important;
-  font-size: 11px;
+  color: var(--pd-text3);
+  font-size: 13px;
+  font-weight: 450;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  animation: pd-fade 300ms ease;
 }
 
-.pd-reply {
+.pd-activity > span:not(.pd-shimmer) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pd-activity :deep(.iconify),
+.pd-activity :deep(svg) {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+}
+
+.pd-activity[data-done] :deep(.iconify),
+.pd-activity[data-done] :deep(svg) {
+  opacity: 0.6;
+}
+
+.pd-shimmer {
+  flex: none;
+  background: linear-gradient(90deg, var(--pd-text3) 0%, var(--pd-text3) 35%, var(--pd-text) 50%, var(--pd-text3) 65%, var(--pd-text3) 100%);
+  background-size: 250% 100%;
+  background-clip: text;
+  color: transparent;
+  animation: pd-shimmer 1.4s linear infinite;
+}
+
+.pd-reply p {
   margin: 0 !important;
   color: var(--pd-text) !important;
   font-size: 13px;
   line-height: 1.7;
 }
 
+.pd-reply table {
+  width: 100%;
+  margin: 8px 0 0 !important;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.pd-reply th,
+.pd-reply td {
+  padding: 5px 10px 5px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--pd-divider) 70%, transparent) !important;
+  background: none !important;
+  color: var(--pd-text);
+  text-align: left;
+}
+
+.pd-reply th {
+  color: var(--pd-text2);
+  font-weight: 600;
+}
+
+.pd-reply th:last-child,
+.pd-reply td:last-child {
+  padding-right: 0 !important;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.pd-reply tbody tr {
+  animation: pd-in 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
 .pd-file {
-  display: flex;
-  width: min(100%, 280px);
+  display: grid;
+  width: min(100%, 300px);
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  gap: 11px;
   align-items: center;
-  gap: 10px;
-  padding: 9px 12px 9px 9px;
-  border: 1px solid var(--pd-line);
-  border-radius: 12px;
-  background: var(--pd-surface);
+  padding: 9px 13px;
+  border: 1px solid color-mix(in srgb, var(--pd-divider) 60%, transparent);
+  border-radius: 13px;
+  background: var(--pd-bg);
   animation: pd-in 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: background 200ms ease;
+}
+
+.pd-file[data-opening] {
+  background: color-mix(in srgb, var(--pd-text) 4%, var(--pd-bg));
 }
 
 .pd-file-icon {
-  display: grid;
-  width: 30px;
-  height: 30px;
-  flex: none;
-  place-items: center;
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--pd-success) 14%, transparent);
-  color: var(--pd-success);
+  width: 18px;
+  height: 18px;
+  color: var(--pd-text2);
 }
 
-.pd-file > span:nth-child(2) {
+.pd-file > span {
   display: grid;
   min-width: 0;
 }
 
 .pd-file strong {
   overflow: hidden;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .pd-file small {
-  color: var(--pd-text3);
-  font-size: 11px;
+  color: var(--pd-text2);
+  font-size: 12px;
 }
 
-.pd-file > :last-child {
-  width: 14px;
-  height: 14px;
-  margin-left: auto;
-  color: var(--pd-text3);
+.pd-file-open {
+  width: 15px;
+  height: 15px;
+  color: var(--pd-text);
+  opacity: 0.7;
 }
 
 /* Composer */
 .pd-composer {
   display: grid;
   gap: 10px;
-  margin: 10px 18px 16px;
+  margin: 8px 18px 12px;
   padding: 11px 12px 10px 14px;
-  border: 1.5px solid var(--pd-line);
-  border-radius: 20px;
-  background: var(--pd-surface);
-  box-shadow: 0 6px 20px -12px rgb(40 30 20 / 25%);
+  border: 1.5px solid color-mix(in srgb, var(--pd-text2) 12%, transparent);
+  border-radius: 22px;
+  background: var(--pd-bg);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 4%);
 }
 
 .pd-input {
   min-height: 21px;
-  margin: 0 !important;
+  margin: 0 0 12px !important;
   overflow: hidden;
   color: var(--pd-text) !important;
   font-size: 13px;
@@ -794,7 +819,7 @@ watch(locale, () => {
 }
 
 .pd-placeholder {
-  color: var(--pd-text3);
+  color: var(--pd-text2);
 }
 
 .pd-caret {
@@ -810,7 +835,7 @@ watch(locale, () => {
 .pd-tools {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .pd-spacer {
@@ -818,159 +843,119 @@ watch(locale, () => {
 }
 
 .pd-icon-btn,
-.pd-pill {
+.pd-chip {
   display: inline-flex;
-  height: 26px;
+  height: 28px;
+  flex: none;
   align-items: center;
   gap: 5px;
-  border-radius: 13px;
-  color: var(--pd-text2);
-  font-size: 11.5px;
+  border-radius: 14px;
+  color: var(--pd-text);
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .pd-icon-btn {
-  width: 26px;
+  width: 28px;
   justify-content: center;
-  border: 1px solid var(--pd-line);
+  color: var(--pd-text2);
 }
 
-.pd-pill {
-  padding: 0 9px;
-  background: var(--pd-gray);
+.pd-chip {
+  padding: 0 7px;
 }
 
-.pd-tools :deep(svg),
-.pd-tools :deep(.iconify) {
+.pd-chip em {
+  font-style: normal;
+}
+
+.pd-tools :deep(.iconify),
+.pd-tools :deep(svg) {
+  width: 14px;
+  height: 14px;
+}
+
+.pd-icon-btn :deep(.iconify),
+.pd-icon-btn :deep(svg) {
+  width: 17px;
+  height: 17px;
+}
+
+.pd-chip .pd-chev {
   width: 13px;
   height: 13px;
+  color: var(--pd-text2);
 }
 
-.pd-model {
-  background: transparent;
-  color: var(--pd-text);
-  font-weight: 500;
+.pd-context {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  animation: pd-fade 300ms ease;
+}
+
+.pd-context svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke-width: 2.4;
+  transform: rotate(-90deg);
+}
+
+.pd-context circle:first-child {
+  stroke: color-mix(in srgb, var(--pd-text) 16%, transparent);
+}
+
+.pd-context circle:last-child {
+  stroke: var(--pd-text2);
+  stroke-dasharray: 44;
+  stroke-linecap: butt;
+  transition: stroke-dashoffset 800ms ease;
 }
 
 .pd-send {
   display: grid;
   width: 28px;
   height: 28px;
+  flex: none;
   place-items: center;
+  margin-left: 2px;
   border-radius: 50%;
   background: var(--pd-text);
   color: var(--pd-bg);
-  transition: transform 200ms ease;
+  transition: background 200ms ease, color 200ms ease;
 }
 
-.pd-send[data-running] :deep(svg),
-.pd-send[data-running] :deep(.iconify) {
-  width: 10px;
-  height: 10px;
+.pd-send[data-disabled] {
+  background: var(--pd-card);
+  color: color-mix(in srgb, var(--pd-text) 35%, transparent);
 }
 
-/* Phone / IM notification */
-.pd-toast {
-  position: absolute;
-  bottom: -26px;
-  left: -28px;
-  width: min(330px, 70%);
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(18px) scale(0.96);
-  transition: opacity 300ms ease, transform 300ms ease;
+.pd-send svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
 }
 
-.pd-toast[data-show] {
-  opacity: 1;
-  transform: none;
-  transition: opacity 420ms ease, transform 520ms cubic-bezier(0.2, 0.9, 0.25, 1.15);
-}
-
-.pd-toast-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  margin: 0 0 6px 4px !important;
-  padding: 3px 9px;
-  border-radius: 999px;
-  background: var(--ink, #000);
-  color: var(--bg-page, #fff) !important;
-  font-size: 11px;
-  font-weight: 500;
-}
-
-.pd-toast-tag :deep(svg),
-.pd-toast-tag :deep(.iconify) {
-  width: 12px;
-  height: 12px;
-}
-
-.pd-toast-card {
-  display: flex;
-  gap: 11px;
-  padding: 12px 14px;
-  border: 1px solid var(--pd-line);
-  border-radius: 16px;
-  background: color-mix(in srgb, var(--pd-surface) 92%, transparent);
-  box-shadow: 0 24px 48px -20px rgb(40 30 20 / 35%), 0 4px 12px -6px rgb(40 30 20 / 15%);
-  color: var(--pd-text);
-  backdrop-filter: blur(12px);
-}
-
-.pd-toast-app {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  flex: none;
-  place-items: center;
-  border-radius: 9px;
-  background: #3370ff;
-  color: #fff;
-}
-
-.pd-toast-app :deep(svg),
-.pd-toast-app :deep(.iconify) {
-  width: 17px;
-  height: 17px;
-}
-
-.pd-toast-card > div {
-  min-width: 0;
-}
-
-.pd-toast-card p {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin: 0 0 2px !important;
-}
-
-.pd-toast-card strong {
-  font-size: 12.5px;
-  font-weight: 600;
-}
-
-.pd-toast-card small {
-  color: var(--pd-text3);
-  font-size: 11px;
-}
-
-.pd-toast-card > div > span {
-  display: -webkit-box;
-  overflow: hidden;
-  color: var(--pd-text2);
-  font-size: 12px;
-  line-height: 1.5;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.pd-spin {
-  animation: pd-spin 900ms linear infinite;
+.pd-send[data-running] svg {
+  width: 13px;
+  height: 13px;
+  fill: currentColor;
+  stroke: none;
 }
 
 @keyframes pd-in {
   from { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes pd-fade {
+  from { opacity: 0; }
 }
 
 @keyframes pd-shimmer {
@@ -987,13 +972,36 @@ watch(locale, () => {
 }
 
 @container (max-width: 560px) {
+  .pd-titlebar,
   .pd-body {
-    grid-template-columns: minmax(0, 1fr);
-    height: 400px;
+    grid-template-columns: 0 minmax(0, 1fr);
   }
 
+  .pd-titlebar-side,
   .pd-sidebar {
-    display: none;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+  }
+
+  .pd-titlebar-main {
+    padding-left: 70px;
+  }
+
+  .pd-titlebar-main::before {
+    position: absolute;
+    left: 14px;
+    width: 47px;
+    height: 11px;
+    background:
+      radial-gradient(circle at 5.5px 5.5px, #ff5f57 5.5px, transparent 6px),
+      radial-gradient(circle at 23.5px 5.5px, #febc2e 5.5px, transparent 6px),
+      radial-gradient(circle at 41.5px 5.5px, #28c840 5.5px, transparent 6px);
+    content: "";
+  }
+
+  .pd-body {
+    height: 440px;
   }
 
   .pd-thread {
@@ -1004,20 +1012,20 @@ watch(locale, () => {
     margin: 8px 10px 10px;
   }
 
-  .pd-steps code {
+  .pd-hide-narrow {
     display: none;
   }
+}
 
-  .pd-toast {
-    bottom: -34px;
-    left: 8px;
-    width: calc(100% - 16px);
+@container (max-width: 400px) {
+  .pd-perm em {
+    display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .pd-shimmer,
-  .pd-spin,
+  .pd-ring,
   .pd-caret {
     animation: none;
   }
