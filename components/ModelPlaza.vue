@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { CLOUD_API_WEB_HEADERS } from '~/utils/cloud-api'
+
 type ModelKind = 'chat' | 'embedding' | 'image_generation' | 'video_generation' | 'text_to_speech' | string
 type ModelFilter = 'all' | 'chat' | 'vision' | 'creative' | 'free'
 
@@ -93,6 +95,7 @@ const apiBaseUrl = String(runtimeConfig.public.cloudApiBaseUrl || 'https://bothu
 const emptyCatalog = (): ModelCatalogResponse => ({ object: 'list', data: [] })
 const fetchCatalog = async (): Promise<ModelCatalogResponse> => {
   const response = await $fetch<ModelCatalogResponse>(`${apiBaseUrl}/v1/ai/models`, {
+    headers: CLOUD_API_WEB_HEADERS,
     query: { sort: 'marketplace' },
     timeout: 8_000,
     retry: 1,

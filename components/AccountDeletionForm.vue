@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { CLOUD_API_WEB_HEADERS } from '~/utils/cloud-api'
+
 const props = withDefaults(
   defineProps<{
     lang?: 'zh' | 'en'
@@ -108,6 +110,7 @@ async function postJson(path: string, payload: Record<string, unknown>) {
   const response = await fetch(`${apiBaseUrl.value}${path}`, {
     method: 'POST',
     headers: {
+      ...CLOUD_API_WEB_HEADERS,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
